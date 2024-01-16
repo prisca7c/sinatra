@@ -1,78 +1,31 @@
+# app.rb
+require 'sinatra'
+require 'icalendar'
 require 'date'
 
-class InteractiveCalendar
-  def initialize
-    @current_date = Date.today
-    @selected_date = @current_date
-    @events = Hash.new { |hash, key| hash[key] = [] }
-  end
+# Existing code...
 
-  def display_calendar
-    puts "\n#{@current_date.strftime("%B %Y")}"
-    puts "Mo Tu We Th Fr Sa Su"
-    
-    first_day_of_month = Date.new(@current_date.year, @current_date.month, 1)
-    last_day_of_month = Date.new(@current_date.year, @current_date.month, -1)
-    days_in_month = (first_day_of_month..last_day_of_month).to_a
+# Add a route to generate and serve the iCalendar data
+get '/calendar.ics' do
+  content_type 'text/calendar'
 
-    days_in_month.each do |day|
-      print day.day.to_s.rjust(2)
-      print " "
+  cal = Icalendar::Calendar.new
 
-      if day.wday == 6 || day == last_day_of_month
-        puts ""
-      end
-    end
+  # Add events to the calendar
+  cal.add_event(create_event('Divyesh Birthday', '2022-02-21'))
+  cal.add_event(create_event('Roshni Birthday', '2022-02-22'))
+  cal.add_event(create_event('Shinerweb website renewal', '2022-02-23'))
 
-    puts ""
-  end
-
-  def display_events
-    events_for_month = @events[@current_date.strftime("%B %Y")]
-    puts "\nEvents for #{@current_date.strftime("%B %Y")}:"
-    events_for_month.each do |event|
-      puts "- #{event}"
-    end
-  end
-
-  def add_event
-    puts "Enter event for #{@selected_date.strftime("%B %d, %Y")}:"
-    event = gets.chomp
-    @events[@selected_date.strftime("%B %Y")] << "#{@selected_date.day}: #{event}"
-    puts "Event added successfully!"
-  end
-
-  def run
-    loop do
-      display_calendar
-      display_events
-
-      puts "\nOptions:"
-      puts "1. Move to the next month"
-      puts "2. Move to the previous month"
-      puts "3. Add event for the selected date"
-      puts "4. Exit"
-
-      choice = gets.chomp.to_i
-
-      case choice
-      when 1
-        @current_date = @current_date.next_month
-      when 2
-        @current_date = @current_date.prev_month
-      when 3
-        add_event
-      when 4
-        break
-      else
-        puts "Invalid choice. Please try again."
-      end
-    end
-
-    puts "Exiting. Goodbye!"
-  end
+  cal.to_ical
 end
 
-# Example usage
-calendar = InteractiveCalendar.new
-calendar.run
+# Helper method to create an iCalendar event
+def create_event(title, start_date)
+  event = Icalendar::Event.new
+  event.summary = title
+  event.dtstart = DateTime.parse(start_date)
+  event
+end
+
+# Run the Sinatra application
+run Sinatra::Application
