@@ -12,9 +12,9 @@ get '/calendar.ics' do
   cal = Icalendar::Calendar.new
 
   # Add events to the calendar
-  cal.add_event(create_event('Divyesh Birthday', '2022-02-21'))
-  cal.add_event(create_event('Roshni Birthday', '2022-02-22'))
-  cal.add_event(create_event('Shinerweb website renewal', '2022-02-23'))
+  cal.add_event(create_event('I made this', '2024-01-16'))
+  cal.add_event(create_event('New Years Day', '2024-01-01'))
+  cal.add_event(create_event('prisca birthday', '2024-08-12'))
 
   cal.to_ical
 end
