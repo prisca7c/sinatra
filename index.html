@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +12,42 @@
   <h1>FullCalendar with Ruby and iCalendar</h1>
   <div id="calendar"></div>
 
+  <div id="addStudentModal" style="display:none;">
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName" />
+    <button onclick="addStudent()">Add Student</button>
+  </div>
+
   <script>
     $(document).ready(function() {
       $('#calendar').fullCalendar({
         defaultView: 'month',
-        events: '/calendar.ics' // Point to the Sinatra route that serves iCalendar data
+        events: '/calendar.ics',
+        eventClick: function(calEvent, jsEvent, view) {
+          // Open a modal or form to add a student when a day is clicked
+          openAddStudentModal(calEvent.start.format('YYYY-MM-DD'));
+        }
       });
     });
+
+    function openAddStudentModal(date) {
+      document.getElementById('studentName').value = ''; // Clear the input field
+      $('#addStudentModal').show();
+      $('#addStudentModal').data('date', date);
+    }
+
+    function addStudent() {
+      var date = $('#addStudentModal').data('date');
+      var studentName = $('#studentName').val();
+
+      // Send an AJAX request to the server to add the student
+      $.post('/add_student', { date: date, student_name: studentName }, function(data) {
+        console.log(data);
+
+        // Close the modal after adding the student
+        $('#addStudentModal').hide();
+      });
+    }
   </script>
 </body>
 </html>
