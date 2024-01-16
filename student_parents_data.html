@@ -3,66 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student & Parents Data</title>
-  <!-- Add your stylesheets or other meta tags here -->
-  <style>
-    /* Add your styles here for better presentation */
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 5px;
-    }
-  </style>
+  <title>Student & Parents' Data</title>
 </head>
 <body>
-  <header>
-    <h1>Student and Parents Data</h1>
-  </header>
+  <h1>Welcome to Bonzi Music School</h1>
+  <p>This is the home page. Explore the website!</p>
   <a href="/sinatra">Go to Home</a>
   <a href="/sinatra/calendar">Go to Calendar</a>
-  <a href="/sinatra/student-parents-data">Student & Parents' Data</a>
-
-  <section>
-    <h2>Registered Students</h2>
-    <ul id="students-list"></ul>
-  </section>
-
-  <script>
-    fetch('students.json')
-      .then(response => response.json())
-      .then(data => {
-        const studentsList = document.getElementById('students-list');
-        data.forEach(student => {
-          const listItem = document.createElement('li');
-          listItem.innerHTML = `
-            <h3>${student.name}</h3>
-            <p><strong>Age:</strong> ${student.age}</p>
-            <p><strong>Grade:</strong> ${student.grade}</p>
-            <p><strong>Parent:</strong> ${student.parent}</p>
-            <p><strong>Email:</strong> ${student.email}</p>
-            <p><strong>Phone:</strong> ${student.phone}</p>
-          `;
-          studentsList.appendChild(listItem);
-        });
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  </script>
-
-  <!-- Add your scripts or other content as needed -->
-
+  <a href="/sinatra/student-parents-data">Go to Student & Parents' Data</a>
 </body>
 </html>
