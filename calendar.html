@@ -94,6 +94,26 @@
       <button onclick="closePopup()">Close</button>
     </div>
   </div>
+
+  <!-- Show Student Information Pop-up HTML -->
+  <div id="showStudentPopup" class="popup">
+    <div class="popup-content">
+      <h2>Student Information</h2>
+      <p><strong>Date:</strong> <span id="showStudentDate"></span></p>
+      <p><strong>First Name:</strong> <span id="showStudentFirstName"></span></p>
+      <p><strong>Last Name:</strong> <span id="showStudentLastName"></span></p>
+  
+      <!-- Parent information (modify as needed) -->
+      <h3>Parent Information</h3>
+      <p><strong>First Name:</strong> <span id="parentFirstName"></span></p>
+      <p><strong>Last Name:</strong> <span id="parentLastName"></span></p>
+      <p><strong>Email:</strong> <span id="parentEmail"></span></p>
+      <p><strong>Phone:</strong> <span id="parentPhone"></span></p>
+  
+      <button onclick="closeShowStudentPopup()">Close</button>
+    </div>
+  </div>
+
   
   <!-- Trigger button for the pop-up -->
   <button onclick="openPopup()">Add Student</button>
@@ -193,17 +213,24 @@
     }
 
     function showStudentInformation(calEvent) {
-      // Display student information when an event is clicked
       var name = calEvent.title;
       var nameArray = name.split(' ');
-      $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#studentFirstName').text(nameArray[0]);
-      $('#studentLastName').text(nameArray[1]);
-
-      // Show student information
-      // $('#studentInfo').show();
+    
+      // Update student information in the display
+      $('#showStudentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
+      $('#showStudentFirstName').text(nameArray[0]);
+      $('#showStudentLastName').text(nameArray[1]);
+    
+      // Show the show student information pop-up
       $('#showStudentPopup').show();
+    
+      // Add parent information to the popup (modify as needed)
+      $('#parentFirstName').text("Parent First Name");
+      $('#parentLastName').text("Parent Last Name");
+      $('#parentEmail').text("parent@email.com");
+      $('#parentPhone').text("123-456-7890");
     }
+
   </script>
 </body>
 </html>
