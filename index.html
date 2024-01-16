@@ -48,9 +48,13 @@
           openAddStudentModal(date.format());
         },
         eventRender: function(event, element) {
-          // Add custom HTML content to the event
-          element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
+          // Check if custom HTML content already exists for the event
+          if (element.find('.student-info').length === 0) {
+            // Add custom HTML content to the event
+            element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
+          }
         },
+
         eventClick: function(calEvent, jsEvent, view) {
           // Show student information when an event is clicked
           showStudentInformation(calEvent);
