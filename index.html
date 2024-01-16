@@ -47,6 +47,10 @@
           // Open a modal or form to add a student when a day is clicked
           openAddStudentModal(date.format());
         },
+        eventRender: function(event, element) {
+          // Add custom HTML content to the event
+          element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
+        },
         eventClick: function(calEvent, jsEvent, view) {
           // Show student information when an event is clicked
           showStudentInformation(calEvent);
@@ -115,9 +119,11 @@
 
     function showStudentInformation(calEvent) {
       // Display student information when an event is clicked
+      var name = calEvent.title;
+      var nameArray = name.split(' ');
       $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#studentFirstName').text(calEvent.title.split(' ')[0]);
-      $('#studentLastName').text(calEvent.title.split(' ')[1]);
+      $('#studentFirstName').text(nameArray[0]);
+      $('#studentLastName').text(nameArray[1]);
       // Assuming there's no price information stored in the event
       $('#studentPrice').text('N/A');
 
