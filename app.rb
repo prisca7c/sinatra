@@ -13,6 +13,16 @@ get '/calendar' do
   erb :calendar
 end
 
+get '/student-parents-data' do
+  @students = load_students
+  erb :index
+end
+
+def load_students
+  file_path = File.join(settings.root, 'students.json')
+  JSON.parse(File.read(file_path))
+end
+
 
 # Add a route to generate and serve the iCalendar data
 get '/calendar.ics' do
