@@ -58,6 +58,9 @@
           if (element.find('.student-info').length === 0) {
             // Add custom HTML content to the event
             element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
+          } else {
+            // Update existing content if needed
+            element.find('.student-info').text(event.title);
           }
         },
 
