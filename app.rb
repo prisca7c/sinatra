@@ -3,7 +3,17 @@ require 'sinatra'
 require 'icalendar'
 require 'date'
 
-# Existing code...
+# Serve the login page
+get '/' do
+  File.read(File.join('public', 'login.html'))
+end
+
+# Serve the calendar page
+get '/calendar' do
+  # You can add authentication logic here if needed
+  File.read(File.join('public', 'calendar.html'))
+end
+
 
 # Add a route to generate and serve the iCalendar data
 get '/calendar.ics' do
