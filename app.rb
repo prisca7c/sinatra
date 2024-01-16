@@ -27,5 +27,19 @@ def create_event(title, start_date)
   event
 end
 
+# Add a route to handle adding a student to a specific day
+post '/add_student' do
+  date = params[:date]
+  student_name = params[:student_name]
+
+  # Perform logic to add the student to the specified date
+  # For now, we'll just print the information to the console
+  puts "Adding student '#{student_name}' to date '#{date}'"
+
+  # Return a JSON response
+  content_type :json
+  { success: true }.to_json
+end
+
 # Run the Sinatra application
 run Sinatra::Application
