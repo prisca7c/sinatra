@@ -29,78 +29,41 @@
       <label for="selectDate">Select Date:</label>
       <input type="text" id="selectDate" readonly />
 
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" required />
+      <label for="studentFirstName">First Name:</label>
+      <input type="text" id="studentFirstName" required />
 
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" required />
+      <label for="studentLastName">Last Name:</label>
+      <input type="text" id="studentLastName" required />
 
-      <label for="price">Price:</label>
-      <input type="number" id="price" required />
+      <label for="tuition">Tuition:</label>
+      <input type="number" id="tuition" required />
+
+      <label for="parentFirstName">First Name:</label>
+      <input type="text" id="parentFirstName" required />
+
+      <label for="parentLastName">Last Name:</label>
+      <input type="text" id="parentLastName" required />
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" required />
+
+      <label for="phoneNumber">Phone Number:</label>
+      <input type="number" id="firstName" required />
 
       <button type="button" onclick="addStudent()">Add Student</button>
     </form>
   </div>
 
-  <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <!-- Left side for student information -->
-              <form id="addStudentForm">
-                <label for="selectDate">Select Date:</label>
-                <input type="text" id="selectDate" readonly />
-
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" required />
-
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" required />
-
-                <label for="price">Price:</label>
-                <input type="number" id="price" required />
-              </form>
-            </div>
-            <div class="col-md-6">
-              <!-- Right side for parent information -->
-              <form id="addParentForm">
-                <label for="selectDate">Select Date:</label>
-                <input type="text" id="selectDate" readonly />
-
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" required />
-
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" required />
-
-                <label for="price">Price:</label>
-                <input type="number" id="price" required />
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="addStudent()">Add Student</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div id="studentInfo" style="display:none;">
     <h2>Student Information:</h2>
     <p><strong>Date:</strong> <span id="studentDate"></span></p>
-    <p><strong>First Name:</strong> <span id="studentFirstName"></span></p>
-    <p><strong>Last Name:</strong> <span id="studentLastName"></span></p>
-    <p><strong>Price:</strong> <span id="studentPrice"></span></p>
+    <p><strong>Student First Name:</strong> <span id="studentFirstName"></span></p>
+    <p><strong>Student Last Name:</strong> <span id="studentLastName"></span></p>
+    <p><strong>Tution:</strong> <span id="tuition"></span></p>
+    <p><strong>Parent First Name:</strong> <span id="parentFirstName"></span></p>
+    <p><strong>Parent Last Name:</strong> <span id="parentLastName"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>Phone Number:</strong> <span id="phoneNumber"></span></p>
   </div>
 
   
@@ -150,9 +113,13 @@
 
     function openAddStudentModal(date) {
       document.getElementById('selectDate').value = date; // Set the selected date in the form
-      document.getElementById('firstName').value = ''; // Clear the input fields
-      document.getElementById('lastName').value = '';
-      document.getElementById('price').value = '';
+      document.getElementById('studentFirstName').value = ''; // Clear the input fields
+      document.getElementById('studentLastName').value = '';
+      document.getElementById('tuition').value = '';
+      document.getElementById('parentFirstName').value = '';
+      document.getElementById('parentLastName').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phoneNumber').value = '';
 
       $('#studentInfo').hide(); // Hide student information
       $('#addStudentModal').show();
@@ -162,15 +129,12 @@
       // Retrieve data from the form
       var studentFirstName = document.getElementById('studentFirstName').value;
       var studentLastName = document.getElementById('studentLastName').value;
-      var invoiceAmount = document.getElementById('invoiceAmount').value;
-      var studentEmail = document.getElementById('studentEmail').value;
-      var studentPhone = document.getElementById('studentPhone').value;
+      var tuition = document.getElementById('tuition').value;
   
       var parentFirstName = document.getElementById('parentFirstName').value;
       var parentLastName = document.getElementById('parentLastName').value;
       var parentEmail = document.getElementById('parentEmail').value;
       var parentPhone = document.getElementById('parentPhone').value;
-      var parentAddress = document.getElementById('parentAddress').value;
     
       // Create a custom event for the student
       var studentEvent = {
@@ -186,13 +150,17 @@
       $('#studentDate').text(date);
       $('#studentFirstName').text(studentFirstName);
       $('#studentLastName').text(studentLastName);
-      $('#studentPrice').text(invoiceAmount);
+      $('#tuition').text(tuition);
+      $('#parentFirstName').text(parentFirstName);
+      $('#parentLastName').text(parentLastName);
+      $('#email').text(email);
+      $('#phoneNumber').text(phoneNumber);
     
       // Show student information
       $('#studentInfo').show();
     
       // Send an AJAX request to the server to add the student
-      $.post('/add_student', { date: date, firstName: studentFirstName, lastName: studentLastName, price: invoiceAmount }, function(data) {
+      $.post('/add_student', { date: date, studentFirstName: studentFirstName, studentLastName: studentLastName, tuition: tuition, parentFirstName: parentFirstName, parentLastName: parentLastName, email: email, phoneNumber: phoneNumber}, function(data) {
         console.log(data);
     
         // Close the modal after adding the student
@@ -204,22 +172,45 @@
     function showStudentInformation(calEvent) {
       var name = calEvent.title;
       var nameArray = name.split(' ');
-    
+  
       // Update student information in the display
       $('#showStudentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#showStudentFirstName').text(nameArray[0]);
       $('#showStudentLastName').text(nameArray[1]);
-    
+  
       // Show the show student information pop-up
       $('#showStudentPopup').show();
-    
-      // Add parent information to the popup (modify as needed)
-      $('#parentFirstName').text("Parent First Name");
-      $('#parentLastName').text("Parent Last Name");
-      $('#parentEmail').text("parent@email.com");
-      $('#parentPhone').text("123-456-7890");
+  
+      // Check if there is enough data for parent information
+      if (nameArray.length >= 4) {
+          // Add parent information to the popup
+          $('#parentFirstName').text(nameArray[2]);
+          $('#parentLastName').text(nameArray[3]);
+          $('#email').text(nameArray[4]);
+          $('#phoneNumber').text(nameArray[5]);
+      } 
     }
 
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
