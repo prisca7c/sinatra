@@ -15,7 +15,7 @@ end
 
 get '/student-parents-data' do
   @students = load_students
-  erb :index
+  erb :student_parents_data
 end
 
 def load_students
