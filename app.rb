@@ -14,13 +14,7 @@ get '/calendar' do
 end
 
 get '/student-parents-data' do
-  @students = load_students
   erb :student_parents_data
-end
-
-def load_students
-  file_path = File.join(settings.root, 'students.json')
-  JSON.parse(File.read(file_path))
 end
 
 
