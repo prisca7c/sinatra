@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bonzi Music School Calendar</title>
+  <title>FullCalendar with Ruby and iCalendar</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
 <body>
-  <h1>Bonzi Music School Calendar</h1>
+  <h1>FullCalendar with Ruby and iCalendar</h1>
   <div id="calendar"></div>
 
   <div id="addStudentModal" style="display:none;">
@@ -28,6 +28,14 @@
 
       <button type="button" onclick="addStudent()">Add Student</button>
     </form>
+  </div>
+
+  <div id="studentInfo" style="display:none;">
+    <h2>Student Information:</h2>
+    <p><strong>Date:</strong> <span id="studentDate"></span></p>
+    <p><strong>First Name:</strong> <span id="studentFirstName"></span></p>
+    <p><strong>Last Name:</strong> <span id="studentLastName"></span></p>
+    <p><strong>Price:</strong> <span id="studentPrice"></span></p>
   </div>
 
   <script>
@@ -62,16 +70,25 @@
       document.getElementById('lastName').value = '';
       document.getElementById('price').value = '';
 
+      $('#studentInfo').hide(); // Hide student information
       $('#addStudentModal').show();
     }
 
     function addStudent() {
       // Retrieve data from the form
-      console.log('addStudent function called');
       var date = $('#selectDate').val();
       var firstName = $('#firstName').val();
       var lastName = $('#lastName').val();
       var price = $('#price').val();
+
+      // Update student information in the display
+      $('#studentDate').text(date);
+      $('#studentFirstName').text(firstName);
+      $('#studentLastName').text(lastName);
+      $('#studentPrice').text(price);
+
+      // Show student information
+      $('#studentInfo').show();
 
       // Send an AJAX request to the server to add the student
       $.post('/add_student', { date: date, firstName: firstName, lastName: lastName, price: price }, function(data) {
