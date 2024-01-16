@@ -3,11 +3,6 @@ require 'sinatra'
 require 'icalendar'
 require 'date'
 
-# Serve the login page
-get '/' do
-  File.read(File.join('public', 'login.html'))
-end
-
 # Serve the home page
 get '/' do
   erb :home
