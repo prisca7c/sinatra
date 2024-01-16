@@ -24,9 +24,6 @@
     </nav>
   </header>
   <div id="calendar"></div>
-  
-  <button type="button" onclick="showRectangle()">Add Student</button>
-  <div id="rectangle"></div>
 
   <div id="addStudentModal" style="display:none;">
     <form id="addStudentForm">
@@ -54,7 +51,7 @@
       <label for="phoneNumber">Parent Phone Number:</label>
       <input type="number" id="firstName" required />
 
-      <button type="button" onclick="addStudent()">Add Student</button>
+      <button type="button" onclick="addStudent(); showRectangle()">Add Student</button>
     </form>
   </div>
 
@@ -127,16 +124,20 @@
       $('#addStudentModal').show();
     }
 
+    showRectangle();
+
     function addStudent() {
       // Retrieve data from the form
-      var studentFirstName = document.getElementById('studentFirstName').value;
-      var studentLastName = document.getElementById('studentLastName').value;
-      var tuition = document.getElementById('tuition').value;
-  
-      var parentFirstName = document.getElementById('parentFirstName').value;
-      var parentLastName = document.getElementById('parentLastName').value;
-      var parentEmail = document.getElementById('parentEmail').value;
-      var parentPhone = document.getElementById('parentPhone').value;
+
+      var date = $('#selectDate').val();
+      var studentFirstName = $('#studentFirstName').val();
+      var studentLastName = $('#studentLastName').val();
+      var tuition = $('#tuition').val();
+
+      var parentFirstName = $('#parentFirstName').val();
+      var parentLastName = $('#parentLastName').val();
+      var email = $('#email').val();
+      var phoneNumber = $('#phoneNumber').val();
     
       // Create a custom event for the student
       var studentEvent = {
@@ -179,9 +180,6 @@
       $('#showStudentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#showStudentFirstName').text(nameArray[0]);
       $('#showStudentLastName').text(nameArray[1]);
-  
-      // Show the show student information pop-up
-      $('#showStudentPopup').show();
   
       // Check if there is enough data for parent information
       if (nameArray.length >= 4) {
