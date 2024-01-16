@@ -1,31 +1,25 @@
+# Layout for the HTML views
+__END__
+
 @@layout
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Sinatra App</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title>Music School App</title>
 </head>
 <body>
   <%= yield %>
 </body>
 </html>
 
-@@home
-<h1>Welcome to the Home Page!</h1>
-<% if session[:user_authenticated] %>
-  <p>Hello, <%= username %>! (<a href="/logout">Logout</a>)</p>
-<% else %>
-  <p>You are not logged in. <a href="/login">Login</a></p>
-<% end %>
-
 @@login
 <h1>Login</h1>
 <% if defined?(error) %>
   <p style="color: red;"><%= error %></p>
 <% end %>
-<form action="/login" method="post">
+<form action="/authenticate" method="post">
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required><br>
 
@@ -34,3 +28,47 @@
 
   <button type="submit">Login</button>
 </form>
+
+@@main
+<h1>Welcome to the Music School App</h1>
+
+<div style="display: flex; justify-content: space-around; margin-top: 20px;">
+  <div style="border: 1px solid #ddd; padding: 10px; width: 200px;">
+    <h2>Students and Parents Info</h2>
+    <ul>
+      <% $students.each do |student| %>
+        <li><%= student[:name] %> - <%= student[:instrument] %> (Parent: <%= student[:parent] %>)</li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div style="border: 1px solid #ddd; padding: 10px; width: 200px;">
+    <h2>Calendar</h2>
+    <ul>
+      <% $calendar_events.each do |event| %>
+        <li><%= event[:title] %> - <%= event[:date] %> at <%= event[:location] %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div style="border: 1px solid #ddd; padding: 10px; width: 200px;">
+    <h2>Invoices</h2>
+    <ul>
+      <% $invoices.each do |invoice| %>
+        <li>Invoice <%= invoice[:id] %> - Amount: $<%= invoice[:amount] %> (Due: <%= invoice[:due_date] %>)</li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div style="border: 1px solid #ddd; padding: 10px; width: 200px;">
+    <h2>Attendance Record</h2>
+    <ul>
+      <% $attendance_records.each do |record| %>
+        <li><%= $students.find { |s| s[:id] == record[:student_id] }[:name] %> - <%= record[:status] %> on <%= record[:date] %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<a href="/logout">Logout</a>
+
