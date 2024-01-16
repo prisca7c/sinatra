@@ -23,9 +23,23 @@
       $('#calendar').fullCalendar({
         defaultView: 'month',
         events: '/calendar.ics',
-        eventClick: function(calEvent, jsEvent, view) {
+        dayClick: function(date, jsEvent, view) {
           // Open a modal or form to add a student when a day is clicked
-          openAddStudentModal(calEvent.start.format('YYYY-MM-DD'));
+          openAddStudentModal(date.format());
+        },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'addEventButton'
+        },
+        customButtons: {
+          addEventButton: {
+            text: 'Add Student',
+            click: function() {
+              // Open the modal to add a student when the custom button is clicked
+              openAddStudentModal(moment().format('YYYY-MM-DD'));
+            }
+          }
         }
       });
     });
