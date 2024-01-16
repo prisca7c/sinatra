@@ -47,6 +47,10 @@
           // Open a modal or form to add a student when a day is clicked
           openAddStudentModal(date.format());
         },
+        eventClick: function(calEvent, jsEvent, view) {
+          // Show student information when an event is clicked
+          showStudentInformation(calEvent);
+        },
         header: {
           left: 'prev,next today',
           center: 'title',
@@ -107,6 +111,18 @@
         // Close the modal after adding the student
         $('#addStudentModal').hide();
       });
+    }
+
+    function showStudentInformation(calEvent) {
+      // Display student information when an event is clicked
+      $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
+      $('#studentFirstName').text(calEvent.title.split(' ')[0]);
+      $('#studentLastName').text(calEvent.title.split(' ')[1]);
+      // Assuming there's no price information stored in the event
+      $('#studentPrice').text('N/A');
+
+      // Show student information
+      $('#studentInfo').show();
     }
   </script>
 </body>
