@@ -5,7 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bonzi Music School</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
@@ -39,6 +42,59 @@
     </form>
   </div>
 
+  <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <!-- Left side for student information -->
+              <form id="addStudentForm">
+                <label for="selectDate">Select Date:</label>
+                <input type="text" id="selectDate" readonly />
+
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" required />
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" required />
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" required />
+              </form>
+            </div>
+            <div class="col-md-6">
+              <!-- Right side for parent information -->
+              <form id="addParentForm">
+                <label for="selectDate">Select Date:</label>
+                <input type="text" id="selectDate" readonly />
+
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" required />
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" required />
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" required />
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="addStudent()">Add Student</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="studentInfo" style="display:none;">
     <h2>Student Information:</h2>
     <p><strong>Date:</strong> <span id="studentDate"></span></p>
@@ -47,76 +103,9 @@
     <p><strong>Price:</strong> <span id="studentPrice"></span></p>
   </div>
 
-  <!-- Add Student Pop-up HTML -->
-  <div id="addStudentPopup" class="popup">
-    <div class="popup-content">
-      <div class="form-container">
-        <div class="form-section">
-          <h2>Student Information</h2>
-          <form id="addStudentForm">
-            <label for="studentFirstName">First Name:</label>
-            <input type="text" id="studentFirstName" required />
-  
-            <label for="studentLastName">Last Name:</label>
-            <input type="text" id="studentLastName" required />
-  
-            <label for="invoiceAmount">Invoice $:</label>
-            <input type="number" id="invoiceAmount" required />
-  
-            <label for="studentEmail">Email (Optional):</label>
-            <input type="email" id="studentEmail" />
-  
-            <label for="studentPhone">Phone Number (Optional):</label>
-            <input type="tel" id="studentPhone" />
-          </form>
-        </div>
-        <div class="form-section">
-          <h2>Parent/Guardian Information</h2>
-          <form id="addParentForm">
-            <label for="parentFirstName">First Name:</label>
-            <input type="text" id="parentFirstName" required />
-  
-            <label for="parentLastName">Last Name:</label>
-            <input type="text" id="parentLastName" required />
-  
-            <label for="parentEmail">Email (Optional):</label>
-            <input type="email" id="parentEmail" />
-  
-            <label for="parentPhone">Phone Number (Optional):</label>
-            <input type="tel" id="parentPhone" />
-  
-            <label for="parentAddress">Address (Optional):</label>
-            <textarea id="parentAddress"></textarea>
-          </form>
-        </div>
-      </div>
-      <button onclick="addStudent()">Add Student</button>
-      <button onclick="closePopup()">Close</button>
-    </div>
-  </div>
-
-  <!-- Show Student Information Pop-up HTML -->
-  <div id="showStudentPopup" class="popup">
-    <div class="popup-content">
-      <h2>Student Information</h2>
-      <p><strong>Date:</strong> <span id="showStudentDate"></span></p>
-      <p><strong>First Name:</strong> <span id="showStudentFirstName"></span></p>
-      <p><strong>Last Name:</strong> <span id="showStudentLastName"></span></p>
-  
-      <!-- Parent information (modify as needed) -->
-      <h3>Parent Information</h3>
-      <p><strong>First Name:</strong> <span id="parentFirstName"></span></p>
-      <p><strong>Last Name:</strong> <span id="parentLastName"></span></p>
-      <p><strong>Email:</strong> <span id="parentEmail"></span></p>
-      <p><strong>Phone:</strong> <span id="parentPhone"></span></p>
-  
-      <button onclick="closeShowStudentPopup()">Close</button>
-    </div>
-  </div>
-
   
   <!-- Trigger button for the pop-up -->
-  <button onclick="openPopup()">Add Student</button>
+  <!-- <button onclick="openPopup()">Add Student</button> -->
 
   <script>
     $(document).ready(function() {
