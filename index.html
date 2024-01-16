@@ -1,43 +1,23 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>How to create full calendar in jQuery</title>
-  <!-- *Note: You must have an internet connection on your laptop or PC; otherwise, the below code is not working -->
-  <!-- CSS for FullCalendar -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-  <!-- JS for jQuery -->
+  <title>FullCalendar with Ruby and iCalendar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- JS for FullCalendar -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
-
 <body>
-  <h1>How to create a searchable select box</h1>
+  <h1>FullCalendar with Ruby and iCalendar</h1>
   <div id="calendar"></div>
-</body>
 
-<script>
-  $(document).ready(function() {
-    $('#calendar').fullCalendar({
-      defaultView: 'month',
-      events: [
-        {
-          title: 'Divyesh Birthday',
-          start: '2022-02-21'
-        },
-        {
-          title: 'Roshni Birthday',
-          start: '2022-02-22' // Changed date
-        },
-        {
-          title: 'Shinerweb website renewal',
-          start: '2022-02-23' // Changed date
-        }
-      ]
+  <script>
+    $(document).ready(function() {
+      $('#calendar').fullCalendar({
+        defaultView: 'month',
+        events: '/calendar.ics' // Point to the Sinatra route that serves iCalendar data
+      });
     });
-  });
-</script>
-
+  </script>
+</body>
 </html>
