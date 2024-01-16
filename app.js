@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
   const calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: ['dayGrid', 'interaction'],
+    plugins: ['dayGrid', 'interaction', 'jquery-qtip'],
     header: {
       left: 'prev,next today',
       center: 'title',
