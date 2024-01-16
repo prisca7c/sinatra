@@ -13,9 +13,21 @@
   <div id="calendar"></div>
 
   <div id="addStudentModal" style="display:none;">
-    <label for="studentName">Student Name:</label>
-    <input type="text" id="studentName" />
-    <button onclick="addStudent()">Add Student</button>
+    <form id="addStudentForm">
+      <label for="selectDate">Select Date:</label>
+      <input type="text" id="selectDate" readonly />
+
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" required />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" required />
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" required />
+
+      <button type="button" onclick="addStudent()">Add Student</button>
+    </form>
   </div>
 
   <script>
@@ -45,17 +57,23 @@
     });
 
     function openAddStudentModal(date) {
-      document.getElementById('studentName').value = ''; // Clear the input field
+      document.getElementById('selectDate').value = date; // Set the selected date in the form
+      document.getElementById('firstName').value = ''; // Clear the input fields
+      document.getElementById('lastName').value = '';
+      document.getElementById('price').value = '';
+
       $('#addStudentModal').show();
-      $('#addStudentModal').data('date', date);
     }
 
     function addStudent() {
-      var date = $('#addStudentModal').data('date');
-      var studentName = $('#studentName').val();
+      // Retrieve data from the form
+      var date = $('#selectDate').val();
+      var firstName = $('#firstName').val();
+      var lastName = $('#lastName').val();
+      var price = $('#price').val();
 
       // Send an AJAX request to the server to add the student
-      $.post('/add_student', { date: date, student_name: studentName }, function(data) {
+      $.post('/add_student', { date: date, firstName: firstName, lastName: lastName, price: price }, function(data) {
         console.log(data);
 
         // Close the modal after adding the student
