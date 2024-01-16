@@ -97,6 +97,39 @@
         // Close the modal after adding the student
         $('#addStudentModal').hide();
       });
+      function addStudent() {
+        // Retrieve data from the form
+        var date = $('#selectDate').val();
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var price = $('#price').val();
+      
+        // Update calendar events with the new student data
+        var newEvent = {
+          title: firstName + ' ' + lastName,
+          start: date
+        };
+      
+        $('#calendar').fullCalendar('renderEvent', newEvent, true); // Add the new event to the calendar
+      
+        // Update student information in the display
+        $('#studentDate').text(date);
+        $('#studentFirstName').text(firstName);
+        $('#studentLastName').text(lastName);
+        $('#studentPrice').text(price);
+      
+        // Show student information
+        $('#studentInfo').show();
+      
+        // Send an AJAX request to the server to add the student
+        $.post('/add_student', { date: date, firstName: firstName, lastName: lastName, price: price }, function(data) {
+          console.log(data);
+      
+          // Close the modal after adding the student
+          $('#addStudentModal').hide();
+        });
+      }
+
     }
   </script>
 </body>
