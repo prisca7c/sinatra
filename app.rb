@@ -2,6 +2,10 @@
 require 'sinatra'
 require 'json'
 
+get '/' do
+  erb :index
+end
+
 class Teacher
   attr_accessor :id, :name, :subject
 
