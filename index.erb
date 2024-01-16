@@ -1,0 +1,22 @@
+<!-- views/index.erb -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Algorithm Example</title>
+</head>
+<body>
+  <h1>Sorting Algorithm Example</h1>
+
+  <form action="/sort" method="post">
+    <label for="input_array">Enter comma-separated numbers:</label>
+    <input type="text" name="input_array" id="input_array" required>
+    <button type="submit">Sort</button>
+  </form>
+
+  <% if defined?(sorted_array) %>
+    <p>Sorted Array: <%= sorted_array.join(', ') %></p>
+  <% end %>
+</body>
+</html>
