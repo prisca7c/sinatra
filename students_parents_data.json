@@ -2,7 +2,7 @@ require 'json'
 
 class School
   def initialize
-    @data_file = 'students_and_parents_data.json'
+    @data_file = 'students_parents_data.json'
     load_data
   end
 
