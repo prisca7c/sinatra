@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FullCalendar with Ruby and iCalendar</title>
+  <title>Bonzi Music School Calendar</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
 <body>
-  <h1>FullCalendar with Ruby and iCalendar</h1>
+  <h1>Bonzi Music School Calendar</h1>
   <div id="calendar"></div>
 
   <div id="addStudentModal" style="display:none;">
@@ -67,6 +67,7 @@
 
     function addStudent() {
       // Retrieve data from the form
+      console.log('addStudent function called');
       var date = $('#selectDate').val();
       var firstName = $('#firstName').val();
       var lastName = $('#lastName').val();
