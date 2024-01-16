@@ -9,7 +9,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
 <body>
-  <h1>Bonzi Music School</h1>
+  <header>
+    <h1>Bonzi Music School</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar">Calendar</a>
+    </nav>
+  </header>
   <div id="calendar"></div>
 
   <div id="addStudentModal" style="display:none;">
@@ -127,9 +133,7 @@
       var nameArray = name.split(' ');
       $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#studentFirstName').text(nameArray[0]);
-      //$('#studentLastName').text(nameArray[1]);
-      // Assuming there's no price information stored in the event
-      //$('#studentPrice').text('N/A');
+      $('#studentLastName').text(nameArray[1]);
 
       // Show student information
       $('#studentInfo').show();
