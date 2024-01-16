@@ -8,10 +8,14 @@ get '/' do
   File.read(File.join('public', 'login.html'))
 end
 
+# Serve the home page
+get '/' do
+  erb :home
+end
+
 # Serve the calendar page
 get '/calendar' do
-  # You can add authentication logic here if needed
-  File.read(File.join('public', 'calendar.html'))
+  erb :calendar
 end
 
 
