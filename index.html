@@ -1,20 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monthly Calendar</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" integrity="sha512-k2OAPF7KniwMhpJIXX+9ckUgGfPntk5d3DQBNEpdXZi1j+l5aIaBuFjvjF6fJmEUx6WQc7zqOIJ9OK/keCRgUQ==" crossorigin="anonymous" />
+  <title>How to create full calendar in jQuery</title>
+  <!-- *Note: You must have an internet connection on your laptop or PC; otherwise, the below code is not working -->
+  <!-- CSS for FullCalendar -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+  <!-- JS for jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- JS for FullCalendar -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
 
 <body>
+  <h1>How to create a searchable select box</h1>
   <div id="calendar"></div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha512-m9iG3nK8B5jbRZP5nz/MzNGxUw1jK3x/cFhg0ra4gNLp+HvKvVx7pK5L5SvBlv83gYZb1+Iz0bsg6lL50R26iQ==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-jNEP6Dkdd3a+nv4Kw8CTNS9Nc1A9zUHISFb2fd1ZLzVrIEZ9dKiyU6Grqk+LQCK4G9K3OXY2j2QfLqK2VRgEbg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-IfITiQfS8s7iV1c8s/1dtRcM16Gee3Jk2RJwDl5t/X3SZBm7YsntgE6wGGrmdUf6qoC5IIzC4tYNt1asD6UpRg==" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
 </body>
+
+<script>
+  $(document).ready(function() {
+    $('#calendar').fullCalendar({
+      defaultView: 'month',
+      events: [
+        {
+          title: 'Divyesh Birthday',
+          start: '2022-02-21'
+        },
+        {
+          title: 'Roshni Birthday',
+          start: '2022-02-22' // Changed date
+        },
+        {
+          title: 'Shinerweb website renewal',
+          start: '2022-02-23' // Changed date
+        }
+      ]
+    });
+  });
+</script>
 
 </html>
