@@ -16,6 +16,7 @@
     <nav>
       <a href="/sinatra">Home</a>
       <a href="/sinatra/calendar">Calendar</a>
+      <a href="/sinatra/student-parents-data">Student & Parents' Data</a>
     </nav>
   </header>
   <div id="calendar"></div>
@@ -45,6 +46,57 @@
     <p><strong>Last Name:</strong> <span id="studentLastName"></span></p>
     <p><strong>Price:</strong> <span id="studentPrice"></span></p>
   </div>
+
+  <!-- Add Student Pop-up HTML -->
+  <div id="addStudentPopup" class="popup">
+    <div class="popup-content">
+      <div class="form-container">
+        <div class="form-section">
+          <h2>Student Information</h2>
+          <form id="addStudentForm">
+            <label for="studentFirstName">First Name:</label>
+            <input type="text" id="studentFirstName" required />
+  
+            <label for="studentLastName">Last Name:</label>
+            <input type="text" id="studentLastName" required />
+  
+            <label for="invoiceAmount">Invoice $:</label>
+            <input type="number" id="invoiceAmount" required />
+  
+            <label for="studentEmail">Email (Optional):</label>
+            <input type="email" id="studentEmail" />
+  
+            <label for="studentPhone">Phone Number (Optional):</label>
+            <input type="tel" id="studentPhone" />
+          </form>
+        </div>
+        <div class="form-section">
+          <h2>Parent/Guardian Information</h2>
+          <form id="addParentForm">
+            <label for="parentFirstName">First Name:</label>
+            <input type="text" id="parentFirstName" required />
+  
+            <label for="parentLastName">Last Name:</label>
+            <input type="text" id="parentLastName" required />
+  
+            <label for="parentEmail">Email (Optional):</label>
+            <input type="email" id="parentEmail" />
+  
+            <label for="parentPhone">Phone Number (Optional):</label>
+            <input type="tel" id="parentPhone" />
+  
+            <label for="parentAddress">Address (Optional):</label>
+            <textarea id="parentAddress"></textarea>
+          </form>
+        </div>
+      </div>
+      <button onclick="addStudent()">Add Student</button>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </div>
+  
+  <!-- Trigger button for the pop-up -->
+  <button onclick="openPopup()">Add Student</button>
 
   <script>
     $(document).ready(function() {
@@ -99,14 +151,21 @@
 
     function addStudent() {
       // Retrieve data from the form
-      var date = $('#selectDate').val();
-      var firstName = $('#firstName').val();
-      var lastName = $('#lastName').val();
-      var price = $('#price').val();
+      var studentFirstName = document.getElementById('studentFirstName').value;
+      var studentLastName = document.getElementById('studentLastName').value;
+      var invoiceAmount = document.getElementById('invoiceAmount').value;
+      var studentEmail = document.getElementById('studentEmail').value;
+      var studentPhone = document.getElementById('studentPhone').value;
+  
+      var parentFirstName = document.getElementById('parentFirstName').value;
+      var parentLastName = document.getElementById('parentLastName').value;
+      var parentEmail = document.getElementById('parentEmail').value;
+      var parentPhone = document.getElementById('parentPhone').value;
+      var parentAddress = document.getElementById('parentAddress').value;
     
       // Create a custom event for the student
       var studentEvent = {
-        title: firstName + ' ' + lastName,
+        title: studentFirstName + ' ' + studentLastName,
         start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
         allDay: true // Set to true for an all-day event
       };
@@ -116,20 +175,21 @@
     
       // Update student information in the display
       $('#studentDate').text(date);
-      $('#studentFirstName').text(firstName);
-      $('#studentLastName').text(lastName);
-      $('#studentPrice').text(price);
+      $('#studentFirstName').text(studentFirstName);
+      $('#studentLastName').text(studentLastName);
+      $('#studentPrice').text(invoiceAmount);
     
       // Show student information
       $('#studentInfo').show();
     
       // Send an AJAX request to the server to add the student
-      $.post('/add_student', { date: date, firstName: firstName, lastName: lastName, price: price }, function(data) {
+      $.post('/add_student', { date: date, firstName: studentFirstName, lastName: studentLastName, price: invoiceAmount }, function(data) {
         console.log(data);
     
         // Close the modal after adding the student
         $('#addStudentModal').hide();
       });
+      closePopup();
     }
 
     function showStudentInformation(calEvent) {
@@ -141,7 +201,8 @@
       $('#studentLastName').text(nameArray[1]);
 
       // Show student information
-      $('#studentInfo').show();
+      // $('#studentInfo').show();
+      $('#showStudentPopup').show();
     }
   </script>
 </body>
