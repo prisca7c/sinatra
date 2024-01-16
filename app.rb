@@ -1,64 +1,78 @@
-# app.rb
-require 'sinatra'
-require 'json'
+require 'date'
 
-get '/' do
-  erb :index
-end
-
-class Teacher
-  attr_accessor :id, :name, :subject
-
-  def initialize(id, name, subject)
-    @id = id
-    @name = name
-    @subject = subject
-  end
-end
-
-class TeacherManager
-  attr_reader :teachers
-
+class InteractiveCalendar
   def initialize
-    @teachers = []
+    @current_date = Date.today
+    @selected_date = @current_date
+    @events = Hash.new { |hash, key| hash[key] = [] }
   end
 
-  def add_teacher(name, subject)
-    id = @teachers.length + 1
-    teacher = Teacher.new(id, name, subject)
-    @teachers << teacher
+  def display_calendar
+    puts "\n#{@current_date.strftime("%B %Y")}"
+    puts "Mo Tu We Th Fr Sa Su"
+    
+    first_day_of_month = Date.new(@current_date.year, @current_date.month, 1)
+    last_day_of_month = Date.new(@current_date.year, @current_date.month, -1)
+    days_in_month = (first_day_of_month..last_day_of_month).to_a
+
+    days_in_month.each do |day|
+      print day.day.to_s.rjust(2)
+      print " "
+
+      if day.wday == 6 || day == last_day_of_month
+        puts ""
+      end
+    end
+
+    puts ""
   end
 
-  def sort_teachers_by_name
-    @teachers.sort_by!(&:name)
+  def display_events
+    events_for_month = @events[@current_date.strftime("%B %Y")]
+    puts "\nEvents for #{@current_date.strftime("%B %Y")}:"
+    events_for_month.each do |event|
+      puts "- #{event}"
+    end
   end
 
-  def to_json
-    { teachers: @teachers.map { |teacher| { id: teacher.id, name: teacher.name, subject: teacher.subject } } }.to_json
+  def add_event
+    puts "Enter event for #{@selected_date.strftime("%B %d, %Y")}:"
+    event = gets.chomp
+    @events[@selected_date.strftime("%B %Y")] << "#{@selected_date.day}: #{event}"
+    puts "Event added successfully!"
+  end
+
+  def run
+    loop do
+      display_calendar
+      display_events
+
+      puts "\nOptions:"
+      puts "1. Move to the next month"
+      puts "2. Move to the previous month"
+      puts "3. Add event for the selected date"
+      puts "4. Exit"
+
+      choice = gets.chomp.to_i
+
+      case choice
+      when 1
+        @current_date = @current_date.next_month
+      when 2
+        @current_date = @current_date.prev_month
+      when 3
+        add_event
+      when 4
+        break
+      else
+        puts "Invalid choice. Please try again."
+      end
+    end
+
+    puts "Exiting. Goodbye!"
   end
 end
 
-teacher_manager = TeacherManager.new
-
-get '/' do
-  erb :index
-end
-
-get '/teachers' do
-  content_type :json
-  teacher_manager.to_json
-end
-
-post '/teachers' do
-  data = JSON.parse(request.body.read)
-  name = data['name']
-  subject = data['subject']
-
-  teacher_manager.add_teacher(name, subject)
-  status 201
-end
-
-put '/teachers/sort' do
-  teacher_manager.sort_teachers_by_name
-  status 200
-end
+# Example usage
+calendar = InteractiveCalendar.new
+calendar.run
