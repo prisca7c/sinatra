@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
   const calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: ['dayGrid', 'interaction', 'jquery-qtip'],
-    header: {
+    headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
@@ -13,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (title) {
         calendar.addEvent({
           title: title,
-          start: info.start,
-          end: info.end,
+          start: info.startStr,
+          end: info.endStr,
           color: 'rgba(0, 123, 255, 0.3)' // Translucent blue color
         });
       }
