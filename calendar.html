@@ -216,9 +216,10 @@
     function showStudentInformation(calEvent) {
       var nameArray = calEvent.title.split(' ');
     
-      $('#showStudentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#showStudentFirstName').text(nameArray[0]);
-      $('#showStudentLastName').text(nameArray[1]);
+      // Update student information in the display
+      $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
+      $('#studentFirstName').text(nameArray[0]);
+      $('#studentLastName').text(nameArray[1]);
     
       // Check if there is enough data for parent information
       if (nameArray.length >= 4) {
@@ -228,8 +229,10 @@
         $('#phoneNumber').text(nameArray[5]);
       }
     
-      $('#showStudentPopup').show();
+      // Show the existing rectangle (assuming it's hidden)
+      $('#addStudentPopup').show();
     }
+
 
 
   </script>
