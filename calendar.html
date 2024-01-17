@@ -75,7 +75,7 @@
         header: {
           left: 'prev,next today',
           center: 'title',
-          right: 'addEventButton'
+          right: 'addLessonButton'
         },
         customButtons: {
           addEventButton: {
@@ -89,10 +89,10 @@
     });
 
     function openAddLessonPopup(date) {
-      document.getElementById('selectDate').value = date;
-      document.getElementById('lessonTitle').value = '';
-      document.getElementById('lessonDescription').value = '';
-
+      document.getElementById('lessonDate').value = date;
+      document.getElementById('lessonType').value = '';
+      document.getElementById('studentName').value = '';
+  
       $('#addLessonPopup').show();
     }
 
