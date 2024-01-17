@@ -142,17 +142,17 @@
       var studentFirstName = $('#studentFirstName').val();
       var studentLastName = $('#studentLastName').val();
       var tuition = $('#tuition').val();
-      
+    
       var parentFirstName = $('#parentFirstName').val();
       var parentLastName = $('#parentLastName').val();
       var email = $('#email').val();
       var phoneNumber = $('#phoneNumber').val();
-      
+    
       // Check if the student is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
         return event.title === studentFirstName + ' ' + studentLastName && moment(event.start).format('YYYY-MM-DD') === date;
       });
-      
+    
       if (existingEvent.length === 0) {
         // Create a custom event for the student
         var studentEvent = {
@@ -160,10 +160,10 @@
           start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
           allDay: true // Set to true for an all-day event
         };
-      
+    
         // Add the student event to the calendar
         $('#calendar').fullCalendar('renderEvent', studentEvent, true);
-      
+    
         // Update student information in the display
         $('#studentDate').text(date);
         $('#studentFirstName').text(studentFirstName);
@@ -173,26 +173,24 @@
         $('#parentLastName').text(parentLastName);
         $('#email').text(email);
         $('#phoneNumber').text(phoneNumber);
-      
+    
         // Show student information
         $('#studentInfo').show();
-      
+    
         // Show the rectangle (assuming you want to show it when adding a student)
         showRectangle();
-      
-        // Change button text to "Close Input Tab"
-        $('#addStudentButton').text('Close Input Tab');
-      
+    
         // Send an AJAX request to the server to add the student
         // ... (your AJAX logic here)
       } else {
         // Handle case where the student is already in the calendar
         console.log('Student already exists in the calendar.');
       }
-      
+    
       // Close the popup
       closeAddStudentPopup();
     }
+
     
     // Update button text based on the visibility of the rectangle
     function updateAddStudentButton() {
@@ -216,22 +214,23 @@
 
 
     function showStudentInformation(calEvent) {
-      var name = calEvent.title;
-      var nameArray = name.split(' ');
-  
+      var nameArray = calEvent.title.split(' ');
+    
       $('#showStudentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#showStudentFirstName').text(nameArray[0]);
       $('#showStudentLastName').text(nameArray[1]);
-  
+    
+      // Check if there is enough data for parent information
       if (nameArray.length >= 4) {
         $('#parentFirstName').text(nameArray[2]);
         $('#parentLastName').text(nameArray[3]);
         $('#email').text(nameArray[4]);
         $('#phoneNumber').text(nameArray[5]);
-      } 
-
+      }
+    
       $('#showStudentPopup').show();
     }
+
 
   </script>
 </body>
