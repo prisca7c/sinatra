@@ -68,7 +68,8 @@
       <label for="phoneNumber">Parent Phone Number:</label>
       <input type="number" id="phoneNumber" required />
 
-      <button type="button" onclick="addStudent();">Add Student</button>
+      <button type="button" id="addStudentButton" onclick="addStudent();">Add Student</button>
+      
     </form>
   </div>
 
@@ -95,9 +96,9 @@
         eventRender: function(event, element) {
           if (element.find('.student-info').length === 0) {
             element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
-          } else {
-            element.find('.student-info').text(event.title);
-          }
+          } //else {
+            //element.find('.student-info').text(event.title);
+          //}
         },
         eventClick: function(calEvent, jsEvent, view) {
           showStudentInformation(calEvent);
