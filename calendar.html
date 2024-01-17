@@ -69,7 +69,7 @@
       <input type="number" id="phoneNumber" required />
 
       <button type="button" id="addStudentButton" onclick="addStudent();">Add Student</button>
-      
+      <button type="button" id="closeInputTabButton" onclick="closeAddStudentPopup();">Close Input Tab</button>
     </form>
   </div>
 
@@ -96,9 +96,7 @@
         eventRender: function(event, element) {
           if (element.find('.student-info').length === 0) {
             element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
-          } //else {
-            //element.find('.student-info').text(event.title);
-          //}
+          }
         },
         eventClick: function(calEvent, jsEvent, view) {
           showStudentInformation(calEvent);
@@ -156,6 +154,7 @@
       if (existingEvent.length === 0) {
         // Create a custom event for the student
         var studentEvent = {
+          id: moment().format('X'), // Use a unique ID to prevent duplication
           title: studentFirstName + ' ' + studentLastName,
           start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
           allDay: true // Set to true for an all-day event
@@ -178,7 +177,10 @@
         $('#studentInfo').show();
     
         // Show the rectangle (assuming you want to show it when adding a student)
-        showRectangle();
+        //showRectangle(); // Commented out as the function is not defined in your provided code
+    
+        // Change the text of the "Add Student" button to "Close Input Tab"
+        $('#addStudentButton').text('Close Input Tab');
     
         // Send an AJAX request to the server to add the student
         // ... (your AJAX logic here)
@@ -187,11 +189,12 @@
         console.log('Student already exists in the calendar.');
       }
     
-      // Close the popup
-      closeAddStudentPopup();
+      // Close the popup if it's not the "Close Input Tab" button
+      if ($('#addStudentButton').text() !== 'Close Input Tab') {
+        closeAddStudentPopup();
+      }
     }
 
-    
     // Update button text based on the visibility of the rectangle
     function updateAddStudentButton() {
       if ($('#addStudentPopup').is(':visible')) {
@@ -200,27 +203,25 @@
         $('#addStudentButton').text('Add Student');
       }
     }
-    
+
     // Call the update function on document ready
     $(document).ready(function() {
       updateAddStudentButton();
     });
-    
+
     // Call the update function whenever the rectangle visibility changes
     $('#addStudentPopup').on('change', function() {
       updateAddStudentButton();
     });
 
-
-
     function showStudentInformation(calEvent) {
       var nameArray = calEvent.title.split(' ');
-    
+
       // Update student information in the display
       $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#studentFirstName').text(nameArray[0]);
       $('#studentLastName').text(nameArray[1]);
-    
+
       // Check if there is enough data for parent information
       if (nameArray.length >= 4) {
         $('#parentFirstName').text(nameArray[2]);
@@ -228,12 +229,10 @@
         $('#email').text(nameArray[4]);
         $('#phoneNumber').text(nameArray[5]);
       }
-    
+
       // Show the existing rectangle (assuming it's hidden)
       $('#addStudentPopup').show();
     }
-
-
 
   </script>
 </body>
