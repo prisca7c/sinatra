@@ -75,6 +75,7 @@
     });
 
     function openAddStudentPopup(date) {
+      var date = moment().format('YYYY-MM-DD');
       document.getElementById('selectDate').value = date;
       document.getElementById('studentFirstName').value = '';
       document.getElementById('studentLastName').value = '';
@@ -144,6 +145,8 @@
       // Close the popup
       closeAddStudentPopup();
     }
+    
   </script>
 </body>
 </html>
+
