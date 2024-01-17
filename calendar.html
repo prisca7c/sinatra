@@ -179,6 +179,9 @@
         // Show the rectangle (assuming you want to show it when adding a student)
         showRectangle();
       
+        // Change button text to "Close Input Tab"
+        $('#addStudentButton').text('Close Input Tab');
+      
         // Send an AJAX request to the server to add the student
         // ... (your AJAX logic here)
       } else {
@@ -189,6 +192,26 @@
       // Close the popup
       closeAddStudentPopup();
     }
+    
+    // Update button text based on the visibility of the rectangle
+    function updateAddStudentButton() {
+      if ($('#addStudentPopup').is(':visible')) {
+        $('#addStudentButton').text('Close Input Tab');
+      } else {
+        $('#addStudentButton').text('Add Student');
+      }
+    }
+    
+    // Call the update function on document ready
+    $(document).ready(function() {
+      updateAddStudentButton();
+    });
+    
+    // Call the update function whenever the rectangle visibility changes
+    $('#addStudentPopup').on('change', function() {
+      updateAddStudentButton();
+    });
+
 
 
     function showStudentInformation(calEvent) {
