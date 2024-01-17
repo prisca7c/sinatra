@@ -7,6 +7,25 @@
   <title>Bonzi Music School</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
+  <style>
+    /* Your custom styles go here */
+    #addStudentPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      z-index: 1000;
+    }
+
+    #addStudentPopup button {
+      margin-top: 10px;
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -24,7 +43,7 @@
   </header>
   <div id="calendar"></div>
 
-  <div id="addStudentModal" style="display:none;">
+  <div id="addStudentPopup">
     <form id="addStudentForm">
       <label for="selectDate">Select Date:</label>
       <input type="text" id="selectDate" readonly />
@@ -51,8 +70,11 @@
       <input type="number" id="phoneNumber" required />
 
       <button type="button" onclick="addStudent()">Add Student</button>
+      
     </form>
   </div>
+
+  <button type="button" onclick="openAddStudentPopup()">Add Student</button>
 
   <div id="studentInfo" style="display:none;">
     <h2>Student Information:</h2>
@@ -108,8 +130,8 @@
       });
     });
 
-    function openAddStudentModal(date) {
-      document.getElementById('selectDate').value = date; // Set the selected date in the form
+    function openAddStudentPopup() {
+      document.getElementById('selectDate').value = ''; // Set the selected date in the form
       document.getElementById('studentFirstName').value = ''; // Clear the input fields
       document.getElementById('studentLastName').value = '';
       document.getElementById('tuition').value = '';
@@ -119,7 +141,12 @@
       document.getElementById('phoneNumber').value = '';
 
       $('#studentInfo').hide(); // Hide student information
-      $('#addStudentModal').show();
+      $('#addStudentPopup').show();
+    }
+
+    function closeAddStudentPopup() {
+      //Hide the popup
+      $('#addStudentPopup').hide();
     }
 
     function addStudent() {
@@ -174,7 +201,7 @@
       }
     
       // Close the popup
-      closePopup();
+      closeAddStudentPopup();
     }
 
 
@@ -202,23 +229,4 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
