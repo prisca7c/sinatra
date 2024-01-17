@@ -141,6 +141,20 @@
         start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
         allDay: true // Set to true for an all-day event
       };
+
+      // Check if the student is already in the calendar
+      var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
+        return event.title === firstName + ' ' + lastName && moment(event.start).format('YYYY-MM-DD') === date;
+      });
+    
+      if (existingEvent.length === 0) {
+        // Create a custom event for the student
+        var studentEvent = {
+          title: firstName + ' ' + lastName,
+          start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
+          allDay: true // Set to true for an all-day event
+        };
+
     
       // Add the student event to the calendar
       $('#calendar').fullCalendar('renderEvent', studentEvent, true);
