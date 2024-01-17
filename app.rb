@@ -14,7 +14,7 @@ get '/calendar' do
 end
 
 get '/student-parents-data' do
-  index :student_parents_data
+  erb :studentParentsData
 end
 
 
