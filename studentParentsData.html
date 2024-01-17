@@ -75,6 +75,23 @@
       // ...
     });
 
+    function openAddStudentPopup(date) {
+      document.getElementById('selectDate').value = date;
+      document.getElementById('studentFirstName').value = '';
+      document.getElementById('studentLastName').value = '';
+      document.getElementById('tuition').value = '';
+      document.getElementById('parentFirstName').value = '';
+      document.getElementById('parentLastName').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phoneNumber').value = '';
+
+      $('#addStudentPopup').show();
+    }
+
+    function closeAddStudentPopup() {
+      $('#addStudentPopup').hide();
+    }
+    
     function addStudent() {
       var date = $('#selectDate').val();
       var studentFirstName = $('#studentFirstName').val();
