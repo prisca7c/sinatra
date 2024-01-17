@@ -9,22 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <style>
     /* Your custom styles go here */
-    #addStudentPopup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      z-index: 1000;
-    }
-
-    #addStudentPopup button {
-      margin-top: 10px;
-    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
@@ -37,61 +21,18 @@
     <nav>
       <a href="/sinatra">Home</a>
       <a href="/sinatra/calendar">Calendar</a>
-      <a href="/sinatra/student-parents-data">Student & Parents' Data</a>
+      <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
     </nav>
   </header>
   <div id="calendar"></div>
 
-  <div id="addStudentPopup">
-    <form id="addStudentForm">
-      <label for="selectDate">Select Date:</label>
-      <input type="text" id="selectDate" readonly /> 
-
-      <label for="studentFirstName">Student First Name:</label>
-      <input type="text" id="studentFirstName" required />
-
-      <label for="studentLastName">Student Last Name:</label>
-      <input type="text" id="studentLastName" required />
-
-      <label for="tuition">Tuition:</label>
-      <input type="number" id="tuition" required />
-
-      <label for="parentFirstName">Parent First Name:</label>
-      <input type="text" id="parentFirstName" required />
-
-      <label for="parentLastName">Parent Last Name:</label>
-      <input type="text" id="parentLastName" required />
-
-      <label for="email">Parent Email:</label>
-      <input type="text" id="email" required />
-
-      <label for="phoneNumber">Parent Phone Number:</label>
-      <input type="number" id="phoneNumber" required />
-
-      <button type="button" id="addStudentButton" onclick="addStudent();">Add Student</button>
-      <button type="button" id="closeInputTabButton" onclick="closeAddStudentPopup();">Close Input Tab</button>
-    </form>
-  </div>
-
-  <div id="studentInfo" style="display:none;">
-    <h2>Student Information:</h2>
-    <p><strong>Date:</strong> <span id="studentDate"></span></p>
-    <p><strong>Student First Name:</strong> <span id="studentFirstName"></span></p>
-    <p><strong>Student Last Name:</strong> <span id="studentLastName"></span></p>
-    <p><strong>Tuition:</strong> <span id="tuition"></span></p>
-    <p><strong>Parent First Name:</strong> <span id="parentFirstName"></span></p>
-    <p><strong>Parent Last Name:</strong> <span id="parentLastName"></span></p>
-    <p><strong>Email:</strong> <span id="email"></span></p>
-    <p><strong>Phone Number:</strong> <span id="phoneNumber"></span></p>
-  </div>
-
   <script>
-    $(document).ready(function() { 
+    $(document).ready(function() {
       $('#calendar').fullCalendar({
         defaultView: 'month',
         events: '/calendar.ics', // Change this URL to your event source
         dayClick: function(date, jsEvent, view) {
-          openAddStudentPopup(date.format());
+          openAddLessonPopup(date.format());
         },
         eventRender: function(event, element) {
           if (element.find('.student-info').length === 0) {
@@ -108,134 +49,87 @@
         },
         customButtons: {
           addEventButton: {
-            text: 'Add Student',
+            text: 'Add Lesson',
             click: function() {
-              openAddStudentPopup(moment().format('YYYY-MM-DD'));
+              openAddLessonPopup(moment().format('YYYY-MM-DD'));
             }
           }
         }
       });
     });
 
-    function openAddStudentPopup(date) {
+    function openAddLessonPopup(date) {
       document.getElementById('selectDate').value = date;
-      document.getElementById('studentFirstName').value = '';
-      document.getElementById('studentLastName').value = '';
-      document.getElementById('tuition').value = '';
-      document.getElementById('parentFirstName').value = '';
-      document.getElementById('parentLastName').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('phoneNumber').value = '';
+      document.getElementById('lessonTitle').value = '';
+      document.getElementById('lessonDescription').value = '';
 
       $('#studentInfo').hide();
-      $('#addStudentPopup').show();
+      $('#addLessonPopup').show();
     }
 
-    function closeAddStudentPopup() {
-      $('#addStudentPopup').hide();
+    function closeAddLessonPopup() {
+      $('#addLessonPopup').hide();
     }
 
-    function addStudent() {
+    function addLesson() {
       var date = $('#selectDate').val();
-      var studentFirstName = $('#studentFirstName').val();
-      var studentLastName = $('#studentLastName').val();
-      var tuition = $('#tuition').val();
-    
-      var parentFirstName = $('#parentFirstName').val();
-      var parentLastName = $('#parentLastName').val();
-      var email = $('#email').val();
-      var phoneNumber = $('#phoneNumber').val();
-    
-      // Check if the student is already in the calendar
+      var lessonTitle = $('#lessonTitle').val();
+      var lessonDescription = $('#lessonDescription').val();
+
+      // Check if the lesson is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
-        return event.title === studentFirstName + ' ' + studentLastName && moment(event.start).format('YYYY-MM-DD') === date;
+        return event.title === lessonTitle && moment(event.start).format('YYYY-MM-DD') === date;
       });
-    
+
       if (existingEvent.length === 0) {
-        // Create a custom event for the student
-        var studentEvent = {
+        // Create a custom event for the lesson
+        var lessonEvent = {
           id: moment().format('X'), // Use a unique ID to prevent duplication
-          title: studentFirstName + ' ' + studentLastName,
+          title: lessonTitle,
           start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
           allDay: true // Set to true for an all-day event
         };
-    
-        // Add the student event to the calendar
-        $('#calendar').fullCalendar('renderEvent', studentEvent, true);
-    
-        // Update student information in the display
-        $('#studentDate').text(date);
-        $('#studentFirstName').text(studentFirstName);
-        $('#studentLastName').text(studentLastName);
-        $('#tuition').text(tuition);
-        $('#parentFirstName').text(parentFirstName);
-        $('#parentLastName').text(parentLastName);
-        $('#email').text(email);
-        $('#phoneNumber').text(phoneNumber);
-    
-        // Show student information
-        $('#studentInfo').show();
-    
-        // Show the rectangle (assuming you want to show it when adding a student)
-        //showRectangle(); // Commented out as the function is not defined in your provided code
-    
-        // Change the text of the "Add Student" button to "Close Input Tab"
-        $('#addStudentButton').text('Close Input Tab');
-    
-        // Send an AJAX request to the server to add the student
-        // ... (your AJAX logic here)
+
+        // Add the lesson event to the calendar
+        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+
+        // Change the text of the "Add Lesson" button to "Close Input Tab"
+        $('#addLessonButton').text('Close Input Tab');
       } else {
-        // Handle case where the student is already in the calendar
-        console.log('Student already exists in the calendar.');
+        // Handle case where the lesson is already in the calendar
+        console.log('Lesson already exists in the calendar.');
       }
-    
+
       // Close the popup if it's not the "Close Input Tab" button
-      if ($('#addStudentButton').text() !== 'Close Input Tab') {
-        closeAddStudentPopup();
+      if ($('#addLessonButton').text() !== 'Close Input Tab') {
+        closeAddLessonPopup();
       }
     }
 
     // Update button text based on the visibility of the rectangle
-    function updateAddStudentButton() {
-      if ($('#addStudentPopup').is(':visible')) {
-        $('#addStudentButton').text('Close Input Tab');
+    function updateAddLessonButton() {
+      if ($('#addLessonPopup').is(':visible')) {
+        $('#addLessonButton').text('Close Input Tab');
       } else {
-        $('#addStudentButton').text('Add Student');
+        $('#addLessonButton').text('Add Lesson');
       }
     }
 
     // Call the update function on document ready
     $(document).ready(function() {
-      updateAddStudentButton();
+      updateAddLessonButton();
     });
 
     // Call the update function whenever the rectangle visibility changes
-    $('#addStudentPopup').on('change', function() {
-      updateAddStudentButton();
+    $('#addLessonPopup').on('change', function() {
+      updateAddLessonButton();
     });
 
     function showStudentInformation(calEvent) {
-      var nameArray = calEvent.title.split(' ');
-
-      // Update student information in the display
-      $('#studentDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#studentFirstName').text(nameArray[0]);
-      $('#studentLastName').text(nameArray[1]);
-
-      // Check if there is enough data for parent information
-      if (nameArray.length >= 4) {
-        $('#parentFirstName').text(nameArray[2]);
-        $('#parentLastName').text(nameArray[3]);
-        $('#email').text(nameArray[4]);
-        $('#phoneNumber').text(nameArray[5]);
-      }
-
-      // Show the existing rectangle (assuming it's hidden)
-      $('#addStudentPopup').show();
+      // Code for showing student information in the rectangle
+      // You can implement this part according to your requirements
+      // ...
     }
-
   </script>
 </body>
 </html>
-
-<!-- testing -->
