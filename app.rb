@@ -17,6 +17,10 @@ get '/student-parents-data' do
   erb :studentParentsData
 end
 
+get '/invoice' do
+  erb :invoice
+end
+
 
 # Add a route to generate and serve the iCalendar data
 get '/calendar.ics' do
