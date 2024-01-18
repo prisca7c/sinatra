@@ -1,40 +1,19 @@
 require 'sinatra'
 require 'icalendar'
 require 'date'
-require 'sinatra/activerecord'
-require 'bcrypt'
-  
+
 # Enable sessions for user authentication
 enable :sessions
 
-# Set up SQLite database
-set :database, { adapter: 'sqlite3', database: 'users.db' }
-
-# Define a User model
-class User < ActiveRecord::Base
-  validates_presence_of :username, :password
-end
+# Dummy user data (replace this with a proper database)
+users = {
+  'user1' => { 'name' => 'John Doe', 'email' => 'john@example.com' },
+  'user2' => { 'name' => 'Jane Doe', 'email' => 'jane@example.com' }
+}
 
 # Serve the login page as the home page
 get '/' do
   erb :login
-end
-
-get '/register' do
-  erb :register
-end
-
-# Handle user registration
-post '/register' do
-  username = params[:username]
-  password = params[:password]
-
-  # Hash the password before saving to the database
-  hashed_password = BCrypt::Password.create(password)
-
-  user = User.create(username: username, password: hashed_password)
-
-  redirect '/'
 end
 
 get '/home' do
@@ -47,27 +26,6 @@ get '/calendar' do
   redirect '/' unless session[:user]
 
   erb :calendar
-end
-
-# Login form submission
-post '/' do
-  username = params[:username]
-  password = params[:password]
-
-  user = User.find_by(username: username)
-
-  if user && BCrypt::Password.new(user.password) == password
-    session[:user] = user.id
-    redirect '/calendar'
-  else
-    redirect '/'
-  end
-end
-
-# Logout route
-get '/logout' do
-  session.clear
-  redirect '/'
 end
 
 get '/student-parents-data' do
@@ -123,6 +81,25 @@ post '/add_student' do
   { success: true }.to_json
 end
 
+# Login form submission
+post '/' do
+  username = params[:username]
+  password = params[:password]
+
+  # Dummy authentication (replace this with proper authentication logic)
+  if users.key?(username) && password == 'password'
+    session[:user] = users[username]
+    redirect '/home'
+  else
+    redirect '/'
+  end
+end
+
+# Logout route
+get '/logout' do
+  session[:user] = nil
+  redirect '/'
+end
 
 # Run the Sinatra application
 run Sinatra::Application
