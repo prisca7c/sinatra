@@ -81,25 +81,7 @@ post '/add_student' do
   { success: true }.to_json
 end
 
-# Login form submission
-post '/' do
-  username = params[:username]
-  password = params[:password]
 
-  # Dummy authentication (replace this with proper authentication logic)
-  if users.key?(username) && password == 'password'
-    session[:user] = users[username]
-    redirect '/home'
-  else
-    redirect '/'
-  end
-end
-
-# Logout route
-get '/logout' do
-  session[:user] = nil
-  redirect '/'
-end
 
 # Run the Sinatra application
 run Sinatra::Application
