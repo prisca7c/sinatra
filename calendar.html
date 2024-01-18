@@ -104,7 +104,7 @@
 
     function addLesson() {
       var date = $('#lessonDate').val();
-      var lessonType = $('#lessonType').val(); // Change to lessonType
+      var lessonType = $('#lessonType').val(); 
       var studentName = $('#studentName').val();
     
       // Check if the lesson is already in the calendar
@@ -118,18 +118,14 @@
       if (existingEvent.length === 0) {
         // Create a custom event for the lesson
         var lessonEvent = {
-          //id: moment().format('X'), // Use a unique ID to prevent duplication
-          var lessonEvent = {
-            title: studentName,
-            start: date + 'T12:00:00',
-            allDay: true
-          };
+          title: studentName,
+          start: date + 'T12:00:00',
+          allDay: true
+        };
     
         // Add the lesson event to the calendar
           $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
     
-          // Change the text of the "Add Lesson" button to "Save and Close Input Tab"
-          $('#addEventButton').text('Save and Close Input Tab');
         } else {
           // Handle case where the lesson is already in the calendar
           console.log('Lesson already exists in the calendar.');
