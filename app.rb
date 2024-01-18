@@ -21,7 +21,6 @@ get '/invoices' do
   erb :invoices
 end
 
-
 # Add a route to generate and serve the iCalendar data
 get '/calendar.ics' do
   content_type 'text/calendar'
