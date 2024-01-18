@@ -65,10 +65,12 @@
           openAddLessonPopup(date.format());
         },
         eventRender: function(event, element) {
+          var studentInfo = event.studentInfo || event.title; // Use studentInfo if available, else use the title
           if (element.find('.student-info').length === 0) {
-            element.find('.fc-content').append('<br/><span class="student-info">' + event.title + '</span>');
+            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
           }
         },
+
         eventClick: function(calEvent, jsEvent, view) {
           showStudentInformation(calEvent);
         },
@@ -84,7 +86,12 @@
               openAddLessonPopup(moment().format('YYYY-MM-DD'));
             }
           }
-        }
+        },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'addEventButton'
+        },
       });
     });
 
@@ -117,6 +124,7 @@
           title: lessonType, // Change to lessonType
           start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
           allDay: true // Set to true for an all-day event
+          lessonInfo: studentName
         };
     
         // Add the lesson event to the calendar
@@ -155,10 +163,14 @@
       updateAddLessonButton();
     });
 
-    function showStudentInformation(calEvent) {
-      // Code for showing student information in the rectangle
-      // You can implement this part according to your requirements
-      // ...
+    function showEventInformation(calEvent) {
+      var nameArray = calEvent.title.split(' ');
+
+      $('#lessonDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
+      $('#lessonType').text(nameArray[0]);
+      $('#studentName').text(nameArray[1]);
+
+      $('#addLessonPopup').show();
     }
   </script>
 </body>
