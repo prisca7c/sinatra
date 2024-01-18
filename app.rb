@@ -3,7 +3,7 @@ require 'icalendar'
 require 'date'
 require 'sinatra/activerecord'
 require 'bcrypt'
- 
+  
 # Enable sessions for user authentication
 enable :sessions
 
