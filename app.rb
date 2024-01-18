@@ -32,7 +32,7 @@ post '/register' do
   # Hash the password before saving to the database
   hashed_password = BCrypt::Password.create(password)
 
-  User.create(username: username, password: hashed_password)
+  user = User.create(username: username, password: hashed_password)
 
   redirect '/'
 end
