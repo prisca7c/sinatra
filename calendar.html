@@ -7,6 +7,9 @@
   <title>Bonzi Music School</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
+  <!-- Add this inside the head tag -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <style>
     #addLessonPopup,
     #lessonInfoPopup {
@@ -85,6 +88,28 @@
     <!-- <button type="button" onclick="changeLessonDate()">Change Date</button> -->
   </div>
 
+  <!-- Add this inside the body tag -->
+  <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog" aria-labelledby="datePickerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="datePickerModalLabel">Select Date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="datepicker"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="saveDateButton">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script>
     $(document).ready(function() {
       // Default date format
@@ -122,6 +147,11 @@
             }
           }
         },
+      });
+
+      $('#datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
       });
     });
 
@@ -185,22 +215,41 @@
       var infoLessonDate = $('#infoLessonDate').val();
       var infoLessonType = $('#infoLessonType').text();
       var infoStudentName = $('#infoStudentName').text();
-    
-      // Find the event in the calendar
-      var calendar = $('#calendar').fullCalendar('getCalendar');
-      var event = calendar.getEventById(infoStudentName);
-    
-      // Check if the event exists
-      if (event) {
-        // Update the start date of the event
-        event.setStart(infoLessonDate);
-    
-        // Close the lesson info popup
-        closeLessonInfoPopup();
-      } else {
-        // Handle the case where the event is not found
-        alert('Event not found!');
-      }
+
+      // Set the current date as the default date in the date picker
+      $('#datepicker').datepicker('setDate', infoLessonDate);
+  
+      // Show the date picker
+      $('#datePickerModal').modal('show');
+  
+      // Handle date selection
+      $('#datepicker').on('changeDate', function (e) {
+        var newDate = moment(e.date).format(defaultDateFormat);
+        // Update the date in the infoLessonDate input
+        $('#infoLessonDate').val(newDate);
+      });
+  
+      // Save the updated date on button click
+      $('#saveDateButton').on('click', function () {
+        // Find the event in the calendar
+        var calendar = $('#calendar').fullCalendar('getCalendar');
+        var event = calendar.getEventById(infoStudentName);
+      
+        // Check if the event exists
+        if (event) {
+          // Update the start date of the event
+          event.setStart(infoLessonDate);
+      
+          // Close the lesson info popup
+          closeLessonInfoPopup();
+        } else {
+          // Handle the case where the event is not found
+          alert('Event not found!');
+        }
+  
+        // Close the modal
+        $('#datePickerModal').modal('hide');
+      });
     }
 
   </script>
