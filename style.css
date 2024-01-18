@@ -24,21 +24,26 @@ body {
     background: rgba(39, 39, 39, 0.4);
 }
 
-.nav-logo p {
+.nav-header p {
     color: white;
     font-size: 25px;
     font-weight: 600;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
 }
 
 .form-box {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 512px;
-    height: 420px;
+    height: auto;
     overflow: hidden;
     z-index: 2;
+}
 }
 
 .login-container {
