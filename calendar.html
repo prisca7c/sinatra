@@ -24,6 +24,13 @@
     #addLessonPopup button {
       margin-top: 10px;
     }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
@@ -43,6 +50,7 @@
   <div id="calendar"></div>
 
   <div id="addLessonPopup">
+    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
     <form id="addLessonForm">
       <label for="lessonDate">Lesson Date:</label>
       <input type="text" id="lessonDate" readonly />
@@ -63,15 +71,21 @@
         defaultView: 'month',
         events: '/calendar.ics',
         dayClick: function(date, jsEvent, view) {
+          // openAddLessonForm(date.format());
         },
         eventRender: function(event, element) {
-          var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
-          if (element.find('.student-info').length === 0) {
-            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
+          if (event.title !== undefined) {
+            var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
+            if (element.find('.student-info').length === 0) {
+              element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
+            }
           }
         },
         eventClick: function(calEvent, jsEvent, view) {
-          showEventInformation(calEvent);
+          if (calEvent.title !== undefined) {
+            showEventInformation(calEvent);
+            return false; // Prevent default behavior
+          }
         },
         header: {
           left: 'prev,next today',
@@ -95,6 +109,10 @@
       document.getElementById('studentName').value = '';
 
       $('#addLessonPopup').show();
+    }
+
+    function closeAddLessonPopup() {
+      $('#addLessonPopup').hide();
     }
 
     function addLesson() {
@@ -123,7 +141,7 @@
       }
 
       // Close the form after adding the lesson
-      $('#addLessonPopup').hide();
+      closeAddLessonPopup();
     }
 
     function showEventInformation(calEvent) {
