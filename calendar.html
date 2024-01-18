@@ -112,13 +112,13 @@
         header: {
           left: 'prev,next today',
           center: 'title',
-          right: 'addEventButton'
+          right: 'customAddEventButton'
         },
         customButtons: {
-          addEventButton: {
+          customAddEventButton: {
             text: 'Add Lesson',
             click: function() {
-              openAddLessonForm(moment().format(defaultDateFormat));
+              openAddLessonForm(moment().format('YYYY-MM-DD'));
             }
           }
         },
