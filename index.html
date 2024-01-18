@@ -24,19 +24,17 @@
                     <header>Login</header>
                 </div>
                 <!-- Allow the user to input anything and redirect to /sinatra/home -->
-                <form action="/sinatra/home" method="post">
+                <form id="loginForm" action="/sinatra/home" method="post">
                     <div class="input-box">
-                        <label for="username">Username or Email</label>
                         <input type="text" id="username" class="input-field" name="username" placeholder="Username or Email">
                         <i class="bx bx-user"></i>
                     </div>
                     <div class="input-box">
-                        <label for="password">Password</label>
                         <input type="password" id="password" class="input-field" name="password" placeholder="Password">
                         <i class="bx bx-lock-alt"></i>
                     </div>
                     <div class="input-box">
-                        <input type="submit" class="submit" value="Login">
+                        <input type="submit" class="submit" value="Login" onclick="submitLoginForm()">
                     </div>
                 </form>
                 <!-- "Don't have an account? Sign up" link -->
@@ -89,12 +87,12 @@
     </div>   
 
     <script>
-        document.getElementById("homeLink").addEventListener("click", function() {
-            login();
-            // Use window.location.replace for cleaner redirection
-            window.location.replace("/sinatra/home");
-        });
+        function submitLoginForm() {
+            document.getElementById("loginForm").submit();
+            window.location.href = "/sinatra/home";
+        }
     </script>
+
 
     <script>
         function myMenuFunction() {
