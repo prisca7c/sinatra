@@ -17,6 +17,7 @@
         <div class="nav-menu-btn">
             <i class="bx bx-menu" onclick="myMenuFunction()"></i>
         </div>
+        <a href="#" id="homeLink">Home</a>
     </nav>
 
 <!----------------------------- Form box ----------------------------------->    
@@ -94,6 +95,13 @@
 </div>   
 
 
+<script>
+    document.getElementById("homeLink").addEventListener("click", function() {
+        login();
+        window.location.href = "/sinatra/home";
+    });
+</script>
+    
 <script>
    
    function myMenuFunction() {
