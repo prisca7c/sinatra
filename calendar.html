@@ -120,13 +120,11 @@
         };
     
         // Add the lesson event to the calendar
-          $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-    
-        } else {
-          // Handle case where the lesson is already in the calendar
-          console.log('Lesson already exists in the calendar.');
-        }
+        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+
         closeAddLessonPopup();
+    
+        } 
       }
 
     // Call the update function on document ready
