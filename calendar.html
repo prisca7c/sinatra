@@ -65,7 +65,7 @@
           openAddLessonPopup(date.format());
         },
         eventRender: function(event, element) {
-          var studentInfo = event.studentInfo || event.title; // Use studentInfo if available, else use the title
+          var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName); // Use studentInfo if available, else use the title
           if (element.find('.student-info').length === 0) {
             element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
           }
