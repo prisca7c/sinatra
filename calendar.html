@@ -53,7 +53,7 @@
       <label for="studentName">Student Name:</label>
       <input type="text" id="studentName" required />
 
-      <button type="button" id="addLessonButton" onclick="openAddLessonForm();">Add Lesson</button>
+      <button type="button" id="addLessonButton" onclick="addLesson();">Add Lesson</button>
     </form>
   </div>
 
@@ -122,17 +122,10 @@
         // Add the lesson event to the calendar
         $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
       }
+
+      // Close the form after adding the lesson
+      $('#addLessonPopup').hide();
     }
-
-    // Call the update function on document ready
-    $(document).ready(function() {
-      updateAddLessonButton();
-    });
-
-    // Call the update function whenever the rectangle visibility changes
-    $('#addLessonPopup').on('hidden.bs.modal', function() {
-      updateAddLessonButton();
-    });
 
     function showEventInformation(calEvent) {
       var nameArray = calEvent.title.split(' ');
