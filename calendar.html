@@ -52,7 +52,7 @@
       <label for="studentName">Student Name:</label>
       <input type="text" id="studentName" required />
 
-      <button type="button" onclick="addLesson();">Add Lesson</button>
+      <button type="button" onclick="openAddLessonForm();">Add Lesson</button>
     </form>
   </div>
 
@@ -89,7 +89,8 @@
       });
     });
 
-    function openAddLessonPopup(date) {
+    function openAddLessonForm(date) {
+      var currentDate = moment().format('YYYY-MM-DD');
       document.getElementById('lessonDate').value = date;
       document.getElementById('lessonType').value = '';
       document.getElementById('studentName').value = '';
@@ -107,47 +108,34 @@
       var studentName = $('#studentName').val();
     
       // Check if the lesson is already in the calendar
-      var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
-        return event.title === $('#studentFirstName').val() + ' ' + $('#studentLastName').val() && moment(event.start).format('YYYY-MM-DD') === date;
-        //return event.title === lessonType && moment(event.start).format('YYYY-MM-DD') === date;
+      var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
+        return (
+          event.title === studentName &&
+          moment(event.start).format('YYYY-MM-DD') === date
+        );
       });
     
       if (existingEvent.length === 0) {
         // Create a custom event for the lesson
         var lessonEvent = {
           //id: moment().format('X'), // Use a unique ID to prevent duplication
-          title: firstName + ' ' + lastName, // Change to lessonType
-          firstName: firstName,
-          lastName: lastName,
-          start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
-          allDay: true, // Set to true for an all-day event
-          //studentInfo: studentName // Add studentInfo property
-        };
+          var lessonEvent = {
+            title: studentName,
+            start: date + 'T12:00:00',
+            allDay: true
+          };
     
         // Add the lesson event to the calendar
-        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+          $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
     
-        // Change the text of the "Add Lesson" button to "Save and Close Input Tab"
-        $('#addEventButton').text('Save and Close Input Tab');
-      } else {
-        // Handle case where the lesson is already in the calendar
-        console.log('Lesson already exists in the calendar.');
-      }
-    
-      // Close the popup if it's not the "Save and Close Input Tab" button
-      if ($('#addEventButton').text() !== 'Save and Close Input Tab') {
+          // Change the text of the "Add Lesson" button to "Save and Close Input Tab"
+          $('#addEventButton').text('Save and Close Input Tab');
+        } else {
+          // Handle case where the lesson is already in the calendar
+          console.log('Lesson already exists in the calendar.');
+        }
         closeAddLessonPopup();
       }
-    }
-
-    // Update button text based on the visibility of the rectangle
-    function updateAddLessonButton() {
-      if ($('#addLessonPopup').is(':visible')) {
-        $('#addEventButton').text('Save and Close Input Tab');
-      } else {
-        $('#addEventButton').text('Add Lesson');
-      }
-    }
 
     // Call the update function on document ready
     $(document).ready(function() {
