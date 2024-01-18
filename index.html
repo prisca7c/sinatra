@@ -1,28 +1,110 @@
-<!-- index.html (Home Page) --> 
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sinatra Home</title>
-  <!-- Add any additional styles or scripts if needed -->
+  <title>Bonzi Music School</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: auto;
+      margin-top: 100px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+    }
+
+    .login-form {
+      margin-top: 20px;
+    }
+
+    .login-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .login-form label {
+      font-weight: bold;
+    }
+
+    .login-form input {
+      border-radius: 4px;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .login-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Bonzi Music School</h1>
-    <nav>
-      <a href="/sinatra/home">Home</a>
-      <a href="/sinatra/calendar">Calendar</a>
-      <a href="/sinatra/student-parents-data">Student & Parents' Data</a>
-      <a href="/sinatra/invoices">Invoices</a>
-    </nav>
-  </header>
 
-  <h1>Welcome to Sinatra Home</h1>
-  <p>This is the landing page for your Sinatra application.</p>
+<div class="login-container">
+  <h2>Login</h2>
+  <form class="login-form">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+  </form>
+</div>
 
-  <!-- Add additional content if needed -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-dMzEXdjGQ6PaNiYCEtL2rZjgXc5p52xCvDEz6EMIH9mNfB6EGGoTTo1B1wKFAsg" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
 
-  <!-- Add any additional scripts if needed -->
+<script>
+  // Dummy user data (replace this with proper authentication logic on the server)
+  const users = {
+    'user1': { 'password': 'password1', 'name': 'John Doe' },
+    'user2': { 'password': 'password2', 'name': 'Jane Doe' }
+  };
+
+  // Function to handle login logic
+  function login() {
+    // Get username and password from the form
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Check if the username exists in the dummy user data
+    if (users.hasOwnProperty(username)) {
+      // Check if the provided password matches the stored password
+      if (password === users[username]['password']) {
+        // Authentication successful
+        alert('Login successful! Welcome, ' + users[username]['name']);
+      } else {
+        // Incorrect password
+        alert('Incorrect password. Please try again.');
+      }
+    } else {
+      // User not found
+      alert('User not found. Please check your username.');
+    }
+  }
+</script>
+
 </body>
 </html>
