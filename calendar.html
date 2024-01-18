@@ -62,7 +62,7 @@
         defaultView: 'month',
         events: '/calendar.ics', // Change this URL to your event source
         dayClick: function(date, jsEvent, view) {
-          openAddLessonPopup(date.format());
+          //openAddLessonPopup(date.format());
         },
         eventRender: function(event, element) {
           var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName); // Use studentInfo if available, else use the title
