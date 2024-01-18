@@ -16,6 +16,10 @@ get '/' do
   erb :login
 end
 
+get '/home' do
+  erb :home
+end
+
 # Serve the calendar page
 get '/calendar' do
   # Check if the user is authenticated
