@@ -43,9 +43,9 @@
   <header>
     <h1>Bonzi Music School</h1>
     <nav>
-      <a href="/sinatra">Home</a>
+      <a href="/sinatra/home">Home</a>
       <a href="/sinatra/calendar">Calendar</a>
-      <a href="/sinatra/student-parents-ata">Student & Parents' Data</a>
+      <a href="/sinatra/student-parents-data">Student & Parents' Data</a>
       <a href="/sinatra/invoices">Invoices</a>
     </nav>
   </header>
@@ -82,7 +82,7 @@
     <!-- Change val to text for setting text content -->
     <span id="infoStudentName"></span>
 
-    <button type="button" onclick="changeLessonDate()">Change Date</button>
+    <!-- <button type="button" onclick="changeLessonDate()">Change Date</button> -->
   </div>
 
   <script>
@@ -112,10 +112,10 @@
         header: {
           left: 'prev,next today',
           center: 'title',
-          right: 'customAddEventButton'
+          right: 'addEventButton'
         },
         customButtons: {
-          customAddEventButton: {
+          addEventButton: {
             text: 'Add Lesson',
             click: function() {
               openAddLessonForm(moment().format('YYYY-MM-DD'));
