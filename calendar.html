@@ -108,17 +108,20 @@
     
       // Check if the lesson is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
-        return event.title === lessonType && moment(event.start).format('YYYY-MM-DD') === date;
+        return event.title === $('#studentFirstName').val() + ' ' + $('#studentLastName').val() && moment(event.start).format('YYYY-MM-DD') === date;
+        //return event.title === lessonType && moment(event.start).format('YYYY-MM-DD') === date;
       });
     
       if (existingEvent.length === 0) {
         // Create a custom event for the lesson
         var lessonEvent = {
-          id: moment().format('X'), // Use a unique ID to prevent duplication
-          title: lessonType, // Change to lessonType
+          //id: moment().format('X'), // Use a unique ID to prevent duplication
+          title: firstName + ' ' + lastName, // Change to lessonType
+          firstName: firstName,
+          lastName: lastName,
           start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
           allDay: true, // Set to true for an all-day event
-          studentInfo: studentName // Add studentInfo property
+          //studentInfo: studentName // Add studentInfo property
         };
     
         // Add the lesson event to the calendar
@@ -160,8 +163,9 @@
       var nameArray = calEvent.title.split(' ');
 
       $('#lessonDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#lessonType').text(nameArray[0]);
-      $('#studentName').text(nameArray[1]);
+      $('#lessonType').val(nameArray[0]);
+      $('#studentName').val(nameArray[1]);
+
 
       $('#addLessonPopup').show();
     }
