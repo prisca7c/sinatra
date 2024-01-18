@@ -7,13 +7,34 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <title>Bonzi Music School | Login & Registration</title>
+    <style>
+        /* Add the new styles for the login link */
+        .login-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db; /* Change the background color to match your login button */
+            color: #fff; /* Text color */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Add a smooth transition effect */
+        }
+    
+        .login-link:hover {
+            background-color: #2980b9; /* Change the background color on hover */
+        }
+    </style>
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Bonzi Music School header -->
-        <div class="nav-header">
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
             <p>Bonzi Music School .</p>
         </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+        <a href="#" id="homeLink">Login</a>
+    </nav>
 
         <!-- Form box -->
         <div class="form-box">
@@ -34,7 +55,7 @@
                         <i class="bx bx-lock-alt"></i>
                     </div>
                     <div class="input-box">
-                        <input type="submit" class="submit" value="Login" onclick="submitLoginForm()">
+                        <a href="#" id="homeLink" class="login-link">Login</a>
                     </div>
                 </form>
                 <!-- "Don't have an account? Sign up" link -->
