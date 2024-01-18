@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <style>
-    #addLessonPopup {
+    #addLessonPopup,
+    #lessonInfoPopup {
       display: none;
       position: fixed;
       top: 50%;
@@ -21,7 +22,8 @@
       z-index: 1000;
     }
 
-    #addLessonPopup button {
+    #addLessonPopup button,
+    #lessonInfoPopup button {
       margin-top: 10px;
     }
 
@@ -65,13 +67,33 @@
     </form>
   </div>
 
+  <div id="lessonInfoPopup">
+    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
+    <h2>Lesson Information</h2>
+    <label for="infoLessonDate">Date:</label>
+    <!-- Remove readonly attribute to allow changes -->
+    <input type="text" id="infoLessonDate" />
+
+    <label for="infoLessonType">Lesson Type:</label>
+    <!-- Change val to text for setting text content -->
+    <span id="infoLessonType"></span>
+
+    <label for="infoStudentName">Student Name:</label>
+    <!-- Change val to text for setting text content -->
+    <span id="infoStudentName"></span>
+
+    <button type="button" onclick="changeLessonDate()">Change Date</button>
+  </div>
+
   <script>
     $(document).ready(function() {
+      // Default date format
+      var defaultDateFormat = 'YYYY-MM-DD';
+
       $('#calendar').fullCalendar({
         defaultView: 'month',
         events: '/calendar.ics',
         dayClick: function(date, jsEvent, view) {
-          // openAddLessonForm(date.format());
         },
         eventRender: function(event, element) {
           if (event.title !== undefined) {
@@ -83,7 +105,7 @@
         },
         eventClick: function(calEvent, jsEvent, view) {
           if (calEvent.title !== undefined) {
-            showEventInformation(calEvent);
+            showLessonInformation(calEvent);
             return false; // Prevent default behavior
           }
         },
@@ -96,7 +118,7 @@
           addEventButton: {
             text: 'Add Lesson',
             click: function() {
-              openAddLessonForm(moment().format('YYYY-MM-DD'));
+              openAddLessonForm(moment().format(defaultDateFormat));
             }
           }
         },
@@ -104,7 +126,8 @@
     });
 
     function openAddLessonForm(date) {
-      document.getElementById('lessonDate').value = date;
+      // Use the default date format to format the date
+      document.getElementById('lessonDate').value = moment(date).format(defaultDateFormat);
       document.getElementById('lessonType').value = '';
       document.getElementById('studentName').value = '';
 
@@ -124,7 +147,7 @@
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
           event.title === studentName &&
-          moment(event.start).format('YYYY-MM-DD') === date
+          moment(event.start).format(defaultDateFormat) === date
         );
       });
 
@@ -144,15 +167,42 @@
       closeAddLessonPopup();
     }
 
-    function showEventInformation(calEvent) {
+    function showLessonInformation(calEvent) {
       var nameArray = calEvent.title.split(' ');
+      $('#infoLessonDate').val(moment(calEvent.start).format(defaultDateFormat));
+      $('#infoLessonType').text(nameArray[0]);
+      $('#infoStudentName').text(nameArray[1]);
 
-      $('#lessonDate').val(moment(calEvent.start).format('YYYY-MM-DD'));
-      $('#lessonType').val(nameArray[0]);
-      $('#studentName').val(nameArray[1]);
-
-      $('#addLessonPopup').show();
+      $('#lessonInfoPopup').show();
     }
+
+    function closeLessonInfoPopup() {
+      $('#lessonInfoPopup').hide();
+    }
+
+    function changeLessonDate() {
+      // Get the information from the lesson info popup
+      var infoLessonDate = $('#infoLessonDate').val();
+      var infoLessonType = $('#infoLessonType').text();
+      var infoStudentName = $('#infoStudentName').text();
+    
+      // Find the event in the calendar
+      var calendar = $('#calendar').fullCalendar('getCalendar');
+      var event = calendar.getEventById(infoStudentName);
+    
+      // Check if the event exists
+      if (event) {
+        // Update the start date of the event
+        event.setStart(infoLessonDate);
+    
+        // Close the lesson info popup
+        closeLessonInfoPopup();
+      } else {
+        // Handle the case where the event is not found
+        alert('Event not found!');
+      }
+    }
+
   </script>
 </body>
 </html>
