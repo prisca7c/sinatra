@@ -17,8 +17,8 @@ get '/student-parents-data' do
   erb :studentParentsData
 end
 
-get '/invoice' do
-  erb :invoice
+get '/invoices' do
+  erb :invoices
 end
 
 
