@@ -26,7 +26,7 @@
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyAo1LWOddbf5g" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
@@ -53,57 +53,56 @@
       <label for="studentName">Student Name:</label>
       <input type="text" id="studentName" required />
 
-      <button type="button" onclick="openAddLessonForm();">Add Lesson</button>
+      <button type="button" id="addLessonButton" onclick="openAddLessonForm();">Add Lesson</button>
     </form>
   </div>
 
   <script>
     $(document).ready(function() {
-    $('#calendar').fullCalendar({
-      defaultView: 'month',
-      events: '/calendar.ics',
-      dayClick: function(date, jsEvent, view) {
-        // openAddLessonForm(date.format());
-      },
-      eventRender: function(event, element) {
-        var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
-        if (element.find('.student-info').length === 0) {
-          element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
-        }
-      },
-      eventClick: function(calEvent, jsEvent, view) {
-        showEventInformation(calEvent);
-      },
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'addEventButton'
-      },
-      customButtons: {
-        addEventButton: {
-          text: 'Add Lesson',
-          click: function() {
-            openAddLessonForm(moment().format('YYYY-MM-DD'));
+      $('#calendar').fullCalendar({
+        defaultView: 'month',
+        events: '/calendar.ics',
+        dayClick: function(date, jsEvent, view) {
+          // openAddLessonForm(date.format());
+        },
+        eventRender: function(event, element) {
+          var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
+          if (element.find('.student-info').length === 0) {
+            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
           }
-        }
-      },
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+          showEventInformation(calEvent);
+        },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'addEventButton'
+        },
+        customButtons: {
+          addEventButton: {
+            text: 'Add Lesson',
+            click: function() {
+              openAddLessonForm(moment().format('YYYY-MM-DD'));
+            }
+          }
+        },
+      });
     });
-  });
-  
-  function openAddLessonForm(date) {
-    document.getElementById('lessonDate').value = date;
-    document.getElementById('lessonType').value = '';
-    document.getElementById('studentName').value = '';
-  
-    $('#addLessonPopup').show();
-  }
 
+    function openAddLessonForm(date) {
+      document.getElementById('lessonDate').value = date;
+      document.getElementById('lessonType').value = '';
+      document.getElementById('studentName').value = '';
+
+      $('#addLessonPopup').show();
+    }
 
     function addLesson() {
       var date = $('#lessonDate').val();
       var lessonType = $('#lessonType').val(); 
       var studentName = $('#studentName').val();
-    
+
       // Check if the lesson is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
@@ -111,7 +110,7 @@
           moment(event.start).format('YYYY-MM-DD') === date
         );
       });
-    
+
       if (existingEvent.length === 0) {
         // Create a custom event for the lesson
         var lessonEvent = {
@@ -119,14 +118,11 @@
           start: date + 'T12:00:00',
           allDay: true
         };
-    
+
         // Add the lesson event to the calendar
         $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-
-        closeAddLessonPopup();
-  
-        } 
       }
+    }
 
     // Call the update function on document ready
     $(document).ready(function() {
@@ -134,17 +130,16 @@
     });
 
     // Call the update function whenever the rectangle visibility changes
-    $('#addLessonPopup').on('change', function() {
+    $('#addLessonPopup').on('hidden.bs.modal', function() {
       updateAddLessonButton();
     });
 
     function showEventInformation(calEvent) {
       var nameArray = calEvent.title.split(' ');
 
-      $('#lessonDate').text(moment(calEvent.start).format('YYYY-MM-DD'));
+      $('#lessonDate').val(moment(calEvent.start).format('YYYY-MM-DD'));
       $('#lessonType').val(nameArray[0]);
       $('#studentName').val(nameArray[1]);
-
 
       $('#addLessonPopup').show();
     }
