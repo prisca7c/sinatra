@@ -1,6 +1,7 @@
 <!-- studentParentsData.html (Student & Parents' Data Page) -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +29,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 </head>
+
 <body>
   <header>
     <h1>Bonzi Music School - Student & Parents' Data</h1>
@@ -70,8 +72,27 @@
     </form>
   </div>
 
+  <!-- Table to display student data -->
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Tuition</th>
+        <th>Parent First Name</th>
+        <th>Parent Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody">
+      <!-- Student data will be dynamically added here -->
+    </tbody>
+  </table>
+
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // Your JavaScript code for handling student data goes here
       // ...
     });
@@ -93,61 +114,40 @@
     function closeAddStudentPopup() {
       $('#addStudentPopup').hide();
     }
-    
+
     function addStudent() {
+      // Your existing code to add student to the calendar...
+      // ...
+
+      // Update the table with new student data
       var date = $('#selectDate').val();
       var studentFirstName = $('#studentFirstName').val();
       var studentLastName = $('#studentLastName').val();
       var tuition = $('#tuition').val();
-    
       var parentFirstName = $('#parentFirstName').val();
       var parentLastName = $('#parentLastName').val();
       var email = $('#email').val();
       var phoneNumber = $('#phoneNumber').val();
-    
-      // Check if the student is already in the calendar
-      var existingEvent = $('#calendar').fullCalendar('clientEvents', function(event) {
-        return event.title === studentFirstName + ' ' + studentLastName && moment(event.start).format('YYYY-MM-DD') === date;
-      });
-    
-      if (existingEvent.length === 0) {
-        // Create a custom event for the student
-        var studentEvent = {
-          title: studentFirstName + ' ' + studentLastName,
-          start: date + 'T12:00:00', // Use noon as the start time (adjust as needed)
-          allDay: true // Set to true for an all-day event
-        };
-    
-        // Add the student event to the calendar
-        $('#calendar').fullCalendar('renderEvent', studentEvent, true);
-    
-        // Update student information in the display
-        $('#studentDate').text(date);
-        $('#studentFirstName').text(studentFirstName);
-        $('#studentLastName').text(studentLastName);
-        $('#tuition').text(tuition);
-        $('#parentFirstName').text(parentFirstName);
-        $('#parentLastName').text(parentLastName);
-        $('#email').text(email);
-        $('#phoneNumber').text(phoneNumber);
-    
-        // Show student information
-        $('#studentInfo').show();
-    
-        // Show the rectangle (assuming you want to show it when adding a student)
-        showRectangle();
-    
-        // Send an AJAX request to the server to add the student
-        // ... (your AJAX logic here)
-      } else {
-        // Handle case where the student is already in the calendar
-        console.log('Student already exists in the calendar.');
-      }
-    
+
+      // Create a new row for the table
+      var newRow = '<tr>' +
+        '<td>' + date + '</td>' +
+        '<td>' + studentFirstName + '</td>' +
+        '<td>' + studentLastName + '</td>' +
+        '<td>' + tuition + '</td>' +
+        '<td>' + parentFirstName + '</td>' +
+        '<td>' + parentLastName + '</td>' +
+        '<td>' + email + '</td>' +
+        '<td>' + phoneNumber + '</td>' +
+        '</tr>';
+
+      // Append the new row to the table
+      $('#studentTableBody').append(newRow);
+
       // Close the popup
       closeAddStudentPopup();
     }
-    
   </script>
 </body>
+
 </html>
