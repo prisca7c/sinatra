@@ -11,29 +11,29 @@ users = {
   'user2' => { 'name' => 'Jane Doe', 'email' => 'jane@example.com' }
 }
 
-# Serve the home page
+# Serve the login page as the home page
 get '/' do
-  erb :home
+  erb :login
 end
 
 # Serve the calendar page
 get '/calendar' do
   # Check if the user is authenticated
-  redirect '/login' unless session[:user]
+  redirect '/' unless session[:user]
 
   erb :calendar
 end
 
 get '/student-parents-data' do
   # Check if the user is authenticated
-  redirect '/login' unless session[:user]
+  redirect '/' unless session[:user]
 
   erb :studentParentsData
 end
 
 get '/invoices' do
   # Check if the user is authenticated
-  redirect '/login' unless session[:user]
+  redirect '/' unless session[:user]
 
   erb :invoices
 end
@@ -63,7 +63,7 @@ end
 # Add a route to handle adding a student to a specific day
 post '/add_student' do
   # Check if the user is authenticated
-  redirect '/login' unless session[:user]
+  redirect '/' unless session[:user]
 
   date = params[:date]
   student_name = params[:student_name]
@@ -77,13 +77,8 @@ post '/add_student' do
   { success: true }.to_json
 end
 
-# Login route
-get '/login' do
-  erb :login
-end
-
 # Login form submission
-post '/login' do
+post '/' do
   username = params[:username]
   password = params[:password]
 
@@ -92,7 +87,7 @@ post '/login' do
     session[:user] = users[username]
     redirect '/calendar'
   else
-    redirect '/login'
+    redirect '/'
   end
 end
 
