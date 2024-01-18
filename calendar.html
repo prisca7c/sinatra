@@ -58,49 +58,45 @@
 
   <script>
     $(document).ready(function() {
-      $('#calendar').fullCalendar({
-        defaultView: 'month',
-        events: '/calendar.ics', // Change this URL to your event source
-        dayClick: function(date, jsEvent, view) {
-          //openAddLessonPopup(date.format());
-        },
-        eventRender: function(event, element) {
-          var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName); // Use studentInfo if available, else use the title
-          if (element.find('.student-info').length === 0) {
-            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
+    $('#calendar').fullCalendar({
+      defaultView: 'month',
+      events: '/calendar.ics',
+      dayClick: function(date, jsEvent, view) {
+        // openAddLessonForm(date.format());
+      },
+      eventRender: function(event, element) {
+        var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
+        if (element.find('.student-info').length === 0) {
+          element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
+        }
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        showEventInformation(calEvent);
+      },
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'addEventButton'
+      },
+      customButtons: {
+        addEventButton: {
+          text: 'Add Lesson',
+          click: function() {
+            openAddLessonForm(moment().format('YYYY-MM-DD'));
           }
-        },
-        eventClick: function(calEvent, jsEvent, view) {
-          showEventInformation(calEvent);
-        },
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'addEventButton'
-        },
-        customButtons: {
-          addEventButton: {
-            text: 'Add Lesson',
-            click: function() {
-              openAddLessonPopup(moment().format('YYYY-MM-DD'));
-            }
-          }
-        },
-      });
+        }
+      },
     });
-
-    function openAddLessonForm(date) {
-      var currentDate = moment().format('YYYY-MM-DD');
-      document.getElementById('lessonDate').value = date;
-      document.getElementById('lessonType').value = '';
-      document.getElementById('studentName').value = '';
+  });
   
-      $('#addLessonPopup').show();
-    }
+  function openAddLessonForm(date) {
+    document.getElementById('lessonDate').value = date;
+    document.getElementById('lessonType').value = '';
+    document.getElementById('studentName').value = '';
+  
+    $('#addLessonPopup').show();
+  }
 
-    function closeAddLessonPopup() {
-      $('#addLessonPopup').hide();
-    }
 
     function addLesson() {
       var date = $('#lessonDate').val();
