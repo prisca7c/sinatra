@@ -103,10 +103,8 @@
 
   <script>
     $(document).ready(function() {
-      // Remove unnecessary function call
       $('#calendar').fullCalendar({
         defaultView: 'month',
-        // events: '/calendar.ics', // Commented out for local storage handling
         dayClick: function(date, jsEvent, view) {
           openAddLessonForm(date.format());
         },
@@ -164,7 +162,7 @@
       if (existingEvent.length === 0) {
         // Create a custom event for the lesson
         var lessonEvent = {
-          title: studentName,
+          title: studentName + ' ' + lessonType, // Concatenate name and type
           start: date + 'T12:00:00',
           allDay: true
         };
@@ -181,9 +179,11 @@
     }
 
     function showLessonInformation(calEvent) {
-      $('#infoLessonDate').text(calEvent.title.split(' ')[0]);
-      $('#infoLessonType').text(calEvent.title.split(' ')[1]);
-      $('#infoStudentName').text(calEvent.title.split(' ')[2]);
+      // Split the title to extract date, type, and name
+      var titleParts = calEvent.title.split(' ');
+      $('#infoLessonDate').text(titleParts[0]);
+      $('#infoLessonType').text(titleParts[1]);
+      $('#infoStudentName').text(titleParts.slice(2).join(' '));
 
       $('#lessonInfoPopup').show();
     }
