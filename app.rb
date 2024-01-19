@@ -45,10 +45,12 @@ end
 post '/calendar' do
   request.body.rewind
   lesson_data = JSON.parse(request.body.read)
-  $db.execute("INSERT INTO lessons (title, start_date) VALUES (?, ?)", [lesson_data['lesson_type'], lesson_data['date']])
+  result = $db.execute("INSERT INTO lessons (title, start_date) VALUES (?, ?)", [lesson_data['title'], lesson_data['start_date']])
+  lesson_id = $db.last_insert_row_id
   content_type :json
-  { success: true }.to_json
+  { success: true, lesson_id: lesson_id }.to_json
 end
+
 
 get '/studentParentsData' do
   erb :studentParentsData
