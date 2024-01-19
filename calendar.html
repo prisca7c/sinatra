@@ -71,7 +71,7 @@
 
   <!-- Add Lesson Popup -->
   <div id="addLessonPopup">
-    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
+    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
     <form id="addLessonForm">
       <div class="input-field">
         <label for="lessonDate"><i class="bx bx-calendar"></i></label>
@@ -175,7 +175,7 @@
       }
     
       // Close the form after adding the lesson
-      closeAddLessonPopup();
+      closeLessonInfoPopup();
     }
     
     function showLessonInformation(calEvent) {
