@@ -118,12 +118,12 @@ get '/get_students' do
 end
 
 post '/delete_lesson' do
-  redirect '/' unless session[:user]
   lesson_id = params[:lesson_id].to_i
   $db.execute("DELETE FROM lessons WHERE id = ?", [lesson_id])
   content_type :json
   { success: true }.to_json
 end
+
 
 
 run Sinatra::Application
