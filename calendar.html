@@ -99,8 +99,8 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
-    <!-- Add a Delete Button -->
-    <button id="deleteButton" onclick="deleteLesson()">Delete</button>
+    <!-- Example button to delete a lesson -->
+    <button onclick="deleteLesson()">Delete Lesson</button>
   </div>
 
   <script>
@@ -164,6 +164,20 @@
         success: function(response) {
           if (response.success) {
             alert('Lesson added successfully');
+            
+            // Set the event.id to the lesson ID from the server response
+            var lessonId = response.lesson_id;
+            // Assuming you have the fullCalendar event object
+            var event = {
+              title: lessonType,
+              start: date + 'T12:00:00',
+              allDay: true,
+              id: lessonId  // Set the event ID here
+            };
+    
+            // Add the lesson event to the calendar
+            $('#calendar').fullCalendar('renderEvent', event, true);
+    
           } else {
             alert('Error adding lesson');
           }
@@ -211,6 +225,7 @@
 
 
     function deleteLesson() {
+      var lessonId = ;
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
@@ -224,13 +239,13 @@
         contentType: 'application/json',
         success: function(response) {
           if (response.success) {
-            alert('Lesson added successfully');
+            alert('Lesson deleted successfully');
           } else {
-            alert('Error adding lesson');
+            alert('Error deleting lesson');
           }
         }
       });
-    
+  
       closeLessonInfoPopup();
     }
   </script>
