@@ -215,11 +215,26 @@
         $('#calendar').fullCalendar('renderEvent', event, true);
       });
     }
+
+    const serverEndpoint = 'http://prisca7c.github.io/sinatra/calendar';
+
+    // Function to delete an event from the server
+    function deleteEventFromServer(eventId) {
+      return fetch(`${serverEndpoint}/${eventId}`, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Event deleted from server:', data);
+      })
+      .catch(error => console.error('Error deleting event:', error));
+    }
+    
     function deleteLesson() {
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
-    
+  
       // Find the event to delete
       var eventsToDelete = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
@@ -228,14 +243,14 @@
           event.studentName === studentName
         );
       });
-    
+  
       if (eventsToDelete.length > 0) {
         // Remove the event from the calendar
         $('#calendar').fullCalendar('removeEvents', eventsToDelete[0]._id);
-    
+  
         // Remove the event from the server
         deleteEventFromServer(eventsToDelete[0]._id);
-    
+  
         // Close the Lesson Information Popup
         closeLessonInfoPopup();
       }
@@ -252,20 +267,6 @@
     
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-    }
-
-    const serverEndpoint = 'http://prisca7c.github.io/sinatra/calendar';
-
-    // Function to delete an event from the server
-    function deleteEventFromServer(eventId) {
-      return fetch(`${serverEndpoint}/${eventId}`, {
-        method: 'DELETE',
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Event deleted from server:', data);
-      })
-      .catch(error => console.error('Error deleting event:', error));
     }
 
     function closeLessonInfoPopup() {
