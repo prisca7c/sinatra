@@ -134,5 +134,35 @@ delete '/calendar/:id' do |id|
 
   deleted_event.to_json
 end
+
+
+# Handle asynchronous form submission to update student data
+post '/update_students' do
+  student_name = params[:student_name]
+  parent_email = params[:parent_email]
+  parent_phone = params[:parent_phone]
+  tuition = params[:tuition]
+
+  # Add new student data to the in-memory store
+  students_data << {
+    student_name: student_name,
+    parent_email: parent_email,
+    parent_phone: parent_phone,
+    tuition: tuition
+  }
+
+  # Save the updated data to the file
+  File.write('studentParentsData.json', JSON.generate(students_data))
+
+  # Send a response back to the client
+  content_type :json
+  { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
+end
+
+# Endpoint to retrieve all student data
+get '/get_students' do
+  content_type :json
+  students_data.to_json
+end
 # Run the Sinatra application
 run Sinatra::Application
