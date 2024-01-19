@@ -153,27 +153,26 @@
       var lessonType = $('#lessonType').val();
       var studentName = $('#studentName').val();
     
-      var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
-        return (
-          event.start.format('YYYY-MM-DD') === date &&
-          event.lessonType === lessonType &&
-          event.studentName === studentName
-        );
+      $.ajax({
+        url: '/calendar',
+        method: 'POST',
+        data: JSON.stringify({
+          title: lessonType,
+          start_date: date
+        }),
+        contentType: 'application/json',
+        success: function(response) {
+          if (response.success) {
+            // The lesson was added successfully
+            // You can update the calendar here
+          } else {
+            // There was an error
+            // You can handle the error here
+          }
+        }
       });
     
-      if (existingEvent.length === 0) {
-        var lessonEvent = {
-          date: date,
-          lessonType: lessonType,
-          studentName: studentName,
-          start: date + 'T12:00:00',
-          allDay: true
-        };
-
-        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-        updateLocalStorage(lessonEvent);
-      }
-      closeAddLessonPopup(); 
+      closeAddLessonPopup();
     }
 
     
@@ -213,28 +212,31 @@
     }
 
 
-    // Add a new function to delete a lesson
     function deleteLesson() {
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
-  
-      var eventToRemove = $('#calendar').fullCalendar('clientEvents', function (event) {
-        return (
-          event.start.format('YYYY-MM-DD') === date &&
-          event.lessonType === lessonType &&
-          event.studentName === studentName
-        );
+    
+      $.ajax({
+        url: '/delete_lesson',
+        method: 'POST',
+        data: JSON.stringify({
+          lesson_id: lessonId
+        }),
+        contentType: 'application/json',
+        success: function(response) {
+          if (response.success) {
+            // The lesson was deleted successfully
+            // You can update the calendar here
+          } else {
+            // There was an error
+            // You can handle the error here
+          }
+        }
       });
-  
-      if (eventToRemove.length > 0) {
-        $('#calendar').fullCalendar('removeEvents', eventToRemove[0]._id);
-        removeEventFromLocalStorage(eventToRemove[0]);
-      }
-  
+    
       closeLessonInfoPopup();
     }
-
   </script>
 </body>
 </html>
