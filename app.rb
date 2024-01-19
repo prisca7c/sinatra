@@ -138,6 +138,34 @@ get '/get_students' do
   students_data.to_json
 end
 
+# Endpoint to delete a lesson
+post '/delete_lesson' do
+  # Check if the user is authenticated
+  redirect '/' unless session[:user]
+
+  lesson_id = params[:lesson_id]
+
+  # Find the lesson in the database
+  lesson = $lessons_database.find { |l| l['id'] == lesson_id }
+
+  # If the lesson exists, delete it
+  if lesson
+    $lessons_database.delete(lesson)
+
+    # Save the updated data to the file
+    File.write('lessonsData.json', JSON.generate($lessons_database))
+
+    # Return a JSON response
+    content_type :json
+    { success: true }.to_json
+  else
+    # Return an error message if the lesson doesn't exist
+    content_type :json
+    { success: false, error: "Lesson not found" }.to_json
+  end
+end
+
+
 
 # Run the Sinatra application
 run Sinatra::Application
