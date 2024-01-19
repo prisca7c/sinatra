@@ -99,8 +99,8 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
-    <!-- Example button to delete a student -->
-    <button onclick="deleteStudent('your_student_id')">Delete Student</button>
+    <!-- Updated button to delete a student -->
+    <button onclick="deleteStudent()">Delete Student</button>
   </div>
 
   <script>
@@ -240,37 +240,32 @@
       });
     }
     
-    function deleteLesson() {
-      var date = $('#infoLessonDate').text();
-      var lessonType = $('#infoLessonType').text();
+    // Function to delete a student
+    function deleteStudent() {
       var studentName = $('#infoStudentName').text();
-    
-      // Find the event to delete
-      var eventsToDelete = $('#calendar').fullCalendar('clientEvents', function (event) {
-        return (
-          event.start.format('YYYY-MM-DD') === date &&
-          event.lessonType === lessonType &&
-          event.studentName === studentName
-        );
+  
+      // Call the server endpoint to delete the student
+      fetch(`${serverEndpoint}/delete_student/${studentName}`, {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Student deleted from server:', data);
+        
+        // Perform any additional actions or UI updates if needed
+  
+        // Close the Lesson Information Popup
+        closeLessonInfoPopup();
+      })
+      .catch(error => {
+        console.error('Error deleting student:', error);
+        // Handle error if needed
       });
-    
-      if (eventsToDelete.length > 0) {
-        // Remove the event from the calendar
-        $('#calendar').fullCalendar('removeEvents', function (event) {
-          return event._id === eventsToDelete[0]._id;
-        });
-    
-        // Remove the event from the server
-        deleteEventFromServer(eventsToDelete[0]._id)
-          .then(() => {
-            // Close the Lesson Information Popup
-            closeLessonInfoPopup();
-          })
-          .catch(error => {
-            console.error('Error deleting event:', error);
-            // Handle error if needed
-          });
-      }
     }
 
 
