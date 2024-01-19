@@ -44,9 +44,10 @@ end
 
 post '/calendar' do
   request.body.rewind
-  event_data = JSON.parse(request.body.read)
-  $db.execute("INSERT INTO lessons (title, start_date) VALUES (?, ?)", [event_data['title'], event_data['start_date']])
-  event_data.to_json
+  lesson_data = JSON.parse(request.body.read)
+  $db.execute("INSERT INTO lessons (title, start_date) VALUES (?, ?)", [lesson_data['lesson_type'], lesson_data['date']])
+  content_type :json
+  { success: true }.to_json
 end
 
 get '/studentParentsData' do
