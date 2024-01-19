@@ -1,9 +1,13 @@
 require 'sinatra'
 require 'icalendar'
 require 'date'
+require 'json'
 
 # Enable sessions for user authentication
 enable :sessions
+
+# Load existing student and parent data
+students_data = JSON.parse(File.read('studentParentsData.json')) rescue []
 
 # Serve the login page as the home page
 get '/' do
@@ -23,8 +27,9 @@ get '/studentParentsData' do
   erb :studentParentsData
 end
 
+# Render the invoices page
 get '/invoices' do
-  erb :invoices
+  erb :invoices, locals: { students_data: students_data }
 end
 
 # Add a route to generate and serve the iCalendar data
@@ -66,6 +71,27 @@ post '/add_student' do
   { success: true }.to_json
 end
 
+# Handle form submission to update invoices
+post '/update_invoices' do
+  student_name = params[:student_name]
+  parent_email = params[:parent_email]
+  parent_phone = params[:parent_phone]
+  tuition = params[:tuition]
+
+  # Add new student data
+  students_data << {
+    student_name: student_name,
+    parent_email: parent_email,
+    parent_phone: parent_phone,
+    tuition: tuition
+  }
+
+  # Save the updated data to the file
+  File.write('studentParentsData.json', JSON.generate(students_data))
+
+  # Redirect back to the invoices page
+  redirect '/invoices'
+end
 
 
 # Run the Sinatra application
