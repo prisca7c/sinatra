@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'icalendar'
 require 'date'
-require 'json' 
+require 'json'
 
 # Enable sessions for user authentication
 enable :sessions
@@ -110,13 +110,26 @@ post '/calendar' do
   event_data.to_json
 end
 
-# Endpoint to delete an event by ID
-delete '/calendar/events/:id' do |id|
-  deleted_event = $calendar_events.find { |event| event['_id'] == id }
-  $calendar_events.reject! { |event| event['_id'] == id }
-  deleted_event.to_json
+# New endpoint to clear all calendar events
+delete '/calendar/clear' do
+  $calendar_events.clear
+
+  # Clear events from the persistent storage (update as needed)
+  # Example: YourEventModel.destroy_all
+
+  { success: true }.to_json
 end
 
+# New endpoint to delete an event by ID
+delete '/calendar/:id' do |id|
+  deleted_event = $calendar_events.find { |event| event['_id'] == id }
+  $calendar_events.reject! { |event| event['_id'] == id }
+
+  # Perform the deletion from the persistent storage (update as needed)
+  # Example: YourEventModel.find(id).destroy
+
+  deleted_event.to_json
+end
 
 # Run the Sinatra application
 run Sinatra::Application
