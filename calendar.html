@@ -225,7 +225,7 @@
 
 
     function deleteLesson() {
-      var lessonId = ;
+      var lessonId = $('#infoLessonId').text(); // Assuming you have an element with ID 'infoLessonId' to store the lesson ID
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
@@ -245,9 +245,10 @@
           }
         }
       });
-  
+    
       closeLessonInfoPopup();
     }
+
   </script>
 </body>
 </html>
