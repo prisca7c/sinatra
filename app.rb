@@ -5,12 +5,6 @@ require 'date'
 # Enable sessions for user authentication
 enable :sessions
 
-# Dummy user data (replace this with a proper database)
-users = {
-  'user1' => { 'name' => 'John Doe', 'email' => 'john@example.com' },
-  'user2' => { 'name' => 'Jane Doe', 'email' => 'jane@example.com' }
-}
-
 # Serve the login page as the home page
 get '/' do
   erb :login
@@ -22,23 +16,14 @@ end
 
 # Serve the calendar page
 get '/calendar' do
-  # Check if the user is authenticated
-  redirect '/' unless session[:user]
-
   erb :calendar
 end
 
-get '/student-parents-data' do
-  # Check if the user is authenticated
-  redirect '/' unless session[:user]
-
+get '/studentParentsData' do
   erb :studentParentsData
 end
 
 get '/invoices' do
-  # Check if the user is authenticated
-  redirect '/' unless session[:user]
-
   erb :invoices
 end
 
