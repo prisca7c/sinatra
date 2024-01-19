@@ -93,8 +93,8 @@
   </div>
 
   <!-- Lesson Information Popup -->
-  <div id="addLessonPopup">
-    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
+  <div id="lessonInfoPopup">
+    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
     <h2>Lesson Information</h2>
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
@@ -185,7 +185,7 @@
       $('#infoLessonType').text(calEvent.lessonType);
       $('#infoStudentName').text(calEvent.studentName);
     
-      $('#addLessonPopup').show();
+      $('#lessonInfoPopup').show();
     }
     
     function updateLocalStorage(event) {
