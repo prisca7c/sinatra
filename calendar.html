@@ -92,7 +92,6 @@
     </form>
   </div>
 
-
   <!-- Lesson Information Popup -->
   <div id="lessonInfoPopup">
     <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
@@ -104,15 +103,17 @@
 
   <script>
     $(document).ready(function() {
+      // Remove unnecessary function call
       $('#calendar').fullCalendar({
         defaultView: 'month',
-        events: '/calendar.ics',
+        // events: '/calendar.ics', // Commented out for local storage handling
         dayClick: function(date, jsEvent, view) {
           openAddLessonForm(date.format());
         },
         eventRender: function(event, element) {
           if (event.title !== undefined) {
-            var studentInfo = event.studentInfo || (event.firstName + ' ' + event.lastName);
+            // Modified code to use event.title directly
+            var studentInfo = event.title || (event.firstName + ' ' + event.lastName);
             if (element.find('.student-info').length === 0) {
               element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
             }
@@ -130,6 +131,9 @@
           right: ''
         }
       });
+
+      // Load events from local storage
+      updateCalendarEvents();
     });
 
     function openAddLessonForm(date) {
@@ -167,6 +171,9 @@
 
         // Add the lesson event to the calendar
         $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+
+        // Update local storage with the new event
+        updateLocalStorage(lessonEvent);
       }
 
       // Close the form after adding the lesson
@@ -183,6 +190,30 @@
 
     function closeLessonInfoPopup() {
       $('#lessonInfoPopup').hide();
+    }
+
+    function updateLocalStorage(event) {
+      // Retrieve existing data from local storage
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+
+      // Add the new event to the local storage data
+      calendarEvents.push(event);
+
+      // Save the updated data back to local storage
+      localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+    }
+
+    function updateCalendarEvents() {
+      // Retrieve data from local storage and update the calendar
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+
+      // Update the calendar with the retrieved data
+      $('#calendar').fullCalendar('removeEvents'); // Remove existing events
+
+      // Add the retrieved events to the calendar
+      calendarEvents.forEach(function(event) {
+        $('#calendar').fullCalendar('renderEvent', event, true);
+      });
     }
   </script>
 </body>
