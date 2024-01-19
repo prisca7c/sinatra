@@ -30,6 +30,7 @@ end
 
 get '/calendar' do
   $calendar_events.to_json
+end
 
 get '/studentParentsData' do
   erb :studentParentsData
@@ -128,8 +129,10 @@ delete '/calendar/:id' do |id|
   # Perform the deletion from the persistent storage (update as needed)
   # Example: YourEventModel.find(id).destroy
 
+  # Save the updated data to the file
+  File.write('calendar_events.json', JSON.generate($calendar_events))
+
   deleted_event.to_json
 end
-
 # Run the Sinatra application
 run Sinatra::Application
