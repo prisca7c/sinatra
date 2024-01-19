@@ -34,6 +34,7 @@ post '/calendar' do
   request.body.rewind
   event_data = JSON.parse(request.body.read)
   $calendar_events << event_data
+  update_calendar_events_file
   event_data.to_json
 end
 
@@ -41,10 +42,7 @@ end
 delete '/calendar/:id' do |id|
   deleted_event = $calendar_events.find { |event| event['_id'] == id }
   $calendar_events.reject! { |event| event['_id'] == id }
-  
-  # Perform the deletion from the persistent storage (update as needed)
-  # Example: YourEventModel.find(id).destroy
-
+  update_calendar_events_file
   deleted_event.to_json
 end
 
@@ -53,6 +51,7 @@ post '/lessons' do
   request.body.rewind
   lesson_data = JSON.parse(request.body.read)
   $lessons_database << lesson_data
+  update_lessons_file
   lesson_data.to_json
 end
 
@@ -66,9 +65,7 @@ delete '/lessons/:date/:lesson_type/:student_name' do |date, lesson_type, studen
     lesson['date'] == date && lesson['lesson_type'] == lesson_type && lesson['student_name'] == student_name
   end
 
-  # Perform the deletion from the persistent storage (update as needed)
-  # Example: YourLessonModel.find_by(date: date, lesson_type: lesson_type, student_name: student_name).destroy
-
+  update_lessons_file
   deleted_lesson.to_json
 end
 
@@ -88,9 +85,9 @@ get '/calendar.ics' do
   cal = Icalendar::Calendar.new
 
   # Add events to the calendar
-  cal.add_event(create_event('I made this', '2024-01-16'))
-  cal.add_event(create_event('New Years Day', '2024-01-01'))
-  cal.add_event(create_event('prisca birthday', '2024-08-12'))
+  $calendar_events.each do |event|
+    cal.add_event(create_event(event['title'], event['start_date']))
+  end
 
   cal.to_ical
 end
@@ -146,10 +143,7 @@ end
 # New endpoint to clear all calendar events
 delete '/calendar/clear' do
   $calendar_events.clear
-
-  # Clear events from the persistent storage (update as needed)
-  # Example: YourEventModel.destroy_all
-
+  update_calendar_events_file
   { success: true }.to_json
 end
 
@@ -157,13 +151,7 @@ end
 delete '/calendar/:id' do |id|
   deleted_event = $calendar_events.find { |event| event['_id'] == id }
   $calendar_events.reject! { |event| event['_id'] == id }
-
-  # Perform the deletion from the persistent storage (update as needed)
-  # Example: YourEventModel.find(id).destroy
-
-  # Save the updated data to the file
-  File.write('calendar_events.json', JSON.generate($calendar_events))
-
+  update_calendar_events_file
   deleted_event.to_json
 end
 
@@ -200,10 +188,7 @@ end
 delete '/delete_student/:id' do |id|
   deleted_student = students_data.find { |student| student['_id'] == id }
   students_data.reject! { |student| student['_id'] == id }
-
-  # Save the updated data to the file
-  File.write('studentParentsData.json', JSON.generate(students_data))
-
+  update_students_file
   deleted_student.to_json
 end
 
