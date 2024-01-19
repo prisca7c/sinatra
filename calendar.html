@@ -114,12 +114,9 @@
             element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
           }
         },
-
         eventClick: function(calEvent, jsEvent, view) {
-          if (calEvent.title !== undefined) {
-            showLessonInformation(calEvent);
-            return false; // Prevent default behavior
-          }
+          showLessonInformation(calEvent);
+          return false; // Prevent default behavior
         },
         header: {
           left: 'prev,next today',
@@ -127,23 +124,23 @@
           right: ''
         }
       });
-  
+    
       // Load events from local storage
       updateCalendarEvents();
     });
-  
+    
     function openAddLessonForm(date) {
       document.getElementById('lessonDate').value = date;
       document.getElementById('lessonType').value = '';
       document.getElementById('studentName').value = '';
-  
+    
       $('#addLessonPopup').show();
     }
-  
+    
     function closeAddLessonPopup() {
       $('#addLessonPopup').hide();
     }
-  
+    
     function addLesson() {
       var date = $('#lessonDate').val();
       var lessonType = $('#lessonType').val();
@@ -152,7 +149,7 @@
       // Check if the lesson is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
-          event.date === date &&
+          event.start.format('YYYY-MM-DD') === date &&
           event.lessonType === lessonType &&
           event.studentName === studentName
         );
@@ -178,42 +175,39 @@
       // Close the form after adding the lesson
       closeAddLessonPopup();
     }
-
-  
+    
     function showLessonInformation(calEvent) {
-      // Split the title to extract date, type, and name
-      var titleParts = calEvent.title.split(' ');
-      $('#infoLessonDate').text(titleParts[0]);
-      $('#infoLessonType').text(titleParts[1]);
-      $('#infoStudentName').text(titleParts.slice(2).join(' '));
-
+      $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
+      $('#infoLessonType').text(calEvent.lessonType);
+      $('#infoStudentName').text(calEvent.studentName);
+    
       $('#lessonInfoPopup').show();
     }
-
-
+    
     function updateLocalStorage(event) {
       // Retrieve existing data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-
+    
       // Add the new event to the local storage data
       calendarEvents.push(event);
-
+    
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
-
+    
     function updateCalendarEvents() {
       // Retrieve data from local storage and update the calendar
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-
+    
       // Update the calendar with the retrieved data
       $('#calendar').fullCalendar('removeEvents'); // Remove existing events
-
+    
       // Add the retrieved events to the calendar
       calendarEvents.forEach(function(event) {
         $('#calendar').fullCalendar('renderEvent', event, true);
       });
     }
+
   </script>
 </body>
 </html>
