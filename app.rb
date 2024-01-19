@@ -38,7 +38,6 @@ post '/calendar' do
   event_data.to_json
 end
 
-# New endpoint to delete a calendar event by ID
 delete '/calendar/:id' do |id|
   deleted_event = $calendar_events.find { |event| event['_id'] == id }
   $calendar_events.reject! { |event| event['_id'] == id }
@@ -184,13 +183,6 @@ get '/get_students' do
   students_data.to_json
 end
 
-# Endpoint to permanently delete a student by ID
-delete '/delete_student/:id' do |id|
-  deleted_student = students_data.find { |student| student['_id'] == id }
-  students_data.reject! { |student| student['_id'] == id }
-  update_students_file
-  deleted_student.to_json
-end
 
 # Run the Sinatra application
 run Sinatra::Application
