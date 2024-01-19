@@ -181,21 +181,14 @@
 
   
     function showLessonInformation(calEvent) {
-      // Extract the date, type, and student name from the title
+      // Split the title to extract date, type, and name
       var titleParts = calEvent.title.split(' ');
-      var date = titleParts[0];
-      var lessonType = titleParts.slice(1, -1).join(' '); // Exclude the last part (student name)
-      var studentName = titleParts.slice(-1).join(' ');
-    
-      // Display the extracted information in the popup
-      $('#infoLessonDate').text(date);
-      $('#infoLessonType').text(lessonType);
-      $('#infoStudentName').text(studentName);
-    
-      // Show the Lesson Information Popup
+      $('#infoLessonDate').text(titleParts[0]);
+      $('#infoLessonType').text(titleParts[1]);
+      $('#infoStudentName').text(titleParts.slice(2).join(' '));
+
       $('#lessonInfoPopup').show();
     }
-
 
 
     function updateLocalStorage(event) {
