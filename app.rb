@@ -164,5 +164,16 @@ get '/get_students' do
   content_type :json
   students_data.to_json
 end
+
+# Endpoint to permanently delete a student by ID
+delete '/delete_student/:id' do |id|
+  deleted_student = students_data.find { |student| student['_id'] == id }
+  students_data.reject! { |student| student['_id'] == id }
+
+  # Save the updated data to the file
+  File.write('studentParentsData.json', JSON.generate(students_data))
+
+  deleted_student.to_json
+end
 # Run the Sinatra application
 run Sinatra::Application
