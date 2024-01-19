@@ -175,8 +175,9 @@
       }
     
       // Close the form after adding the lesson
-      closeLessonInfoPopup();
+      closeAddLessonPopup(); // Fix: Correct function name
     }
+
     
     function showLessonInformation(calEvent) {
       $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
