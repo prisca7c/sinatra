@@ -99,6 +99,8 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
+    <!-- Add a Delete Button -->
+    <button id="deleteButton" onclick="deleteLesson()">Delete</button>
   </div>
 
   <script>
@@ -116,7 +118,7 @@
         },
         eventClick: function(calEvent, jsEvent, view) {
           showLessonInformation(calEvent);
-          return false; // Prevent default behavior
+          return false;
         },
 
         header: {
@@ -126,7 +128,6 @@
         }
       });
     
-      // Load events from local storage
       updateCalendarEvents();
     });
     
@@ -152,7 +153,6 @@
       var lessonType = $('#lessonType').val();
       var studentName = $('#studentName').val();
     
-      // Check if the lesson is already in the calendar
       var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
           event.start.format('YYYY-MM-DD') === date &&
@@ -162,7 +162,6 @@
       });
     
       if (existingEvent.length === 0) {
-        // Create a custom event for the lesson
         var lessonEvent = {
           date: date,
           lessonType: lessonType,
@@ -170,16 +169,11 @@
           start: date + 'T12:00:00',
           allDay: true
         };
-    
-        // Add the lesson event to the calendar
+
         $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-    
-        // Update local storage with the new event
         updateLocalStorage(lessonEvent);
       }
-    
-      // Close the form after adding the lesson
-      closeAddLessonPopup(); // Fix: Correct function name
+      closeAddLessonPopup(); 
     }
 
     
@@ -192,45 +186,53 @@
     }
     
     function updateLocalStorage(event) {
-      // Retrieve existing data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-     
-      // Add the new event to the local storage data
       calendarEvents.push(event);
-    
-      // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
     
     function updateCalendarEvents() {
-      // Retrieve data from local storage and update the calendar
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+      $('#calendar').fullCalendar('removeEvents');
     
-      // Update the calendar with the retrieved data
-      $('#calendar').fullCalendar('removeEvents'); // Remove existing events
-    
-      // Add the retrieved events to the calendar
       calendarEvents.forEach(function(event) {
         $('#calendar').fullCalendar('renderEvent', event, true);
       });
     }
-
     
     function removeEventFromLocalStorage(eventToRemove) {
-      // Retrieve data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    
-      // Remove the event from the local storage data
       calendarEvents = calendarEvents.filter(function (event) {
         return eventToRemove._id !== event._id;
       });
     
-      // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
-
     function closeLessonInfoPopup() {
       closePopup();
+    }
+
+
+    // Add a new function to delete a lesson
+    function deleteLesson() {
+      var date = $('#infoLessonDate').text();
+      var lessonType = $('#infoLessonType').text();
+      var studentName = $('#infoStudentName').text();
+  
+      var eventToRemove = $('#calendar').fullCalendar('clientEvents', function (event) {
+        return (
+          event.start.format('YYYY-MM-DD') === date &&
+          event.lessonType === lessonType &&
+          event.studentName === studentName
+        );
+      });
+  
+      if (eventToRemove.length > 0) {
+        $('#calendar').fullCalendar('removeEvents', eventToRemove[0]._id);
+        removeEventFromLocalStorage(eventToRemove[0]);
+      }
+  
+      closeLessonInfoPopup();
     }
 
   </script>
