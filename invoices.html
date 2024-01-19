@@ -1,36 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoices</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+
 <body>
+
   <h1>Invoices</h1>
   <nav>
     <a href="/sinatra/home">Home</a>
     <a href="/sinatra/calendar">Calendar</a>
     <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
-    <a href="/sinatra/invoices">Invoices</a> 
+    <a href="/sinatra/invoices">Invoices</a>
+    <!-- Add Student Button -->
+    <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
   </nav>
 
-  <form action="/update_invoices" method="post">
+  <form id="invoiceForm">
     <label for="student_name">Student Name:</label>
-    <input type="text" name="student_name" required><br>
+    <input type="text" id="student_name" required><br>
 
     <label for="parent_email">Parent's Email:</label>
-    <input type="email" name="parent_email" required><br>
+    <input type="email" id="parent_email" required><br>
 
     <label for="parent_phone">Parent's Phone:</label>
-    <input type="tel" name="parent_phone" required><br>
+    <input type="tel" id="parent_phone" required><br>
 
     <label for="tuition">Tuition:</label>
-    <input type="number" name="tuition" required><br>
+    <input type="number" id="tuition" required><br>
 
-    <button type="submit">Add Invoice</button>
+    <button type="button" onclick="addInvoice()">Add Invoice</button>
   </form>
 
-  <table border="1">
+  <table id="invoiceTable">
     <thead>
       <tr>
         <th>Student Name</th>
@@ -39,17 +66,65 @@
         <th>Tuition</th>
       </tr>
     </thead>
-    <tbody>
-      <% students_data.each do |data| %>
-        <tr>
-          <td><%= data['student_name'] %></td>
-          <td><%= data['parent_email'] %></td>
-          <td><%= data['parent_phone'] %></td>
-          <td><%= data['tuition'] %></td>
-        </tr>
-      <% end %>
+    <tbody id="invoiceTableBody">
+      <!-- Invoice data will be dynamically added here -->
     </tbody>
   </table>
-</body>
-</html>
 
+  <script>
+    $(document).ready(function () {
+      // Retrieve data from local storage and update the table
+      updateInvoiceTable();
+    });
+
+    function updateInvoiceTable() {
+      // Retrieve data from local storage
+      var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
+
+      // Update the table with the retrieved data
+      $('#invoiceTableBody').empty(); // Clear existing rows
+      invoicesData.forEach(function (data) {
+        var newRow = '<tr>' +
+          '<td>' + data.student_name + '</td>' +
+          '<td>' + data.parent_email + '</td>' +
+          '<td>' + data.parent_phone + '</td>' +
+          '<td>' + data.tuition + '</td>' +
+          '</tr>';
+        $('#invoiceTableBody').append(newRow);
+      });
+    }
+
+    function addInvoice() {
+      var student_name = $('#student_name').val();
+      var parent_email = $('#parent_email').val();
+      var parent_phone = $('#parent_phone').val();
+      var tuition = $('#tuition').val();
+
+      // Retrieve existing data from local storage
+      var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
+
+      // Add the new invoice data
+      invoicesData.push({
+        student_name: student_name,
+        parent_email: parent_email,
+        parent_phone: parent_phone,
+        tuition: tuition
+      });
+
+      // Save the updated data back to local storage
+      localStorage.setItem('invoicesData', JSON.stringify(invoicesData));
+
+      // Update the table
+      updateInvoiceTable();
+
+      // Clear the form fields
+      $('#student_name').val('');
+      $('#parent_email').val('');
+      $('#parent_phone').val('');
+      $('#tuition').val('');
+    }
+  </script>
+
+</body>
+
+</html>
