@@ -6,8 +6,8 @@ require 'sqlite3'
 
 enable :sessions
 
-# Open a database
-$db = SQLite3::Database.new "test.db"
+# Initialize SQLite3 database
+$db = SQLite3::Database.new 'bonzimusicschool.db'
 
 # Create tables
 $db.execute <<-SQL
