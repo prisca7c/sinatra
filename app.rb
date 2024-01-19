@@ -118,11 +118,13 @@ get '/get_students' do
 end
 
 post '/delete_lesson' do
-  lesson_id = params[:lesson_id].to_i
-  $db.execute("DELETE FROM lessons WHERE id = ?", [lesson_id])
+  request.body.rewind
+  lesson_data = JSON.parse(request.body.read)
+  $db.execute("DELETE FROM lessons WHERE id = ?", [lesson_data['lesson_id']])
   content_type :json
   { success: true }.to_json
 end
+
 
 
 
