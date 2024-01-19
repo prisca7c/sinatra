@@ -217,20 +217,28 @@
       });
     }
 
-    const serverEndpoint = 'http://prisca7c.github.io/sinatra/calendar';
+    const serverEndpoint = 'http://prisca7c.github.io/sinatra';
 
     // Function to delete an event from the server
     function deleteEventFromServer(eventId) {
       return fetch(`${serverEndpoint}/calendar/${eventId}`, {
         method: 'DELETE',
       })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         console.log('Event deleted from server:', data);
+        return data;
       })
-      .catch(error => console.error('Error deleting event:', error));
+      .catch(error => {
+        console.error('Error deleting event:', error);
+        throw error;
+      });
     }
-
     
     function deleteLesson() {
       var date = $('#infoLessonDate').text();
@@ -253,12 +261,18 @@
         });
     
         // Remove the event from the server
-        deleteEventFromServer(eventsToDelete[0]._id);
-    
-        // Close the Lesson Information Popup
-        closeLessonInfoPopup();
+        deleteEventFromServer(eventsToDelete[0]._id)
+          .then(() => {
+            // Close the Lesson Information Popup
+            closeLessonInfoPopup();
+          })
+          .catch(error => {
+            console.error('Error deleting event:', error);
+            // Handle error if needed
+          });
       }
     }
+
 
     
     function removeEventFromLocalStorage(eventToRemove) {
