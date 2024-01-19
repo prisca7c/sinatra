@@ -109,14 +109,12 @@
           openAddLessonForm(date.format());
         },
         eventRender: function(event, element) {
-          if (event.title !== undefined) {
-            // Modified code to use event.title directly
-            var studentInfo = event.title || (event.firstName + ' ' + event.lastName);
-            if (element.find('.student-info').length === 0) {
-              element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
-            }
+          var studentInfo = event.studentName + ' ' + event.lessonType;
+          if (element.find('.student-info').length === 0) {
+            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
           }
         },
+
         eventClick: function(calEvent, jsEvent, view) {
           if (calEvent.title !== undefined) {
             showLessonInformation(calEvent);
