@@ -182,8 +182,8 @@
       // Split the title to extract date, type, and name
       var titleParts = calEvent.title.split(' ');
       $('#infoLessonDate').text(titleParts[0]);
-      $('#infoLessonType').text(titleParts[1]);
-      $('#infoStudentName').text(titleParts.slice(2).join(' '));
+      $('#infoLessonType').text(titleParts.slice(2).join(' '));
+      $('#infoStudentName').text(titleParts[0] + ' ' + titleParts[1]);
   
       $('#lessonInfoPopup').show();
     }
