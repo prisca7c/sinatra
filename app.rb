@@ -72,7 +72,7 @@ post '/add_student' do
 end
 
 # Handle asynchronous form submission to update invoices
-post '/update_invoices' do
+post '/invoices' do
   student_name = params[:student_name]
   parent_email = params[:parent_email]
   parent_phone = params[:parent_phone]
