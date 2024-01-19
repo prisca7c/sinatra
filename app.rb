@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'icalendar'
 require 'date'
-require 'json'
+require 'json' 
 
 # Enable sessions for user authentication
 enable :sessions
