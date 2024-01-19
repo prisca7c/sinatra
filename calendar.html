@@ -99,11 +99,9 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
-    <!-- Updated button to delete an event -->
-    <button onclick="deleteLesson()">Delete Event</button>
+    <!-- Example button to delete a student -->
+    <button onclick="deleteStudent('your_student_id')">Delete Student</button>
   </div>
-
-
 
   <script>
     $(document).ready(function() {
@@ -133,18 +131,6 @@
       // Load events from local storage
       updateCalendarEvents();
     });
-
-    // Function to generate a unique ID for an event
-    function generateEventId(event) {
-      return event.date + '_' + event.lessonType + '_' + event.studentName;
-    }
-  
-    // Function to add a lesson event to the calendar
-    function addLessonToCalendar(event) {
-      event.id = generateEventId(event); // Add a unique ID to the event
-      $('#calendar').fullCalendar('renderEvent', event, true);
-    }
-
     
     function openAddLessonForm(date) {
       document.getElementById('lessonDate').value = date;
@@ -188,14 +174,14 @@
         };
     
         // Add the lesson event to the calendar
-        addLessonToCalendar(lessonEvent);
+        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
     
         // Update local storage with the new event
         updateLocalStorage(lessonEvent);
       }
     
       // Close the form after adding the lesson
-      closeAddLessonPopup();
+      closeAddLessonPopup(); // Fix: Correct function name
     }
 
     
@@ -231,80 +217,62 @@
       });
     }
 
-    const serverEndpoint = 'http://prisca7c.github.io/sinatra';
+    const serverEndpoint = 'http://prisca7c.github.io/sinatra/calendar';
 
     // Function to delete an event from the server
     function deleteEventFromServer(eventId) {
-      return fetch(`${serverEndpoint}/calendar/${eventId}`, {
+      return fetch(`${serverEndpoint}/${eventId}`, {
         method: 'DELETE',
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
         console.log('Event deleted from server:', data);
-        return data;
       })
-      .catch(error => {
-        console.error('Error deleting event:', error);
-        throw error;
-      });
+      .catch(error => console.error('Error deleting event:', error));
     }
     
-    // Function to delete an event
     function deleteLesson() {
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
     
-      // Call the server endpoint to delete the event
-      fetch(`${serverEndpoint}/calendar/${date}/${lessonType}/${studentName}`, {
-        method: 'DELETE',
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Event deleted from server:', data);
+      // Find the event to delete
+      var eventsToDelete = $('#calendar').fullCalendar('clientEvents', function (event) {
+        return (
+          event.start.format('YYYY-MM-DD') === date &&
+          event.lessonType === lessonType &&
+          event.studentName === studentName
+        );
+      });
     
-          // Remove the event from the local storage
-          removeEventFromLocalStorage(date, lessonType, studentName);
-    
-          // Perform any additional actions or UI updates if needed
-    
-          // Close the Lesson Information Popup
-          closeLessonInfoPopup();
-        })
-        .catch(error => {
-          console.error('Error deleting event:', error);
-          // Handle error if needed
+      if (eventsToDelete.length > 0) {
+        // Remove the event from the calendar
+        $('#calendar').fullCalendar('removeEvents', function (event) {
+          return event._id === eventsToDelete[0]._id;
         });
-    }
     
-    // Function to remove an event from local storage
-    function removeEventFromLocalStorage(date, lessonType, studentName) {
+        // Remove the event from the server
+        deleteEventFromServer(eventsToDelete[0]._id);
+    
+        // Close the Lesson Information Popup
+        closeLessonInfoPopup();
+      }
+    }
+
+    
+    function removeEventFromLocalStorage(eventToRemove) {
       // Retrieve data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     
       // Remove the event from the local storage data
       calendarEvents = calendarEvents.filter(function (event) {
-        return (
-          event.date !== date &&
-          event.lessonType !== lessonType &&
-          event.studentName !== studentName
-        );
+        return eventToRemove._id !== event._id;
       });
     
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
-    
+
     function closeLessonInfoPopup() {
       closePopup();
     }
