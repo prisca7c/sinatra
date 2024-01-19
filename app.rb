@@ -83,6 +83,14 @@ post '/add_student' do
   { success: true }.to_json
 end
 
+post '/studentParentsData' do
+  request.body.rewind
+  student_data = JSON.parse(request.body.read)
+  $db.execute("INSERT INTO students (student_name, parent_email, parent_phone, tuition) VALUES (?, ?, ?, ?)", [student_data['student_name'], student_data['parent_email'], student_data['parent_phone'], student_data['tuition']])
+  student_data.to_json
+end
+
+
 post '/invoices' do
   student_name = params[:student_name]
   parent_email = params[:parent_email]
