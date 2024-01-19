@@ -111,6 +111,31 @@
     $(document).ready(function () {
       // Your JavaScript code for handling student data goes here
       // ...
+      // Submit the form using AJAX
+      $('#addStudentForm').submit(function (event) {
+        event.preventDefault();
+        $.post('/update_invoices', $(this).serialize(), function (data) {
+          // Handle the response from the server
+          if (data.success) {
+            // Update the existing table with new row
+            var newRow = '<tr>' +
+              '<td>' + data.student_name + '</td>' +
+              '<td>' + data.parent_email + '</td>' +
+              '<td>' + data.parent_phone + '</td>' +
+              '<td>' + data.tuition + '</td>' +
+              '</tr>';
+  
+            // Append the new row to the table
+            $('#studentTableBody').append(newRow);
+  
+            // Close the popup
+            closeAddStudentPopup();
+          } else {
+            // Handle the case where the server-side processing fails
+            alert('Failed to add student. Please try again.');
+          }
+        });
+      });
     });
 
     function openAddStudentPopup() {
