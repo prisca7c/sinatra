@@ -28,7 +28,7 @@ get '/calendar' do
   erb :calendar
 end
 
-get '/calendar' do
+get '/calendar/events' do
   $calendar_events.to_json
 end
 
