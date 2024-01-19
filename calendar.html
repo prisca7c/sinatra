@@ -99,7 +99,8 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
-    <button type="button" id="deleteLessonButton" onclick="deleteLesson()">Delete Lesson</button>
+    <!-- Example button to delete a student -->
+    <button onclick="deleteStudent('your_student_id')">Delete Student</button>
   </div>
 
   <script>
@@ -220,7 +221,7 @@
 
     // Function to delete an event from the server
     function deleteEventFromServer(eventId) {
-      return fetch(`${serverEndpoint}/${eventId}`, {
+      return fetch(`${serverEndpoint}/calendar/${eventId}`, {
         method: 'DELETE',
       })
       .then(response => response.json())
@@ -229,6 +230,7 @@
       })
       .catch(error => console.error('Error deleting event:', error));
     }
+
     
     function deleteLesson() {
       var date = $('#infoLessonDate').text();
