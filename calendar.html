@@ -111,7 +111,7 @@
         eventRender: function(event, element) {
           var studentInfo = event.studentName + ' ' + event.lessonType;
           if (element.find('.student-info').length === 0) {
-            element.find('.fc-content').append('<br/><span class="student-info">' + studentInfo + '</span>');
+            element.find('.fc-content').append('<span class="student-info">' + studentInfo + '</span>');
           }
         },
         eventClick: function(calEvent, jsEvent, view) {
