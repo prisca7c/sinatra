@@ -99,9 +99,11 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
-    <!-- Updated button to delete a student -->
-    <button onclick="deleteStudent()">Delete Student</button>
+    <!-- Updated button to delete an event -->
+    <button onclick="deleteLesson()">Delete Event</button>
   </div>
+
+
 
   <script>
     $(document).ready(function() {
@@ -240,49 +242,57 @@
       });
     }
     
-    // Function to delete a student
-    function deleteStudent() {
+    // Function to delete an event
+    function deleteLesson() {
+      var date = $('#infoLessonDate').text();
+      var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
-  
-      // Call the server endpoint to delete the student
-      fetch(`${serverEndpoint}/delete_student/${studentName}`, {
+    
+      // Call the server endpoint to delete the event
+      fetch(`${serverEndpoint}/calendar/${date}/${lessonType}/${studentName}`, {
         method: 'DELETE',
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Student deleted from server:', data);
-        
-        // Perform any additional actions or UI updates if needed
-  
-        // Close the Lesson Information Popup
-        closeLessonInfoPopup();
-      })
-      .catch(error => {
-        console.error('Error deleting student:', error);
-        // Handle error if needed
-      });
-    }
-
-
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Event deleted from server:', data);
     
-    function removeEventFromLocalStorage(eventToRemove) {
+          // Remove the event from the local storage
+          removeEventFromLocalStorage(date, lessonType, studentName);
+    
+          // Perform any additional actions or UI updates if needed
+    
+          // Close the Lesson Information Popup
+          closeLessonInfoPopup();
+        })
+        .catch(error => {
+          console.error('Error deleting event:', error);
+          // Handle error if needed
+        });
+    }
+    
+    // Function to remove an event from local storage
+    function removeEventFromLocalStorage(date, lessonType, studentName) {
       // Retrieve data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     
       // Remove the event from the local storage data
       calendarEvents = calendarEvents.filter(function (event) {
-        return eventToRemove._id !== event._id;
+        return (
+          event.date !== date &&
+          event.lessonType !== lessonType &&
+          event.studentName !== studentName
+        );
       });
     
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
-
+    
     function closeLessonInfoPopup() {
       closePopup();
     }
