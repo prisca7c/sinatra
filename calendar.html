@@ -214,40 +214,41 @@
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
-  
+    
       // Find the event to delete
       var eventsToDelete = $('#calendar').fullCalendar('clientEvents', function (event) {
         return (
-          event.date === date &&
+          event.start.format('YYYY-MM-DD') === date &&
           event.lessonType === lessonType &&
           event.studentName === studentName
         );
       });
-  
+    
       if (eventsToDelete.length > 0) {
         // Remove the event from the calendar
         $('#calendar').fullCalendar('removeEvents', eventsToDelete[0]._id);
-  
+    
         // Remove the event from local storage
         removeEventFromLocalStorage(eventsToDelete[0]);
       }
-  
+    
       // Close the Lesson Information Popup
       closeLessonInfoPopup();
     }
-  
+    
     function removeEventFromLocalStorage(eventToRemove) {
       // Retrieve data from local storage
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-  
+    
       // Remove the event from the local storage data
       calendarEvents = calendarEvents.filter(function (event) {
         return eventToRemove._id !== event._id;
       });
-  
+    
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
+
 
   </script>
 </body>
