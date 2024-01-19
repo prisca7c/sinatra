@@ -113,19 +113,23 @@
         });
     });
 </script>
-    
 <script>
-   
-   function myMenuFunction() {
-    var i = document.getElementById("navMenu");
+    function submitRegisterForm() {
+        // Get the values entered by the user
+        var firstName = document.getElementById("firstName").value;
+        var lastName = document.getElementById("lastName").value;
+        var email = document.getElementById("email").value;
+        var registerPassword = document.getElementById("registerPassword").value;
 
-    if(i.className === "nav-menu") {
-        i.className += " responsive";
-    } else {
-        i.className = "nav-menu";
+        // Perform basic validation (you can add more sophisticated validation)
+        if (!firstName || !lastName || !email || !registerPassword) {
+            alert("Please fill in all registration fields.");
+            return;
+        }
+
+        // Redirect to the desired URL after successful registration
+        window.location.href = "https://prisca7c.github.io/sinatra/home";
     }
-   }
- 
 </script>
 
 <script>
