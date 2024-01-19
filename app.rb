@@ -38,36 +38,6 @@ post '/calendar' do
   event_data.to_json
 end
 
-delete '/calendar/:id' do |id|
-  deleted_event = $calendar_events.find { |event| event['_id'] == id }
-  $calendar_events.reject! { |event| event['_id'] == id }
-  update_calendar_events_file
-  deleted_event.to_json
-end
-
-# Endpoint to add a new lesson to the database
-post '/lessons' do
-  request.body.rewind
-  lesson_data = JSON.parse(request.body.read)
-  $lessons_database << lesson_data
-  update_lessons_file
-  lesson_data.to_json
-end
-
-# New endpoint to delete a lesson from the database
-delete '/lessons/:date/:lesson_type/:student_name' do |date, lesson_type, student_name|
-  deleted_lesson = $lessons_database.find do |lesson|
-    lesson['date'] == date && lesson['lesson_type'] == lesson_type && lesson['student_name'] == student_name
-  end
-
-  $lessons_database.reject! do |lesson|
-    lesson['date'] == date && lesson['lesson_type'] == lesson_type && lesson['student_name'] == student_name
-  end
-
-  update_lessons_file
-  deleted_lesson.to_json
-end
-
 get '/studentParentsData' do
   erb :studentParentsData
 end
@@ -137,21 +107,6 @@ post '/invoices' do
   # Send a response back to the client
   content_type :json
   { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
-end
-
-# New endpoint to clear all calendar events
-delete '/calendar/clear' do
-  $calendar_events.clear
-  update_calendar_events_file
-  { success: true }.to_json
-end
-
-# New endpoint to delete an event by ID
-delete '/calendar/:id' do |id|
-  deleted_event = $calendar_events.find { |event| event['_id'] == id }
-  $calendar_events.reject! { |event| event['_id'] == id }
-  update_calendar_events_file
-  deleted_event.to_json
 end
 
 # Handle asynchronous form submission to update student data
