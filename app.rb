@@ -25,9 +25,11 @@ end
 
 # Serve the calendar page
 get '/calendar' do
-  @calendar_event_json = $calendar_events.to_json
   erb :calendar
 end
+
+get '/calendar' do
+  $calendar_events.to_json
 
 get '/studentParentsData' do
   erb :studentParentsData
@@ -109,10 +111,10 @@ post '/calendar' do
 end
 
 # Endpoint to delete an event by ID
-delete '/calendar/:eventId' do
-  event_id = params[:eventId]
-  $calendar_events.reject! { |event| event['_id'] == event_id }
-  { message: 'Event deleted successfully' }.to_json
+delete '/calendar/events/:id' do |id|
+  deleted_event = $calendar_events.find { |event| event['_id'] == id }
+  $calendar_events.reject! { |event| event['_id'] == id }
+  deleted_event.to_json
 end
 
 
