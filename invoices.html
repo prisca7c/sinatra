@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoices</title>
+</head>
+<body>
+  <h1>Invoices</h1>
+  <nav>
+    <a href="/sinatra/home">Home</a>
+    <a href="/sinatra/calendar">Calendar</a>
+    <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
+    <a href="/sinatra/invoices">Invoices</a> 
+  </nav>
+
+  <form action="/update_invoices" method="post">
+    <label for="student_name">Student Name:</label>
+    <input type="text" name="student_name" required><br>
+
+    <label for="parent_email">Parent's Email:</label>
+    <input type="email" name="parent_email" required><br>
+
+    <label for="parent_phone">Parent's Phone:</label>
+    <input type="tel" name="parent_phone" required><br>
+
+    <label for="tuition">Tuition:</label>
+    <input type="number" name="tuition" required><br>
+
+    <button type="submit">Add Invoice</button>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Parent's Email</th>
+        <th>Parent's Phone</th>
+        <th>Tuition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students_data.each do |data| %>
+        <tr>
+          <td><%= data['student_name'] %></td>
+          <td><%= data['parent_email'] %></td>
+          <td><%= data['parent_phone'] %></td>
+          <td><%= data['tuition'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</body>
+</html>
 
