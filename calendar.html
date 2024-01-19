@@ -133,6 +133,18 @@
       // Load events from local storage
       updateCalendarEvents();
     });
+
+    // Function to generate a unique ID for an event
+    function generateEventId(event) {
+      return event.date + '_' + event.lessonType + '_' + event.studentName;
+    }
+  
+    // Function to add a lesson event to the calendar
+    function addLessonToCalendar(event) {
+      event.id = generateEventId(event); // Add a unique ID to the event
+      $('#calendar').fullCalendar('renderEvent', event, true);
+    }
+
     
     function openAddLessonForm(date) {
       document.getElementById('lessonDate').value = date;
@@ -176,14 +188,14 @@
         };
     
         // Add the lesson event to the calendar
-        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+        addLessonToCalendar(lessonEvent);
     
         // Update local storage with the new event
         updateLocalStorage(lessonEvent);
       }
     
       // Close the form after adding the lesson
-      closeAddLessonPopup(); // Fix: Correct function name
+      closeAddLessonPopup();
     }
 
     
