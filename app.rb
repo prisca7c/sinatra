@@ -71,7 +71,7 @@ post '/add_student' do
   { success: true }.to_json
 end
 
-# Handle form submission to update invoices
+# Handle asynchronous form submission to update invoices
 post '/update_invoices' do
   student_name = params[:student_name]
   parent_email = params[:parent_email]
@@ -89,8 +89,9 @@ post '/update_invoices' do
   # Save the updated data to the file
   File.write('studentParentsData.json', JSON.generate(students_data))
 
-  # Redirect back to the invoices page
-  redirect '/invoices'
+  # Send a response back to the client
+  content_type :json
+  { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
 end
 
 
