@@ -9,6 +9,11 @@ enable :sessions
 # Load existing student and parent data
 students_data = JSON.parse(File.read('studentParentsData.json')) rescue []
 
+set :port, 4567 # Change the port as needed
+
+# Sample in-memory data store
+$calendar_events = []
+
 # Serve the login page as the home page
 get '/' do
   erb :login
@@ -20,6 +25,7 @@ end
 
 # Serve the calendar page
 get '/calendar' do
+  @calendar_event_json = $calendar_events.to_json
   erb :calendar
 end
 
@@ -92,6 +98,21 @@ post '/invoices' do
   # Send a response back to the client
   content_type :json
   { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
+end
+
+# Endpoint to add a new event
+post '/calendar' do
+  request.body.rewind
+  event_data = JSON.parse(request.body.read)
+  $calendar_events << event_data
+  event_data.to_json
+end
+
+# Endpoint to delete an event by ID
+delete '/calendar/:eventId' do
+  event_id = params[:eventId]
+  $calendar_events.reject! { |event| event['_id'] == event_id }
+  { message: 'Event deleted successfully' }.to_json
 end
 
 
