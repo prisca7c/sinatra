@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
   <style>
     #addLessonPopup,
-    #lessonInfoPopup {
+    #addLessonPopup {
       display: none;
       position: fixed;
       top: 50%;
@@ -23,7 +23,7 @@
     }
 
     #addLessonPopup button,
-    #lessonInfoPopup button {
+    #addLessonPopup button {
       margin-top: 10px;
     }
 
@@ -71,7 +71,7 @@
 
   <!-- Add Lesson Popup -->
   <div id="addLessonPopup">
-    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
+    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
     <form id="addLessonForm">
       <div class="input-field">
         <label for="lessonDate"><i class="bx bx-calendar"></i></label>
@@ -93,8 +93,8 @@
   </div>
 
   <!-- Lesson Information Popup -->
-  <div id="lessonInfoPopup">
-    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
+  <div id="addLessonPopup">
+    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
     <h2>Lesson Information</h2>
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
@@ -138,8 +138,8 @@
       $('#addLessonPopup').show();
     }
     
-    function closeLessonInfoPopup() {
-      $('#lessonInfoPopup').hide();
+    function closeAddLessonPopup() {
+      $('#addLessonPopup').hide();
     }
 
     
@@ -184,7 +184,7 @@
       $('#infoLessonType').text(calEvent.lessonType);
       $('#infoStudentName').text(calEvent.studentName);
     
-      $('#lessonInfoPopup').show();
+      $('#addLessonPopup').show();
     }
     
     function updateLocalStorage(event) {
@@ -228,12 +228,12 @@
         // Remove the event from the calendar
         $('#calendar').fullCalendar('removeEvents', eventsToDelete[0]._id);
     
-        // Remove the event from local storage
-        removeEventFromLocalStorage(eventsToDelete[0]);
-      }
+        // Remove the event from the server
+        deleteEventFromServer(eventsToDelete[0]._id);
     
-      // Close the Lesson Information Popup
-      closeLessonInfoPopup();
+        // Close the Lesson Information Popup
+        closeLessonInfoPopup();
+      }
     }
     
     function removeEventFromLocalStorage(eventToRemove) {
@@ -248,6 +248,21 @@
       // Save the updated data back to local storage
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
+
+    const serverEndpoint = 'http://prisca7c.github.io/sinatra/calendar';
+
+    // Function to delete an event from the server
+    function deleteEventFromServer(eventId) {
+      return fetch(`${serverEndpoint}/${eventId}`, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Event deleted from server:', data);
+      })
+      .catch(error => console.error('Error deleting event:', error));
+    }
+
 
 
   </script>
