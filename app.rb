@@ -11,14 +11,14 @@ $db = SQLite3::Database.new 'bonzimusicschool.db'
 
 # Create tables
 $db.execute <<-SQL
-  CREATE TABLE IF NOT EXISTS students (
+  CREATE TABLE IF NOT EXISTS lessons (
     id INTEGER PRIMARY KEY,
-    student_name TEXT,
-    parent_email TEXT,
-    parent_phone TEXT,
-    tuition TEXT
+    title TEXT,
+    start_date TEXT,
+    student_name TEXT
   );
 SQL
+
 
 $db.execute <<-SQL
   CREATE TABLE IF NOT EXISTS lessons (
@@ -45,7 +45,7 @@ end
 post '/calendar' do
   request.body.rewind
   lesson_data = JSON.parse(request.body.read)
-  result = $db.execute("INSERT INTO lessons (title, start_date) VALUES (?, ?)", [lesson_data['title'], lesson_data['start_date']])
+  $db.execute("INSERT INTO lessons (title, start_date, student_name) VALUES (?, ?, ?)", [lesson_data['title'], lesson_data['start_date'], lesson_data['studentName']])
   lesson_id = $db.last_insert_row_id
   content_type :json
   { success: true, lesson_id: lesson_id }.to_json
@@ -65,17 +65,19 @@ get '/calendar.ics' do
   content_type 'text/calendar'
   cal = Icalendar::Calendar.new
   $db.execute("SELECT * FROM lessons") do |row|
-    cal.add_event(create_event(row[1], row[2]))
+    cal.add_event(create_event(row[1], row[2], row[3]))  # Assuming create_event takes a title, start_date, and student_name
   end
   cal.to_ical
 end
 
-def create_event(title, start_date)
+def create_event(title, start_date, student_name)
   event = Icalendar::Event.new
   event.summary = title
   event.dtstart = DateTime.parse(start_date)
+  event.location = student_name  
   event
 end
+
 
 post '/add_student' do
   redirect '/' unless session[:user]
