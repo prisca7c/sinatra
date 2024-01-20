@@ -1,10 +1,10 @@
-<span style="font-family: verdana, geneva, sans-serif;">/*  import google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 * {
   margin: 0;
   padding: 0;
-  outline: none;
+  /*outline: none;
   border: none;
-  text-decoration: none;
+  text-decoration: none;*/
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
@@ -12,8 +12,6 @@
 body {
   background: rgb(226, 226, 226);
 }
-
-/* Add the following styles to your existing CSS */
 
 nav ul {
   display: flex;
@@ -34,7 +32,8 @@ nav a {
   text-transform: uppercase;
 }
 
-.link:hover, .active {
+.link:hover,
+.active {
   border-bottom: 2px solid #fff;
 }
 
@@ -90,29 +89,22 @@ a {
   cursor: pointer;
 }
 
-.main .users {
+.users {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.users {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
 .users .card {
-    width: 48%; /* Adjust width as needed */
-    margin: 10px;
-    background: #fff;
-    text-align: center;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    flex-basis: 48%; /* Adjust the flex-basis property */
+  width: 48%; /* Adjust width as needed */
+  margin: 10px;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  flex-basis: 48%; /* Adjust the flex-basis property */
 }
-
 
 .users .card img {
   width: 70px;
@@ -159,4 +151,21 @@ a {
   background: #4AD489;
   color: #fff;
   transition: 0.5s;
+}
+
+/* Update card content */
+.users .card:nth-child(1) h4::before {
+  content: "Students & Parents' Data";
+}
+
+.users .card:nth-child(2) h4::before {
+  content: "Calendar";
+}
+
+.users .card:nth-child(3) h4::before {
+  content: "Invoices";
+}
+
+.users .card:nth-child(4) h4::before {
+  content: "Attendance Record";
 }
