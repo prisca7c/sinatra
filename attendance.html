@@ -59,8 +59,9 @@
               <input type="text" class="form-control" id="contact" required>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="attendanceCheckbox">
-              <label class="form-check-label" for="attendanceCheckbox">Mark as Present</label>
+              <button type="button" class="btn btn-success" id="presentBtn">Present</button>
+              <button type="button" class="btn btn-danger" id="absentBtn">Absent</button>
+              <input type="hidden" id="attendanceCheckbox" />
             </div>
             <button type="button" class="btn btn-primary" id="addStudentBtn">Add Student</button>
           </form>
@@ -83,15 +84,33 @@
         $('#addStudentModal').modal('hide');
       });
 
+      // Handle "Present" button click
+      $('#presentBtn').click(function () {
+        $('#attendanceCheckbox').prop('checked', true);
+      });
+
+      // Handle "Absent" button click
+      $('#absentBtn').click(function () {
+        $('#attendanceCheckbox').prop('checked', false);
+      });
+
       // Function to dynamically add a new student to the table
       function addStudentToTable(student) {
+        var attendanceHtml = '<td class="attendance-cell">';
+        if (student.attendance === true) {
+          attendanceHtml += '<div class="attendance-present">Present</div>';
+        } else if (student.attendance === false) {
+          attendanceHtml += '<div class="attendance-absent">Absent</div>';
+        } else {
+          attendanceHtml += '<input type="checkbox" id="attendance_' + student.id + '" class="form-check-input" ' + (student.attendance ? 'checked' : '') + ' disabled>';
+          attendanceHtml += '<label for="attendance_' + student.id + '"></label>';
+        }
+        attendanceHtml += '</td>';
+
         var newRow = '<tr data-id="' + student.id + '">' +
           '<td>' + student.name + '</td>' +
           '<td>' + student.contact + '</td>' +
-          '<td>' +
-          '<input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '>' +
-          '<label for="attendance_' + student.id + '"></label>' +
-          '</td>' +
+          attendanceHtml +
           '</tr>';
 
         // Append the new row to the table
@@ -124,7 +143,6 @@
         // Clear input fields and checkboxes
         $('#studentName').val('');
         $('#contact').val('');
-        $('#attendanceCheckbox').prop('checked', false);
       }
 
 
