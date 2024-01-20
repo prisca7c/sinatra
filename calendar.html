@@ -71,7 +71,7 @@
 
   <!-- Add Lesson Popup -->
   <div id="addLessonPopup">
-    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
+    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
     <form id="addLessonForm">
       <div class="input-field">
         <label for="lessonDate"><i class="bx bx-calendar"></i></label>
@@ -94,7 +94,7 @@
 
   <!-- Lesson Information Popup -->
   <div id="lessonInfoPopup">
-    <span class="close-button" onclick="()">X</span>
+    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
     <h2>Lesson Information</h2>
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
@@ -160,13 +160,14 @@
         method: 'POST',
         data: JSON.stringify({
           title: lessonType,
-          start_date: date
+          start_date: date,
+          studentName: studentName
         }),
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             alert('Lesson added successfully');
-            
+    
             // Set the event.id to the lesson ID from the server response
             var lessonId = response.lesson_id;
             // Assuming you have the fullCalendar event object
@@ -174,11 +175,15 @@
               title: lessonType,
               start: date + 'T12:00:00',
               allDay: true,
-              id: lessonId  // Set the event ID here
+              id: lessonId,  // Set the event ID here
+              student_info: studentName // Add student_info property
             };
     
             // Add the lesson event to the calendar
             $('#calendar').fullCalendar('renderEvent', event, true);
+    
+            // Store the event in localStorage
+            updateLocalStorage(event);
     
           } else {
             alert('Error adding lesson');
@@ -188,6 +193,7 @@
     
       closeAddLessonPopup();
     }
+
 
     
     function showLessonInformation(calEvent) {
@@ -210,10 +216,11 @@
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
       $('#calendar').fullCalendar('removeEvents');
     
-      calendarEvents.forEach(function(event) {
+      calendarEvents.forEach(function (event) {
         $('#calendar').fullCalendar('renderEvent', event, true);
       });
     }
+
     
     function removeEventFromLocalStorage(eventToRemove) {
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
@@ -224,10 +231,20 @@
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
     }
 
+    function deleteLessonFromLocalStorage(lessonId) {
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+      calendarEvents = calendarEvents.filter(function (event) {
+        return event.id !== lessonId;
+      });
+    
+      localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+    }
+
+
 
 
     function deleteLesson() {
-      var lessonId = $('#infoLessonId').text(); // Assuming you have an element with ID 'infoLessonId' to store the lesson ID
+      var lessonId = $('#infoLessonId').text();
       var date = $('#infoLessonDate').text();
       var lessonType = $('#infoLessonType').text();
       var studentName = $('#infoStudentName').text();
@@ -239,9 +256,13 @@
           lesson_id: lessonId
         }),
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             alert('Lesson deleted successfully');
+    
+            // Remove the event from localStorage
+            deleteLessonFromLocalStorage(lessonId);
+    
           } else {
             alert('Error deleting lesson');
           }
@@ -250,6 +271,7 @@
     
       closeLessonInfoPopup();
     }
+
 
 
   </script>
