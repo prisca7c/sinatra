@@ -54,22 +54,6 @@ post '/invoices' do
   { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
 end
 
-delete '/invoices/:id' do
-  invoicesData = JSON.parse(File.read('invoices.json')) rescue []  # Load existing data or initialize as an empty array
-
-  index = params[:id].to_i
-
-  if index >= 0 && index < invoicesData.length
-    invoicesData.delete_at(index)
-
-    # Save the updated data back to the file
-    File.write('invoices.json', JSON.pretty_generate(invoicesData))
-
-    { success: true }.to_json
-  else
-    { success: false, error: 'Invalid index' }.to_json
-  end
-end
 
 post '/update_students' do
   student_name = params[:student_name]
