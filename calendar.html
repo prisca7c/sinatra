@@ -99,6 +99,8 @@
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
+    <!-- Add an element to store lesson ID -->
+    <p style="display: none;" id="infoLessonId"></p>
     <!-- Example button to delete a lesson -->
     <button onclick="deleteLesson()">Delete Lesson</button>
   </div>
@@ -143,7 +145,7 @@
       $('#addLessonPopup').hide();
     }
 
-    function closePopup() {
+    function closeLessonInfoPopup() {
       $('#lessonInfoPopup').hide();
     }
 
