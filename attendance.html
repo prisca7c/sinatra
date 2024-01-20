@@ -86,37 +86,36 @@
 
       // Handle "Present" button click
       $('#presentBtn').click(function () {
-        $('#attendanceCheckbox').prop('checked', true);
+        $('#attendanceCheckbox').data('attendance', 'present');
+        updateAttendanceCheckboxUI();
       });
 
       // Handle "Absent" button click
       $('#absentBtn').click(function () {
-        $('#attendanceCheckbox').prop('checked', false);
+        $('#attendanceCheckbox').data('attendance', 'absent');
+        updateAttendanceCheckboxUI();
       });
 
       // Function to dynamically add a new student to the table
       function addStudentToTable(student) {
-        var attendanceHtml = '<td class="attendance-cell">';
-        if (student.attendance === true) {
-          attendanceHtml += '<div class="attendance-present">Present</div>';
-        } else if (student.attendance === false) {
-          attendanceHtml += '<div class="attendance-absent">Absent</div>';
+        var attendanceCell;
+        if (student.attendance === 'present') {
+          attendanceCell = '<td class="text-success">Present</td>';
+        } else if (student.attendance === 'absent') {
+          attendanceCell = '<td class="text-danger">Absent</td>';
         } else {
-          attendanceHtml += '<input type="checkbox" id="attendance_' + student.id + '" class="form-check-input" ' + (student.attendance ? 'checked' : '') + ' disabled>';
-          attendanceHtml += '<label for="attendance_' + student.id + '"></label>';
+          attendanceCell = '<td><input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '><label for="attendance_' + student.id + '"></label></td>';
         }
-        attendanceHtml += '</td>';
-
+      
         var newRow = '<tr data-id="' + student.id + '">' +
           '<td>' + student.name + '</td>' +
           '<td>' + student.contact + '</td>' +
-          attendanceHtml +
+          attendanceCell +
           '</tr>';
-
+      
         // Append the new row to the table
         $('#studentTable tbody').append(newRow);
       }
-
       // Function to load existing students on page load
       function loadStudents() {
         var students = JSON.parse(localStorage.getItem('students')) || [];
@@ -128,21 +127,26 @@
       function addStudent() {
         var studentName = $('#studentName').val();
         var contact = $('#contact').val();
-        var attendanceStatus = $('#attendanceCheckbox').prop('checked');
+        var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
         var studentId = Date.now().toString();
-
+      
         // Create a new student object
         var newStudent = { id: studentId, name: studentName, contact: contact, attendance: attendanceStatus };
-
+      
         // Add the new student to the table
         addStudentToTable(newStudent);
-
+      
         // Save the new student to local storage
         updateLocalStorage(newStudent);
-
+      
         // Clear input fields and checkboxes
         $('#studentName').val('');
         $('#contact').val('');
+        $('#attendanceCheckbox').data('attendance', '');
+        updateAttendanceCheckboxUI();
+        
+        // Close the modal
+        $('#addStudentModal').modal('hide');
       }
 
 
@@ -155,6 +159,17 @@
 
         // Update the local storage with the modified students array
         localStorage.setItem('students', JSON.stringify(students));
+      }
+
+      function updateAttendanceCheckboxUI() {
+        var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
+        if (attendanceStatus === 'present') {
+          $('#attendanceCheckbox').html('<span class="badge badge-success">Present</span>');
+        } else if (attendanceStatus === 'absent') {
+          $('#attendanceCheckbox').html('<span class="badge badge-danger">Absent</span>');
+        } else {
+          $('#attendanceCheckbox').html('<input type="checkbox"> <label>Mark as Present</label>');
+        }
       }
 
     });
