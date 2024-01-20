@@ -127,8 +127,7 @@
       eventRender: function (event, element) {
         var studentInfo = event.student_info;
         if (element.find('.student-info').length === 0) {
-          var displayText = studentInfo + ' ' + event.title; // Switch order and add space
-          element.find('.fc-content').append('<span class="student-info">' + displayText + '</span>');
+          element.find('.fc-content').append('<span class="student-info">' + event.studentInfo + ' ' + event.title + '</span>');
           element.find('.fc-content').append('<br>'); // Add a line break
         }
       },
