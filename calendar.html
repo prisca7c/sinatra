@@ -89,6 +89,9 @@
       </div>
 
       <button type="button" id="addLessonButton" onclick="addLesson();">Add Lesson</button>
+      <!-- Add a button to clear the calendar -->
+      <button onclick="clearCalendar()">Clear Calendar</button>
+
     </form>
   </div>
 
@@ -226,6 +229,15 @@
       $('#calendar').fullCalendar('renderEvent', event, true);
     });
   }
+  // Function to clear all events from FullCalendar and local storage
+  function clearCalendar() {
+    // Clear events from FullCalendar
+    $('#calendar').fullCalendar('removeEvents');
+  
+    // Clear events from local storage
+    localStorage.removeItem('calendarEvents');
+  }
+
   </script>
 </body>
 
