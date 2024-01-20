@@ -152,9 +152,11 @@
       document.getElementById('parentLastName').value = '';
       document.getElementById('email').value = '';
       document.getElementById('phoneNumber').value = '';
+  
+      // Set the display style to block
+      $('#addStudentPopup').css('display', 'block');
+  }
 
-      $('#addStudentPopup').show();
-    }
 
     function closeAddStudentPopup() {
       $('#addStudentPopup').hide();
