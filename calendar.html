@@ -184,36 +184,15 @@
   
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
-    var date = $('#infoLessonDate').text();
-    var lessonType = $('#infoLessonType').text();
-    var studentName = $('#infoStudentName').text();
   
-    $.ajax({
-      url: '/delete_lesson',
-      method: 'POST',
-      data: JSON.stringify({
-        lesson_id: lessonId
-      }),
-      contentType: 'application/json',
-      success: function (response) {
-        if (response.success) {
-          // Remove the event from local storage
-          deleteLessonFromLocalStorage(lessonId);
+    // Update local storage
+    deleteLessonFromLocalStorage(lessonId);
   
-          // Remove the event from the calendar
-          $('#calendar').fullCalendar('removeEvents', lessonId);
-  
-          alert('Lesson deleted successfully');
-        } else {
-          alert('Error deleting lesson');
-        }
-      }
-    });
+    // Remove the event from the calendar
+    $('#calendar').fullCalendar('removeEvents', lessonId);
   
     closeLessonInfoPopup();
   }
-
-
 
 
 
@@ -253,11 +232,15 @@
 
   function deleteLessonFromLocalStorage(lessonId) {
     var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+  
+    // Remove the lesson with the matching lessonId
     calendarEvents = calendarEvents.filter(function (event) {
       return event.id !== lessonId;
     });
-
+  
+    // Update local storage
     localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
   }
+
 
 </script>
