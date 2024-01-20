@@ -27,7 +27,7 @@
       Delete Selected
     </button>
 
-    <table class="table">
+    <table class="table" id="studentTable">
       <thead>
         <tr>
           <th>ID</th>
@@ -35,6 +35,8 @@
           <th>Attendance</th>
         </tr>
       </thead>
+      <tbody>
+      </tbody>
     </table>
 
   </div>
@@ -89,7 +91,6 @@
       });
     });
 
-    // Function to add a new student
     function addStudent() {
       var studentName = $('#studentName').val();
       var attendanceStatus = $('#attendanceCheckbox').prop('checked');
@@ -98,12 +99,14 @@
       // AJAX request to update the backend
       $.ajax({
         type: 'POST',
-        url: '/add_student',
+        url: '/attendance/add_student',
         contentType: 'application/json',
         data: JSON.stringify({ id: studentId, name: studentName, attendance: attendanceStatus }),
         success: function (data) {
           console.log(data);
-          // Assuming you have a function to refresh the student table, update as needed
+
+          // Assuming you have a function to refresh the student table
+          // and add the new student dynamically to the table
           refreshStudentTable();
         },
         error: function (error) {
@@ -117,15 +120,28 @@
 
     // Function to refresh the student table
     function refreshStudentTable() {
-      // Assuming you have a function to fetch and render the updated student data
-      // Replace this with the actual implementation based on your backend
+      // AJAX request to get the updated student data
       $.ajax({
         type: 'GET',
-        url: '/get_students',
+        url: '/attendance/get_students',
         success: function (data) {
-          // Assuming you have a function to render the table with updated data
-          // Replace this with the actual implementation based on your backend
-          renderStudentTable(data);
+          // Clear the existing table rows
+          $('#studentTable tbody').empty();
+
+          // Iterate through the updated student data and add rows to the table
+          data.forEach(function (student) {
+            var newRow = '<tr>' +
+              '<td>' + student.id + '</td>' +
+              '<td>' + student.name + '</td>' +
+              '<td>' +
+              '<input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '>' +
+              '<label for="attendance_' + student.id + '"></label>' +
+              '</td>' +
+              '</tr>';
+
+            // Append the new row to the table
+            $('#studentTable tbody').append(newRow);
+          });
         },
         error: function (error) {
           console.error(error);
@@ -149,7 +165,7 @@
           data: JSON.stringify({ students: selectedStudents }),
           success: function (data) {
             console.log(data);
-            // Assuming you have a function to refresh the student table, update as needed
+            // Refresh the student table after deletion
             refreshStudentTable();
           },
           error: function (error) {
