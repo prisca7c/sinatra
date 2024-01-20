@@ -70,16 +70,25 @@ get '/get_students' do
   students_data.to_json
 end
 
-post '/delete_lesson' do
-  request.body.rewind
-  lesson_data = JSON.parse(request.body.read)
-  lesson_id = lesson_data['lesson_id']
+# Assuming $lessons is an array holding your lessons
 
-  # Remove the lesson with the given ID from the lessons array
-  $lessons.reject! { |lesson| lesson['id'] == lesson_id }
+# Delete lesson by ID
+delete '/calendar/:id' do
+  lesson_id = params[:id].to_i
 
-  content_type :json
-  { success: true }.to_json
+  # Find the lesson with the specified ID
+  lesson_index = $lessons.index { |lesson| lesson['id'] == lesson_id }
+
+  if lesson_index
+    # Remove the lesson from the array
+    deleted_lesson = $lessons.delete_at(lesson_index)
+
+    content_type :json
+    { success: true, deleted_lesson: deleted_lesson }.to_json
+  else
+    content_type :json
+    { success: false, message: 'Lesson not found' }.to_json
+  end
 end
 
 run Sinatra::Application
