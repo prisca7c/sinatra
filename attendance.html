@@ -72,44 +72,23 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     function addStudent() {
-      console.log("Adding a new student...");
-    
       var studentName = $('#studentName').val();
       var attendanceStatus = $('#attendanceCheckbox').prop('checked');
       var studentId = Date.now().toString();
     
-      // AJAX request to update the backend
-      $.ajax({
-        type: 'POST',
-        url: '/attendance/add_student',
-        contentType: 'application/json',
-        data: JSON.stringify({ id: studentId, name: studentName, attendance: attendanceStatus }),
-        success: function (data) {
-          console.log("Add student success:", data);
+      // Assuming you have a function to dynamically add the new student to the table
+      addStudentToTable({ id: studentId, name: studentName, attendance: attendanceStatus });
     
-          // Assuming you have a function to dynamically add the new student to the table
-          addStudentToTable(data.student);
+      // Clear input fields and checkboxes
+      $('#studentName').val('');
+      $('#attendanceCheckbox').prop('checked', false);
     
-          if (data.clearFields) {
-            // Clear input fields and checkboxes
-            $('#studentName').val('');
-            $('#attendanceCheckbox').prop('checked', false);
-          }
-    
-          // Close the modal
-          $('#addStudentModal').modal('hide');
-        },
-        error: function (error) {
-          console.error("Add student error:", error);
-        }
-      });
+      // Close the modal (if you have a Bootstrap modal)
+      $('#addStudentModal').modal('hide');
     }
-
     
     // Function to dynamically add a new student to the table
     function addStudentToTable(student) {
-      console.log("Adding student to table:", student);
-    
       var newRow = '<tr>' +
         '<td>' + student.id + '</td>' +
         '<td>' + student.name + '</td>' +
@@ -123,54 +102,49 @@
       $('#studentTable tbody').append(newRow);
     }
 
-
-    // Function to refresh the student table
-    function refreshStudentTable() {
-      // AJAX request to get the updated student data
-      $.ajax({
-        type: 'GET',
-        url: '/attendance/get_students',
-        success: function (data) {
-          // Clear the existing table rows
-          $('#studentTable tbody').empty();
-
-          // Iterate through the updated student data and add rows to the table
-          data.forEach(function (student) {
-            addStudentToTable(student);
-          });
-        },
-        error: function (error) {
-          console.error(error);
-        }
-      });
-    }
-
-    // Function to delete selected students
     function deleteStudent() {
-      var selectedStudents = [];
-      $('input[type="checkbox"]:checked').each(function () {
-        var studentId = $(this).attr('id').split('_')[1];
-        selectedStudents.push({ id: parseInt(studentId) });
-      });
-
-      if (selectedStudents.length > 0) {
-        // AJAX request to delete selected students
-        $.ajax({
-          type: 'POST',
-          url: '/attendance/delete_student',
-          contentType: 'application/json',
-          data: JSON.stringify({ students: selectedStudents }),
-          success: function (data) {
-            console.log(data);
-            // Refresh the student table after deletion
-            refreshStudentTable();
-          },
-          error: function (error) {
-            console.error(error);
-          }
+      var selectedRows = $('#studentTable tbody tr input[type="checkbox"]:checked').closest('tr');
+      
+      selectedRows.each(function () {
+        var studentId = $(this).data('id');
+    
+        // Remove the student from the local array
+        students = students.filter(function (student) {
+          return student.id !== studentId;
         });
-      }
+    
+        // Update the local storage with the modified students array
+        localStorage.setItem('students', JSON.stringify(students));
+    
+        // Remove the row from the table
+        $(this).remove();
+      });
+    
+      // Close any modal or perform additional UI actions
+      // closeLessonInfoPopup(); // Adjust as needed
     }
+    // Initialize students array if it doesn't exist
+    var students = JSON.parse(localStorage.getItem('students')) || [];
+    
+    function updateLocalStorage(student) {
+      // Add the student to the students array
+      students.push(student);
+    
+      // Update the local storage with the modified students array
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+    
+    function removeStudentFromLocalStorage(studentId) {
+      // Filter out the student with the specified ID
+      students = students.filter(function (student) {
+        return student.id !== studentId;
+      });
+    
+      // Update the local storage with the modified students array
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+
+
   </script>
 
 </body>
