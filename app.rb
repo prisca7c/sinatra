@@ -120,19 +120,6 @@ post '/attendance/add_student' do
   { success: true, student: new_student }.to_json
 end
 
-# Endpoint to delete a student by ID
-post '/attendance/delete_student' do
-  request.body.rewind
-  data = JSON.parse(request.body.read, symbolize_names: true)
-
-  student_id = data[:id]
-
-  students.reject! { |student| student[:id] == student_id }
-
-  content_type :json
-  { success: true }.to_json
-end
-
 # Endpoint to get all students
 get '/attendance/get_students' do
   content_type :json
