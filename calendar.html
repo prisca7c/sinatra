@@ -153,43 +153,33 @@
     var lessonType = $('#lessonType').val();
     var studentName = $('#studentName').val();
   
-    fetch('/calendar', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: lessonType,
-        start_date: date,
-        studentName: studentName,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('Lesson added successfully');
+    // Using fullCalendar's clientEvents method to get existing events
+    var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
+      return (
+        event.start.format('YYYY-MM-DD') === date &&
+        event.title === lessonType && // Change from lessonType to title
+        event.student_info === studentName // Change from studentName to student_info
+      );
+    });
   
-          var lessonId = data.lesson_id;
-          var event = {
-            title: lessonType,
-            start: date + 'T12:00:00',
-            allDay: true,
-            id: lessonId,
-            studentName: studentName,
-          };
+    if (existingEvent.length === 0) {
+      var lessonEvent = {
+        title: lessonType, // Change from lessonType to title
+        student_info: studentName, // Change from studentName to student_info
+        start: date + 'T12:00:00',
+        allDay: true
+      };
   
-          $('#calendar').fullCalendar('renderEvent', event, true);
-          updateLocalStorage(event);
-        } else {
-          alert('Error adding lesson');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      // Render the event on the calendar
+      $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+  
+      // Update local storage
+      updateLocalStorage(lessonEvent);
+    }
   
     closeAddLessonPopup();
   }
+
   
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
