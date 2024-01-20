@@ -71,32 +71,12 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
-    $(document).ready(function () {
-      $('input[type="checkbox"]').change(function () {
-        var studentId = $(this).attr('id').split('_')[1];
-        var attendanceStatus = $(this).prop('checked');
-
-        $.ajax({
-          type: 'POST',
-          url: '/update_attendance',
-          contentType: 'application/json',
-          data: JSON.stringify({ student_id: parseInt(studentId), attendance_status: attendanceStatus }),
-          success: function (data) {
-            console.log(data);
-          },
-          error: function (error) {
-            console.error(error);
-          }
-        });
-      });
-    });
-
     // Function to add a new student
     function addStudent() {
       var studentName = $('#studentName').val();
       var attendanceStatus = $('#attendanceCheckbox').prop('checked');
       var studentId = Date.now().toString();
-
+    
       // AJAX request to update the backend
       $.ajax({
         type: 'POST',
@@ -105,18 +85,33 @@
         data: JSON.stringify({ id: studentId, name: studentName, attendance: attendanceStatus }),
         success: function (data) {
           console.log(data);
-
-          // Assuming you have a function to refresh the student table
-          // and add the new student dynamically to the table
-          refreshStudentTable();
+    
+          // Assuming you have a function to dynamically add the new student to the table
+          addStudentToTable(data.student);
+    
+          // Close the modal
+          $('#addStudentModal').modal('hide');
         },
         error: function (error) {
           console.error(error);
         }
       });
+    }
 
-      // Close the modal
-      $('#addStudentModal').modal('hide');
+
+    // Function to dynamically add a new student to the table
+    function addStudentToTable(student) {
+      var newRow = '<tr>' +
+        '<td>' + student.id + '</td>' +
+        '<td>' + student.name + '</td>' +
+        '<td>' +
+        '<input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '>' +
+        '<label for="attendance_' + student.id + '"></label>' +
+        '</td>' +
+        '</tr>';
+
+      // Append the new row to the table
+      $('#studentTable tbody').append(newRow);
     }
 
     // Function to refresh the student table
@@ -131,17 +126,7 @@
 
           // Iterate through the updated student data and add rows to the table
           data.forEach(function (student) {
-            var newRow = '<tr>' +
-              '<td>' + student.id + '</td>' +
-              '<td>' + student.name + '</td>' +
-              '<td>' +
-              '<input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '>' +
-              '<label for="attendance_' + student.id + '"></label>' +
-              '</td>' +
-              '</tr>';
-
-            // Append the new row to the table
-            $('#studentTable tbody').append(newRow);
+            addStudentToTable(student);
           });
         },
         error: function (error) {
@@ -149,6 +134,7 @@
         }
       });
     }
+
     // Function to delete selected students
     function deleteStudent() {
       var selectedStudents = [];
