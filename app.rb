@@ -95,53 +95,48 @@ end
 
 
 #-------------------------ATTENDANCE RECORD---------------------------
-# Assuming $students is an array holding your students
-$students = []
+# Sample data for students
+students = []
 
+# Endpoint to render the attendance page
+get '/attendance' do
+  erb :index, locals: { students: students }
+end
+
+# Endpoint to add a new student
 post '/attendance/add_student' do
   request.body.rewind
   data = JSON.parse(request.body.read, symbolize_names: true)
 
-  student_id = Time.now.to_i
+  student_id = data[:id]
   student_name = data[:name]
-  parent_email = data[:parent_email]
-  attendance_status = false  # Default to false, modify as needed
+  contact = data[:contact]
+  attendance_status = data[:attendance]
 
-  new_student = { id: student_id, name: student_name, parent_email: parent_email, attendance: attendance_status }
+  new_student = { id: student_id, name: student_name, contact: contact, attendance: attendance_status }
   students.push(new_student)
-
-  # Update the local storage with the modified students array
-  localStorage.setItem('students', JSON.stringify(students))
 
   content_type :json
   { success: true, student: new_student }.to_json
 end
 
-post '/attendance/delete_student/:id' do
-  student_id = params[:id].to_i
+# Endpoint to delete a student by ID
+post '/attendance/delete_student' do
+  request.body.rewind
+  data = JSON.parse(request.body.read, symbolize_names: true)
 
-  # Find the student with the specified ID
-  student_index = students.index { |student| student[:id] == student_id }
+  student_id = data[:id]
 
-  if student_index
-    # Remove the student from the array
-    deleted_student = students.delete_at(student_index)
+  students.reject! { |student| student[:id] == student_id }
 
-    # Update the local storage with the modified students array
-    localStorage.setItem('students', JSON.stringify(students))
-
-    content_type :json
-    { success: true, deleted_student: deleted_student }.to_json
-  else
-    content_type :json
-    { success: false, message: 'Student not found' }.to_json
-  end
+  content_type :json
+  { success: true }.to_json
 end
 
+# Endpoint to get all students
 get '/attendance/get_students' do
   content_type :json
   students.to_json
 end
-
 
 run Sinatra::Application
