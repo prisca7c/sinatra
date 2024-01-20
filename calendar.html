@@ -94,7 +94,7 @@
 
   <!-- Lesson Information Popup -->
   <div id="lessonInfoPopup">
-    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
+    <span class="close-button" onclick="()">X</span>
     <h2>Lesson Information</h2>
     <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
@@ -192,11 +192,13 @@
     
     function showLessonInformation(calEvent) {
       $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
-      $('#infoLessonType').text(calEvent.lessonType);
-      $('#infoStudentName').text(calEvent.studentName);
-    
+      $('#infoLessonType').text(calEvent.title);
+      $('#infoStudentName').text(calEvent.student_info); // Use the correct property name
+      $('#infoLessonId').text(calEvent.id); // Assuming you have an element with ID 'infoLessonId' to store the lesson ID
+      
       $('#lessonInfoPopup').show();
     }
+
     
     function updateLocalStorage(event) {
       var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
@@ -220,9 +222,6 @@
       });
     
       localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-    }
-    function closeLessonInfoPopup() {
-      $('#lessonInfoPopup').hide();
     }
 
 
@@ -251,6 +250,7 @@
     
       closeLessonInfoPopup();
     }
+
 
   </script>
 </body>
