@@ -22,6 +22,10 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
       Add Student
     </button>
+    <!-- Delete Student Button -->
+    <button type="button" class="btn btn-danger" onclick="deleteStudent()">
+      Delete Selected
+    </button>
 
     <table class="table">
       <thead>
@@ -31,18 +35,6 @@
           <th>Attendance</th>
         </tr>
       </thead>
-      <tbody>
-        <% students.each do |student| %>
-          <tr>
-            <td><%= student[:id] %></td>
-            <td><%= student[:name] %></td>
-            <td>
-              <input type="checkbox" id="attendance_<%= student[:id] %>" <% if student[:attendance] %>checked<% end %>>
-              <label for="attendance_<%= student[:id] %>"></label>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
     </table>
 
   </div>
@@ -139,6 +131,32 @@
           console.error(error);
         }
       });
+    }
+    // Function to delete selected students
+    function deleteStudent() {
+      var selectedStudents = [];
+      $('input[type="checkbox"]:checked').each(function () {
+        var studentId = $(this).attr('id').split('_')[1];
+        selectedStudents.push({ id: parseInt(studentId) });
+      });
+
+      if (selectedStudents.length > 0) {
+        // AJAX request to delete selected students
+        $.ajax({
+          type: 'POST',
+          url: '/attendance/delete_student',
+          contentType: 'application/json',
+          data: JSON.stringify({ students: selectedStudents }),
+          success: function (data) {
+            console.log(data);
+            // Assuming you have a function to refresh the student table, update as needed
+            refreshStudentTable();
+          },
+          error: function (error) {
+            console.error(error);
+          }
+        });
+      }
     }
   </script>
 
