@@ -89,8 +89,6 @@
       </div>
 
       <button type="button" id="addLessonButton" onclick="addLesson();">Add Lesson</button>
-      <!-- Add a button to clear the calendar -->
-      <button onclick="clearCalendar()">Clear Calendar</button>
 
     </form>
   </div>
@@ -128,7 +126,15 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: ''
+        right: 'clearButton'
+      }
+      customButtons: {
+        clearButton: {
+          text: 'Clear Calendar',
+          click: function () {
+            clearCalendar();
+          }
+        }
       }
     });
 
