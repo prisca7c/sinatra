@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'icalendar'
 require 'date'
+require 'erb'
 require 'json'
 
 enable :sessions
@@ -90,6 +91,33 @@ delete '/calendar/:id' do
     content_type :json
     { success: false, message: 'Lesson not found' }.to_json
   end
+end
+
+
+#-------------------------ATTENDANCE RECORD---------------------------
+# Sample data for students
+students = [
+  { id: 1, name: 'John Doe', attendance: false },
+  { id: 2, name: 'Jane Doe', attendance: false },
+  # Add more students as needed
+]
+
+get '/attendance' do
+  erb :index, locals: { students: students }
+end
+
+post '/update_attendance' do
+  request.body.rewind
+  data = JSON.parse(request.body.read, symbolize_names: true)
+
+  student_id = data[:student_id]
+  attendance_status = data[:attendance_status]
+
+  student = students.find { |s| s[:id] == student_id }
+  student[:attendance] = attendance_status
+
+  content_type :json
+  { success: true }.to_json
 end
 
 run Sinatra::Application
