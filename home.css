@@ -152,20 +152,3 @@ a {
   color: #fff;
   transition: 0.5s;
 }
-
-/* Update card content */
-.users .card:nth-child(1) h4::before {
-  content: "Students & Parents' Data";
-}
-
-.users .card:nth-child(2) h4::before {
-  content: "Calendar";
-}
-
-.users .card:nth-child(3) h4::before {
-  content: "Invoices";
-}
-
-.users .card:nth-child(4) h4::before {
-  content: "Attendance Record";
-}
