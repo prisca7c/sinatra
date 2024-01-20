@@ -91,6 +91,10 @@
           // Assuming you have a function to dynamically add the new student to the table
           addStudentToTable(data.student);
     
+          // Clear input fields and checkboxes
+          $('#studentName').val('');
+          $('#attendanceCheckbox').prop('checked', false);
+    
           // Close the modal
           $('#addStudentModal').modal('hide');
         },
@@ -99,6 +103,7 @@
         }
       });
     }
+
     
     // Function to dynamically add a new student to the table
     function addStudentToTable(student) {
