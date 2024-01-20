@@ -71,7 +71,6 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
-    // Function to add a new student
     function addStudent() {
       console.log("Adding a new student...");
     
@@ -91,9 +90,11 @@
           // Assuming you have a function to dynamically add the new student to the table
           addStudentToTable(data.student);
     
-          // Clear input fields and checkboxes
-          $('#studentName').val('');
-          $('#attendanceCheckbox').prop('checked', false);
+          if (data.clearFields) {
+            // Clear input fields and checkboxes
+            $('#studentName').val('');
+            $('#attendanceCheckbox').prop('checked', false);
+          }
     
           // Close the modal
           $('#addStudentModal').modal('hide');
