@@ -165,30 +165,27 @@
         });
       }
 
-      function addStudent() {
-        var studentName = $('#studentName').val();
-        var contact = $('#contact').val();
-        var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
-        var studentId = Date.now().toString();
+      // Function to dynamically add a new student to the table
+      function addStudentToTable(student) {
+        var attendanceCell;
+        if (student.attendance === 'present') {
+          attendanceCell = '<td><button class="btn btn-success">Present</button></td>';
+        } else if (student.attendance === 'absent') {
+          attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
+        } else {
+          attendanceCell = '<td><button class="btn btn-light">Not Marked</button></td>';
+        }
       
-        // Create a new student object
-        var newStudent = { id: studentId, name: studentName, contact: contact, attendance: attendanceStatus };
+        var newRow = '<tr data-id="' + student.id + '">' +
+          '<td>' + student.name + '</td>' +
+          '<td>' + student.contact + '</td>' +
+          attendanceCell +
+          '</tr>';
       
-        // Add the new student to the table
-        addStudentToTable(newStudent);
-      
-        // Save the new student to local storage
-        updateLocalStorage(newStudent);
-      
-        // Clear input fields and checkboxes
-        $('#studentName').val('');
-        $('#contact').val('');
-        $('#attendanceCheckbox').data('attendance', '');
-        updateAttendanceCheckboxUI();
-        
-        // Close the modal
-        $('#addStudentModal').modal('hide');
+        // Append the new row to the table
+        $('#studentTable tbody').append(newRow);
       }
+
 
       function updateLocalStorage(student) {
         // Retrieve existing students from local storage
