@@ -1,0 +1,67 @@
+<!-- views/index.erb -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/attendance.css">
+  <title>Student Attendance Record</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Student Attendance Record</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Attendance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% students.each do |student| %>
+          <tr>
+            <td><%= student[:id] %></td>
+            <td><%= student[:name] %></td>
+            <td>
+              <input type="checkbox" id="attendance_<%= student[:id] %>" <% if student[:attendance] %>checked<% end %>>
+              <label for="attendance_<%= student[:id] %>"></label>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('input[type="checkbox"]').change(function () {
+        var studentId = $(this).attr('id').split('_')[1];
+        var attendanceStatus = $(this).prop('checked');
+
+        $.ajax({
+          type: 'POST',
+          url: '/update_attendance',
+          contentType: 'application/json',
+          data: JSON.stringify({ student_id: parseInt(studentId), attendance_status: attendanceStatus }),
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (error) {
+            console.error(error);
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
