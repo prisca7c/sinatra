@@ -1,53 +1,103 @@
-/* public/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: rgb(226, 226, 226);
 }
 
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Main Section */
+.main {
+  position: relative;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+.main-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-th {
-  background-color: #f2f2f2;
-}
-
-input[type="checkbox"] {
-  display: none;
-}
-
-input[type="checkbox"] + label {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  background-color: #3498db;
+.main-top i {
+  position: absolute;
+  right: 0;
+  margin: 10px 30px;
+  color: rgb(110, 109, 109);
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked + label {
-  background-color: #2ecc71;
+.users {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.users .card {
+  width: 48%;
+  margin: 10px;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  flex-basis: 48%;
+}
+
+.users .card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.users .card h4 {
+  text-transform: uppercase;
+}
+
+.users .card p {
+  font-size: 12px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.users table {
+  margin: auto;
+}
+
+.users .per span {
+  padding: 5px;
+  border-radius: 10px;
+  background: rgb(223, 223, 223);
+}
+
+.users td {
+  font-size: 14px;
+  padding-right: 15px;
+}
+
+/* Add styles for attendance buttons */
+.attendance-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px;
+  cursor: pointer;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid #4AD489;
+}
+
+.attendance-btn:hover {
+  background: #4AD489;
+  color: #fff;
+  transition: 0.5s;
 }
