@@ -23,6 +23,8 @@ get '/calendar' do
   erb :calendar
 end
 
+#-------------------------CALENDAR---------------------------
+
 post '/calendar' do
   request.body.rewind
   lesson_data = JSON.parse(request.body.read)
@@ -39,12 +41,26 @@ post '/calendar' do
   { success: true, lesson_id: lesson_id }.to_json
 end
 
-post '/studentParentsData' do
-  request.body.rewind
-  student_data = JSON.parse(request.body.read)
-  # Adjusted to use JSON data
-  { success: true, data: student_data }.to_json
+# Delete lesson by ID
+delete '/calendar/:id' do
+  lesson_id = params[:id].to_i
+
+  # Find the lesson with the specified ID
+  lesson_index = $lessons.index { |lesson| lesson['id'] == lesson_id }
+
+  if lesson_index
+    # Remove the lesson from the array
+    deleted_lesson = $lessons.delete_at(lesson_index)
+
+    content_type :json
+    { success: true, deleted_lesson: deleted_lesson }.to_json
+  else
+    content_type :json
+    { success: false, message: 'Lesson not found' }.to_json
+  end
 end
+
+#-------------------------INVOICES---------------------------
 
 post '/invoices' do
   student_name = params[:student_name]
@@ -70,27 +86,6 @@ get '/get_students' do
   students_data = [{ student_name: 'John Doe', parent_email: 'john@example.com', parent_phone: '123-456-7890', tuition: '100' }]
   content_type :json
   students_data.to_json
-end
-
-# Assuming $lessons is an array holding your lessons
-
-# Delete lesson by ID
-delete '/calendar/:id' do
-  lesson_id = params[:id].to_i
-
-  # Find the lesson with the specified ID
-  lesson_index = $lessons.index { |lesson| lesson['id'] == lesson_id }
-
-  if lesson_index
-    # Remove the lesson from the array
-    deleted_lesson = $lessons.delete_at(lesson_index)
-
-    content_type :json
-    { success: true, deleted_lesson: deleted_lesson }.to_json
-  else
-    content_type :json
-    { success: false, message: 'Lesson not found' }.to_json
-  end
 end
 
 
@@ -125,5 +120,34 @@ get '/attendance/get_students' do
   content_type :json
   students.to_json
 end
+
+#-------------------------STUDENT & PARENTS DATA---------------------------
+
+# Store student data in-memory for simplicity
+studentData = []
+
+# Serve HTML page
+get '/sinatra/studentParentsData' do
+  File.read(File.join('views', 'studentParentsData.html'))
+end
+
+# Get all students
+get '/get_students' do
+  studentData.to_json
+end
+
+# Add/update a student
+post '/update_students' do
+  request.body.rewind
+  data = JSON.parse(request.body.read)
+
+  # Validate data (add your validation logic here)
+
+  # Add the student to the list
+  studentData << data
+
+  { success: true, message: 'Student added successfully' }.to_json
+end
+
 
 run Sinatra::Application
