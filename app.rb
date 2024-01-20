@@ -19,15 +19,6 @@ $db.execute <<-SQL
   );
 SQL
 
-
-$db.execute <<-SQL
-  CREATE TABLE IF NOT EXISTS lessons (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    start_date TEXT
-  );
-SQL
-
 set :port, 4567
 
 get '/' do
