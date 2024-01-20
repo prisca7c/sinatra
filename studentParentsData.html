@@ -1,7 +1,6 @@
-<!-- studentParentsData.html (Student & Parents' Data Page) -->
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +12,8 @@
       margin-top: 20px;
     }
 
-    #studentTable th, #studentTable td {
+    #studentTable th,
+    #studentTable td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
@@ -22,6 +22,7 @@
     #studentTable th {
       background-color: #f2f2f2;
     }
+
     #addStudentPopup {
       display: none;
       position: fixed;
@@ -60,31 +61,7 @@
 
   <div id="addStudentPopup">
     <form id="addStudentForm" action="/update_students" method="post">
-      <label for="selectDate">Select Date:</label>
-      <input type="text" id="selectDate" readonly />
-
-      <label for="studentFirstName">Student First Name:</label>
-      <input type="text" id="studentFirstName" required />
-
-      <label for="studentLastName">Student Last Name:</label>
-      <input type="text" id="studentLastName" required />
-
-      <label for="tuition">Tuition:</label>
-      <input type="number" id="tuition" required />
-
-      <label for="parentFirstName">Parent First Name:</label>
-      <input type="text" id="parentFirstName" required />
-
-      <label for="parentLastName">Parent Last Name:</label>
-      <input type="text" id="parentLastName" required />
-
-      <label for="email">Parent Email:</label>
-      <input type="text" id="email" required />
-
-      <label for="phoneNumber">Parent Phone Number:</label>
-      <input type="number" id="phoneNumber" required />
-
-      <button type="button" id="addStudentButton" onclick="addStudent();">Add Student</button>
+      <!-- Form fields for student data -->
     </form>
   </div>
 
@@ -93,8 +70,7 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>Student Name</th>
         <th>Tuition</th>
         <th>Parent First Name</th>
         <th>Parent Last Name</th>
@@ -106,11 +82,36 @@
       <!-- Student data will be dynamically added here -->
     </tbody>
   </table>
-
   <script>
     $(document).ready(function () {
-      // Your JavaScript code for handling student data goes here
-      // ...
+      // Function to retrieve all student data from the server
+      function getStudents() {
+        $.get('/get_students', function (data) {
+          // Handle the response from the server
+          // Clear existing table rows
+          $('#studentTableBody').empty();
+
+          // Update the table with data from the server
+          data.forEach(function (student) {
+            var newRow = '<tr>' +
+              '<td>' + student.date + '</td>' +
+              '<td>' + student.student_name + '</td>' +
+              '<td>' + student.tuition + '</td>' +
+              '<td>' + student.parent_first_name + '</td>' +
+              '<td>' + student.parent_last_name + '</td>' +
+              '<td>' + student.parent_email + '</td>' +
+              '<td>' + student.parent_phone + '</td>' +
+              '</tr>';
+
+            // Append the new row to the table
+            $('#studentTableBody').append(newRow);
+          });
+        });
+      }
+
+      // Call the getStudents function on page load
+      getStudents();
+
       // Submit the form using AJAX
       $('#addStudentForm').submit(function (event) {
         event.preventDefault();
@@ -119,15 +120,18 @@
           if (data.success) {
             // Update the existing table with new row
             var newRow = '<tr>' +
+              '<td>' + data.date + '</td>' +
               '<td>' + data.student_name + '</td>' +
+              '<td>' + data.tuition + '</td>' +
+              '<td>' + data.parent_first_name + '</td>' +
+              '<td>' + data.parent_last_name + '</td>' +
               '<td>' + data.parent_email + '</td>' +
               '<td>' + data.parent_phone + '</td>' +
-              '<td>' + data.tuition + '</td>' +
               '</tr>';
-  
+
             // Append the new row to the table
             $('#studentTableBody').append(newRow);
-  
+
             // Close the popup
             closeAddStudentPopup();
           } else {
@@ -136,33 +140,6 @@
           }
         });
       });
-      // Function to retrieve all student data from the server
-     function getStudents() {
-       $.get('/get_students', function (data) {
-         // Handle the response from the server
-         // Clear existing table rows
-         $('#studentTableBody').empty();
-   
-         // Update the table with data from the server
-         data.forEach(function (student) {
-           var newRow = '<tr>' +
-             '<td>' + student.date + '</td>' +
-             '<td>' + student.student_name + '</td>' +
-             '<td>' + student.tuition + '</td>' +
-             '<td>' + student.parent_first_name + '</td>' +
-             '<td>' + student.parent_last_name + '</td>' +
-             '<td>' + student.parent_email + '</td>' +
-             '<td>' + student.parent_phone + '</td>' +
-             '</tr>';
-   
-           // Append the new row to the table
-           $('#studentTableBody').append(newRow);
-         });
-       });
-     }
-   
-     // Call the getStudents function on page load
-     getStudents();
     });
 
     function openAddStudentPopup() {
@@ -181,39 +158,6 @@
 
     function closeAddStudentPopup() {
       $('#addStudentPopup').hide();
-    }
-
-    function addStudent() {
-      // Your existing code to add student to the calendar...
-      // ...
-
-      // Update the table with new student data
-      var date = $('#selectDate').val();
-      var studentFirstName = $('#studentFirstName').val();
-      var studentLastName = $('#studentLastName').val();
-      var tuition = $('#tuition').val();
-      var parentFirstName = $('#parentFirstName').val();
-      var parentLastName = $('#parentLastName').val();
-      var email = $('#email').val();
-      var phoneNumber = $('#phoneNumber').val();
-
-      // Create a new row for the table
-      var newRow = '<tr>' +
-        '<td>' + date + '</td>' +
-        '<td>' + studentFirstName + '</td>' +
-        '<td>' + studentLastName + '</td>' +
-        '<td>' + tuition + '</td>' +
-        '<td>' + parentFirstName + '</td>' +
-        '<td>' + parentLastName + '</td>' +
-        '<td>' + email + '</td>' +
-        '<td>' + phoneNumber + '</td>' +
-        '</tr>';
-
-      // Append the new row to the table
-      $('#studentTableBody').append(newRow);
-
-      // Close the popup
-      closeAddStudentPopup();
     }
   </script>
 </body>
