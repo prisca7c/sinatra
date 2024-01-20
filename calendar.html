@@ -125,7 +125,8 @@
         openAddLessonForm(date.format());
       },
       eventRender: function (event, element) {
-        element.find('.fc-title').append('<br><span class="student-info">' + event.student_info + '</span>');
+        var studentInfo = '<span class="student-info">' + event.student_info + ' ' + event.title + '</span>';
+        element.find('.fc-title').html(studentInfo);
       },
 
       eventClick: function (calEvent, jsEvent, view) {
