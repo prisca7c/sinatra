@@ -13,6 +13,31 @@ body {
   background: rgb(226, 226, 226);
 }
 
+/* Add the following styles to your existing CSS */
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.link:hover, .active {
+  border-bottom: 2px solid #fff;
+}
+
 nav {
   display: flex;
   background: #fff;
