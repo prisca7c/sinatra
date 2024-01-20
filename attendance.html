@@ -12,10 +12,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <style>
     .color-box {
-      width: 20px;
-      height: 20px;
+      width: 70px;
+      height: 30px;
       border: 1px solid #ccc;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 5px;
     }
   
     .present {
@@ -38,6 +41,9 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
       Add Student
     </button>
+    <button type="button" class="btn btn-warning" id="clearAllBtn">
+      Clear All
+    </button>
 
     <table class="table" id="studentTable">
       <thead>
@@ -59,9 +65,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
-          <button type="button" class="btn btn-warning" id="clearAllBtn">
-            Clear All
-          </button>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
