@@ -1,4 +1,3 @@
-<!-- calendar.html (Calendar Page) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +88,6 @@
       </div>
 
       <button type="button" id="addLessonButton" onclick="addLesson();">Add Lesson</button>
-
     </form>
   </div>
 
@@ -105,10 +103,24 @@
     <!-- Example button to delete a lesson -->
     <button onclick="deleteLesson()">Delete Lesson</button>
   </div>
+
 <script>
   $(document).ready(function () {
     $('#calendar').fullCalendar({
       defaultView: 'month',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'clearButton'
+      },
+      customButtons: {
+        clearButton: {
+          text: 'Clear Calendar',
+          click: function () {
+            clearCalendar();
+          }
+        }
+      },
       dayClick: function (date, jsEvent, view) {
         openAddLessonForm(date.format());
       },
@@ -121,20 +133,6 @@
       eventClick: function (calEvent, jsEvent, view) {
         showLessonInformation(calEvent);
         return false;
-      },
-
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'clearButton'
-      }
-      customButtons: {
-        clearButton: {
-          text: 'Clear Calendar',
-          click: function () {
-            clearCalendar();
-          }
-        }
       }
     });
 
@@ -161,35 +159,32 @@
     var date = $('#lessonDate').val();
     var lessonType = $('#lessonType').val();
     var studentName = $('#studentName').val();
-    var lessonId = Date.now().toString();
-  
-    // Using fullCalendar's clientEvents method to get existing events
+    var lessonId = Date.now().toString(); // Generating a unique lesson ID
+
     var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
       return (
         event.start.format('YYYY-MM-DD') === date &&
-        event.title === lessonType && // Change from lessonType to title
-        event.student_info === studentName // Change from studentName to student_info
+        event.title === lessonType &&
+        event.student_info === studentName
       );
     });
-  
+
     if (existingEvent.length === 0) {
       var lessonEvent = {
-        id: lessonId,
-        title: lessonType, // Change from lessonType to title
-        student_info: studentName, // Change from studentName to student_info
+        id: lessonId, // Unique lesson ID
+        title: lessonType,
+        student_info: studentName,
         start: date + 'T12:00:00',
         allDay: true
       };
-  
+
       $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
       updateLocalStorage(lessonEvent);
     }
-  
+
     closeAddLessonPopup();
   }
 
-
-  
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
 
@@ -211,7 +206,6 @@
     localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
   }
 
-
   function showLessonInformation(calEvent) {
     $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
     $('#infoLessonType').text(calEvent.title);
@@ -229,22 +223,13 @@
 
   function updateCalendarEvents() {
     var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    $('#calendar').fullCalendar('removeEvents');
-
-    calendarEvents.forEach(function (event) {
-      $('#calendar').fullCalendar('renderEvent', event, true);
-    });
+    $('#calendar').fullCalendar('addEventSource', calendarEvents);
   }
-  // Function to clear all events from FullCalendar and local storage
+
   function clearCalendar() {
-    // Clear events from FullCalendar
     $('#calendar').fullCalendar('removeEvents');
-  
-    // Clear events from local storage
     localStorage.removeItem('calendarEvents');
   }
-
-  </script>
+</script>
 </body>
-
 </html>
