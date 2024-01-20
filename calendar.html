@@ -164,7 +164,7 @@
     var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
       return (
         event.start.format('YYYY-MM-DD') === date &&
-        event.title === studentName + ' ' + lessonType && // Concatenate in the desired order
+        event.title === lessonType && // Only check for lessonType in the title
         event.student_info === studentName
       );
     });
@@ -172,7 +172,7 @@
     if (existingEvent.length === 0) {
       var lessonEvent = {
         id: lessonId, // Unique lesson ID
-        title: studentName + ' ' + lessonType, // Concatenate in the desired order
+        title: lessonType, // Only use lessonType in the title
         student_info: studentName,
         start: date + 'T12:00:00',
         allDay: true
@@ -184,6 +184,7 @@
   
     closeAddLessonPopup();
   }
+
 
 
   function deleteLesson() {
