@@ -132,6 +132,18 @@ post '/attendance/add_student' do
   students.push(new_student)
 
   content_type :json
+  { success: true, student: new_student }.to_json
+end
+
+post '/attendance/delete_student' do
+  request.body.rewind
+  data = JSON.parse(request.body.read, symbolize_names: true)
+
+  student_id = data[:id]
+
+  students.reject! { |student| student[:id] == student_id }
+
+  content_type :json
   { success: true }.to_json
 end
 
@@ -139,5 +151,4 @@ get '/attendance/get_students' do
   content_type :json
   students.to_json
 end
-
 run Sinatra::Application
