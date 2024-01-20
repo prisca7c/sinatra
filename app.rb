@@ -100,14 +100,18 @@ $students = []
 
 post '/attendance/add_student' do
   request.body.rewind
-  student_data = JSON.parse(request.body.read, symbolize_names: true)
+  data = JSON.parse(request.body.read, symbolize_names: true)
 
-  student_id = student_data[:id]
-  student_name = student_data[:name]
-  attendance_status = student_data[:attendance]
+  student_id = Time.now.to_i
+  student_name = data[:name]
+  parent_email = data[:parent_email]
+  attendance_status = false  # Default to false, modify as needed
 
-  new_student = { id: student_id, name: student_name, attendance: attendance_status }
-  $students.push(new_student)
+  new_student = { id: student_id, name: student_name, parent_email: parent_email, attendance: attendance_status }
+  students.push(new_student)
+
+  # Update the local storage with the modified students array
+  localStorage.setItem('students', JSON.stringify(students))
 
   content_type :json
   { success: true, student: new_student }.to_json
@@ -117,11 +121,14 @@ post '/attendance/delete_student/:id' do
   student_id = params[:id].to_i
 
   # Find the student with the specified ID
-  student_index = $students.index { |student| student[:id] == student_id }
+  student_index = students.index { |student| student[:id] == student_id }
 
   if student_index
     # Remove the student from the array
-    deleted_student = $students.delete_at(student_index)
+    deleted_student = students.delete_at(student_index)
+
+    # Update the local storage with the modified students array
+    localStorage.setItem('students', JSON.stringify(students))
 
     content_type :json
     { success: true, deleted_student: deleted_student }.to_json
@@ -133,7 +140,8 @@ end
 
 get '/attendance/get_students' do
   content_type :json
-  $students.to_json
+  students.to_json
 end
+
 
 run Sinatra::Application
