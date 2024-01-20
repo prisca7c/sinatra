@@ -160,30 +160,31 @@
     var lessonType = $('#lessonType').val();
     var studentName = $('#studentName').val();
     var lessonId = Date.now().toString(); // Generating a unique lesson ID
-
+  
     var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
       return (
         event.start.format('YYYY-MM-DD') === date &&
-        event.title === lessonType &&
+        event.title === studentName + ' ' + lessonType && // Concatenate in the desired order
         event.student_info === studentName
       );
     });
-
+  
     if (existingEvent.length === 0) {
       var lessonEvent = {
         id: lessonId, // Unique lesson ID
-        title: lessonType,
+        title: studentName + ' ' + lessonType, // Concatenate in the desired order
         student_info: studentName,
         start: date + 'T12:00:00',
         allDay: true
       };
-
+  
       $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
       updateLocalStorage(lessonEvent);
     }
-
+  
     closeAddLessonPopup();
   }
+
 
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
