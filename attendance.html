@@ -58,6 +58,10 @@
               <label for="studentName">Student Name:</label>
               <input type="text" class="form-control" id="studentName" required>
             </div>
+            <div class="form-group">
+              <label for="contact">Contact:</label>
+              <input type="text" class="form-control" id="contact" required>
+            </div>
             <div class="form-group form-check">
               <input type="checkbox" class="form-check-input" id="attendanceCheckbox">
               <label class="form-check-label" for="attendanceCheckbox">Mark as Present</label>
@@ -76,6 +80,14 @@
     $(document).ready(function () {
       // Load existing students on page load
       loadStudents();
+
+      // Handle "Add Student" button click in the modal
+      $('#addStudentModal').on('hidden.bs.modal', function () {
+        // Clear input fields when the modal is closed
+        $('#studentName').val('');
+        $('#contact').val('');
+        $('#attendanceCheckbox').prop('checked', false);
+      });
   
       // Handle "Add Student" button click
       $('#addStudentBtn').click(function () {
@@ -106,7 +118,7 @@
       function addStudentToTable(student) {
         var newRow = '<tr data-id="' + student.id + '">' +
           '<td>' + student.name + '</td>' +
-          '<td>' + student.parent_email + '</td>' +
+          '<td>' + student.contact + '</td>' +
           '<td>' +
           '<input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '>' +
           '<label for="attendance_' + student.id + '"></label>' +
