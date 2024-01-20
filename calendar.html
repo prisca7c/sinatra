@@ -71,7 +71,7 @@
 
   <!-- Add Lesson Popup -->
   <div id="addLessonPopup">
-    <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
+    <span class="close-button" onclick="closeAddLessonPopup()">X</span>
     <form id="addLessonForm">
       <div class="input-field">
         <label for="lessonDate"><i class="bx bx-calendar"></i></label>
@@ -198,12 +198,15 @@
     
     function showLessonInformation(calEvent) {
       $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
-      $('#infoLessonType').text(calEvent.title);
-      $('#infoStudentName').text(calEvent.student_info); // Use the correct property name
-      $('#infoLessonId').text(calEvent.id); // Assuming you have an element with ID 'infoLessonId' to store the lesson ID
-      
+      $('#infoLessonType').text(calEvent.title); // 'title' instead of 'lessonType'
+      $('#infoStudentName').text(calEvent.student_info); // 'student_info' instead of 'studentName'
+    
+      // Store the lesson ID in the hidden element
+      $('#infoLessonId').text(calEvent.id);
+    
       $('#lessonInfoPopup').show();
     }
+
 
     
     function updateLocalStorage(event) {
