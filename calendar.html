@@ -185,14 +185,40 @@
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
   
-    // Update local storage
-    deleteLessonFromLocalStorage(lessonId);
+    $.ajax({
+      url: '/delete_lesson',
+      method: 'POST',
+      data: JSON.stringify({
+        lesson_id: lessonId
+      }),
+      contentType: 'application/json',
+      success: function (response) {
+        if (response.success) {
+          alert('Lesson deleted successfully');
   
-    // Remove the event from the calendar
-    $('#calendar').fullCalendar('removeEvents', lessonId);
+          // Remove the event from localStorage
+          removeLessonFromLocalStorage(lessonId);
+  
+          // Remove the event from the calendar
+          $('#calendar').fullCalendar('removeEvents', lessonId);
+        } else {
+          alert('Error deleting lesson');
+        }
+      }
+    });
   
     closeLessonInfoPopup();
   }
+  
+  function removeLessonFromLocalStorage(lessonId) {
+    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+    calendarEvents = calendarEvents.filter(function (event) {
+      return event.id !== lessonId;
+    });
+  
+    localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+  }
+
 
 
 
