@@ -152,6 +152,7 @@
     var date = $('#lessonDate').val();
     var lessonType = $('#lessonType').val();
     var studentName = $('#studentName').val();
+    var lessonId = Date.now().toString();
   
     // Using fullCalendar's clientEvents method to get existing events
     var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
@@ -164,16 +165,14 @@
   
     if (existingEvent.length === 0) {
       var lessonEvent = {
+        id: lessonId,
         title: lessonType, // Change from lessonType to title
         student_info: studentName, // Change from studentName to student_info
         start: date + 'T12:00:00',
         allDay: true
       };
   
-      // Render the event on the calendar
       $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-  
-      // Update local storage
       updateLocalStorage(lessonEvent);
     }
   
@@ -184,49 +183,30 @@
   
   function deleteLesson() {
     var lessonId = $('#infoLessonId').text();
-  
-    $.ajax({
-      url: '/delete_lesson',
-      method: 'POST',
-      data: JSON.stringify({
-        lesson_id: lessonId
-      }),
-      contentType: 'application/json',
-      success: function (response) {
-        if (response.success) {
-          alert('Lesson deleted successfully');
-  
-          // Remove the event from localStorage
-          removeLessonFromLocalStorage(lessonId);
-  
-          // Remove the event from the calendar
-          $('#calendar').fullCalendar('removeEvents', lessonId);
-        } else {
-          alert('Error deleting lesson');
-        }
-      }
-    });
-  
+
+    // Remove the lesson from local storage
+    removeLessonFromLocalStorage(lessonId);
+
+    // Remove the lesson from the calendar
+    $('#calendar').fullCalendar('removeEvents', lessonId);
+
     closeLessonInfoPopup();
   }
-  
+
   function removeLessonFromLocalStorage(lessonId) {
     var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     calendarEvents = calendarEvents.filter(function (event) {
       return event.id !== lessonId;
     });
-  
+
     localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
   }
-
-
 
 
   function showLessonInformation(calEvent) {
     $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
     $('#infoLessonType').text(calEvent.title);
     $('#infoStudentName').text(calEvent.student_info);
-
     $('#infoLessonId').text(calEvent.id);
 
     $('#lessonInfoPopup').show();
@@ -246,27 +226,7 @@
       $('#calendar').fullCalendar('renderEvent', event, true);
     });
   }
+  </script>
+</body>
 
-  function removeEventFromLocalStorage(eventToRemove) {
-    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    calendarEvents = calendarEvents.filter(function (event) {
-      return eventToRemove._id !== event._id;
-    });
-
-    localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-  }
-
-  function deleteLessonFromLocalStorage(lessonId) {
-    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-  
-    // Remove the lesson with the matching lessonId
-    calendarEvents = calendarEvents.filter(function (event) {
-      return event.id !== lessonId;
-    });
-  
-    // Update local storage
-    localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-  }
-
-
-</script>
+</html>
