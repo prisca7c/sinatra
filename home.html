@@ -9,31 +9,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 </head>
 <body>
+  <nav class="nav">
+      <div class="nav-logo">
+          <p>LOGO .</p>
+      </div>
+      <div class="nav-menu" id="navMenu">
+          <ul>
+              <li><a href="/sinatra/home" class="link active">Home</a></li>
+              <li><a href="/sinatra/calendar" class="link">Calendar</a></li>
+              <li><a href="/sinatra/studentParentsData" class="link">Student & Parents' Data</a></li>
+              <li><a href="/sinatra/invoices" class="link">Invoices</a></li>
+          </ul>
+      </div>
+      <div class="nav-menu-btn">
+          <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+      </div>
+  </nav>
   <div class="container">
-    <nav>
-      <ul>
-        <li><a href="/sinatra/home" class="logo">
-          <img src="./pic/logo.jpg">
-          <span class="nav-item">Home</span>
-        </a></li>
-        <li><a href="/sinatra/calendar">
-          <i class="fas fa-menorah"></i>
-          <span class="nav-item">Calendar</span>
-        </a></li>
-        <li><a href="/sinatra/studentParentsData">
-          <i class="fas fa-comment"></i>
-          <span class="nav-item">Student & Parents' Data</span>
-        </a></li>
-        <li><a href="/sinatra/invoices">
-          <i class="fas fa-database"></i>
-          <span class="nav-item">Invoices</span>
-        </a></li>
-        <li><a href="#" class="logout">
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="nav-item">Log out</span>
-        </a></li>
-      </ul>
-    </nav>
     <section class="main">
       <div class="main-top">
         <h1>Attendance</h1>
