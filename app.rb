@@ -132,7 +132,7 @@ post '/attendance/add_student' do
   students.push(new_student)
 
   content_type :json
-  { success: true, student: new_student }.to_json
+  { success: true, student: new_student, clearFields: true }.to_json
 end
 
 post '/attendance/delete_student' do
