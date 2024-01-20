@@ -133,19 +133,19 @@
       function addStudentToTable(student) {
         var attendanceCell;
         if (student.attendance === 'present') {
-          attendanceCell = '<td><div class="color-box present"></div></td>';
+          attendanceCell = '<td><button class="btn btn-success">Present</button></td>';
         } else if (student.attendance === 'absent') {
-          attendanceCell = '<td><div class="color-box absent"></div></td>';
+          attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
         } else {
-          attendanceCell = '<td><div class="color-box"></div></td>';
+          attendanceCell = '<td><input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '><label for="attendance_' + student.id + '"></label></td>';
         }
-      
+
         var newRow = '<tr data-id="' + student.id + '">' +
           '<td>' + student.name + '</td>' +
           '<td>' + student.contact + '</td>' +
           attendanceCell +
           '</tr>';
-      
+
         // Append the new row to the table
         $('#studentTable tbody').append(newRow);
       }
