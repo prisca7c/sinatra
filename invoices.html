@@ -64,6 +64,7 @@
         <th>Parent's Email</th>
         <th>Parent's Phone</th>
         <th>Tuition</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody id="invoiceTableBody">
@@ -89,6 +90,7 @@
           '<td>' + data.parent_email + '</td>' +
           '<td>' + data.parent_phone + '</td>' +
           '<td>' + data.tuition + '</td>' +
+          '<td><button type="button" onclick="deleteInvoice(' + index + ')">Delete</button></td>' + 
           '</tr>';
         $('#invoiceTableBody').append(newRow);
       });
@@ -111,10 +113,17 @@
         tuition: tuition
       });
 
-      // Save the updated data back to local storage
+      function deleteInvoice(index) {
+        var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
+        
+        invoicesData.splice(index, 1);
+        localStorage.setItem('invoicesData', JSON.stringify(invoicesData));
+    
+        updateInvoiceTable();
+      }
+      
       localStorage.setItem('invoicesData', JSON.stringify(invoicesData));
-
-      // Update the table
+      
       updateInvoiceTable();
 
       // Clear the form fields
