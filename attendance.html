@@ -73,6 +73,8 @@
   <script>
     // Function to add a new student
     function addStudent() {
+      console.log("Adding a new student...");
+    
       var studentName = $('#studentName').val();
       var attendanceStatus = $('#attendanceCheckbox').prop('checked');
       var studentId = Date.now().toString();
@@ -84,7 +86,7 @@
         contentType: 'application/json',
         data: JSON.stringify({ id: studentId, name: studentName, attendance: attendanceStatus }),
         success: function (data) {
-          console.log(data);
+          console.log("Add student success:", data);
     
           // Assuming you have a function to dynamically add the new student to the table
           addStudentToTable(data.student);
@@ -93,14 +95,15 @@
           $('#addStudentModal').modal('hide');
         },
         error: function (error) {
-          console.error(error);
+          console.error("Add student error:", error);
         }
       });
     }
-
-
+    
     // Function to dynamically add a new student to the table
     function addStudentToTable(student) {
+      console.log("Adding student to table:", student);
+    
       var newRow = '<tr>' +
         '<td>' + student.id + '</td>' +
         '<td>' + student.name + '</td>' +
@@ -109,10 +112,11 @@
         '<label for="attendance_' + student.id + '"></label>' +
         '</td>' +
         '</tr>';
-
+    
       // Append the new row to the table
       $('#studentTable tbody').append(newRow);
     }
+
 
     // Function to refresh the student table
     function refreshStudentTable() {
