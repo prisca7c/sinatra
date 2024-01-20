@@ -125,11 +125,7 @@
         openAddLessonForm(date.format());
       },
       eventRender: function (event, element) {
-        var studentInfo = event.student_info;
-        if (element.find('.student-info').length === 0) {
-          element.find('.fc-content').append('<span class="student-info">' + studentInfo + ' ' + event.title + '</span>');
-          element.find('.fc-content').append('<br>'); // Add a line break
-        }
+        element.find('.fc-title').append('<br><span class="student-info">' + event.student_info + '</span>');
       },
 
       eventClick: function (calEvent, jsEvent, view) {
