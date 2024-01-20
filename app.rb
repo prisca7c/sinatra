@@ -106,7 +106,7 @@ get '/attendance' do
   erb :index, locals: { students: students }
 end
 
-post '/update_attendance' do
+post '/attendance/update_attendance' do
   request.body.rewind
   data = JSON.parse(request.body.read, symbolize_names: true)
 
@@ -118,6 +118,26 @@ post '/update_attendance' do
 
   content_type :json
   { success: true }.to_json
+end
+
+post '/attendance/add_student' do
+  request.body.rewind
+  data = JSON.parse(request.body.read, symbolize_names: true)
+
+  student_id = data[:id]
+  student_name = data[:name]
+  attendance_status = data[:attendance]
+
+  new_student = { id: student_id, name: student_name, attendance: attendance_status }
+  students.push(new_student)
+
+  content_type :json
+  { success: true }.to_json
+end
+
+get '/attendance/get_students' do
+  content_type :json
+  students.to_json
 end
 
 run Sinatra::Application
