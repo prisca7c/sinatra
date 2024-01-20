@@ -73,6 +73,26 @@
     </div>
   </div>
 
+  <style>
+    .color-box {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      margin-right: 5px;
+    }
+
+    .present {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .absent {
+      background-color: #dc3545;
+      color: #fff;
+    }
+  </style>
+
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     $(document).ready(function () {
@@ -117,7 +137,7 @@
         } else if (student.attendance === 'absent') {
           attendanceCell = '<td><div class="color-box absent"></div></td>';
         } else {
-          attendanceCell = '<td><input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '><label for="attendance_' + student.id + '"></label></td>';
+          attendanceCell = '<td><div class="color-box"></div></td>';
         }
       
         var newRow = '<tr data-id="' + student.id + '">' +
@@ -176,11 +196,11 @@
       function updateAttendanceCheckboxUI() {
         var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
         if (attendanceStatus === 'present') {
-          $('#attendanceCheckbox').html('<div class="color-box present">Present</div>');
+          $('#attendanceCheckbox').html('<div class="color-box present"></div>');
         } else if (attendanceStatus === 'absent') {
-          $('#attendanceCheckbox').html('<div class="color-box absent">Absent</div>');
+          $('#attendanceCheckbox').html('<div class="color-box absent"></div>');
         } else {
-          $('#attendanceCheckbox').html('<div class="color-box">Checkmark</div>');
+          $('#attendanceCheckbox').html('<div class="color-box"></div>');
         }
       }
     });
