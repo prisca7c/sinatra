@@ -107,23 +107,15 @@
       // Load existing students on page load
       loadStudents();
 
-      // Handle "Add Student" button click in the modal
-      $('#addStudentBtn').click(function () {
-        addStudent();
-
-        // Close the modal
-        $('#addStudentModal').modal('hide');
-      });
-
       // Handle "Present" button click
       $('#presentBtn').click(function () {
-        $('#attendanceCheckbox').data('attendance', 'present');
+        $('#attendanceCheckbox').prop('checked', true);
         updateAttendanceCheckboxUI();
       });
-
+      
       // Handle "Absent" button click
       $('#absentBtn').click(function () {
-        $('#attendanceCheckbox').data('attendance', 'absent');
+        $('#attendanceCheckbox').prop('checked', false);
         updateAttendanceCheckboxUI();
       });
 
@@ -203,10 +195,10 @@
       }
 
       function updateAttendanceCheckboxUI() {
-        var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
-        if (attendanceStatus === 'present') {
+        var isChecked = $('#attendanceCheckbox').prop('checked');
+        if (isChecked) {
           $('#attendanceCheckbox').html('<div class="color-box present"></div>');
-        } else if (attendanceStatus === 'absent') {
+        } else {
           $('#attendanceCheckbox').html('<div class="color-box absent"></div>');
         } else {
           $('#attendanceCheckbox').html('<div class="color-box"></div>');
