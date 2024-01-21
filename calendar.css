@@ -9,10 +9,10 @@
 }
 
 body {
-  background: url("https://d10j3mvrs1suex.cloudfront.net/s:bzglfiles/u/452881/8360455c833c71dcc105413ce118cde846de72fa/original/20191019-k11musea-perfromance11-hck7863.jpg/!!/b%3AW1sicmVzaXplIiwxMDAwXSxbIm1heCJdLFsid2UiXV0%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg");
+  /* background: url("https://d10j3mvrs1suex.cloudfront.net/s:bzglfiles/u/452881/8360455c833c71dcc105413ce118cde846de72fa/original/20191019-k11musea-perfromance11-hck7863.jpg/!!/b%3AW1sicmVzaXplIiwxMDAwXSxbIm1heCJdLFsid2UiXV0%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; */
   overflow: hidden;
 }
 
