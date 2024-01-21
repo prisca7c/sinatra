@@ -1,16 +1,11 @@
-/* calendar.css */
-
-* {
-  
-}
-
+/* Updated code with changes */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #fff; /* White background */
-  color: #000; /* Black text color */
+  background: #fff; 
+  color: #000; 
   overflow: hidden;
 }
 
@@ -62,52 +57,6 @@ nav a {
   z-index: 1000;
 }
 
-/* Calendar Popup and Input Styles 
-#addLessonPopup,
-#lessonInfoPopup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  z-index: 1000;
-}
-
-#addLessonPopup button,
-#lessonInfoPopup button {
-  margin-top: 10px;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-.input-field {
-  position: relative;
-  margin-bottom: 15px;
-}
-
-.input-field input {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.input-field i {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
-} */
-
-/* Add modern styling with curves to the table */
 table {
   width: 100%;
   border-collapse: collapse;
