@@ -178,10 +178,8 @@ nav a:hover {
 /* Calendar styles (integrated) */
 
 #calendar {
-  margin-top: 20px;
-  max-width: 950px;
-  padding-left: 50px
-  padding-right: 50px
+  margin-top: 20px auto;
+  max-width: 900px;
 }
 
 #addLessonForm {
