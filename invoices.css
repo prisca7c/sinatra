@@ -1,7 +1,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px; /* Add padding to provide space from the border */
   box-sizing: border-box;
   background: #fff; /* Set background to white */
   overflow: hidden;
@@ -13,7 +13,7 @@ body {
   top: 50px; /* Adjust as needed */
   display: flex;
   justify-content: space-around;
-  width: 100%;
+  width: calc(100% - 40px); /* Adjust as needed */
   height: 50px; /* Adjust as needed */
   line-height: 50px; /* Adjust as needed */
   background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
