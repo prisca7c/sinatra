@@ -78,17 +78,17 @@
     <form id="addLessonForm">
       <div class="input-field">
         <label for="lessonDate"><i class="bx bx-calendar"></i></label>
-        <input type="text" id="lessonDate" placeholder="   YYYY-MM-DD" required />
+        <input type="text" id="lessonDate" placeholder="    YYYY-MM-DD" required />
       </div>
 
       <div class="input-field">
         <label for="lessonType"><i class="bx bx-edit"></i></label>
-        <input type="text" id="lessonType" placeholder="   Lesson Type" required />
+        <input type="text" id="lessonType" placeholder="    Lesson Type" required />
       </div>
 
       <div class="input-field">
         <label for="studentName"><i class="bx bx-user"></i></label>
-        <input type="text" id="studentName" placeholder="   Student Name" required />
+        <input type="text" id="studentName" placeholder="    Student Name" required />
       </div>
 
       <button type="button" id="addLessonButton" onclick="addLesson();">Add Lesson</button>
@@ -99,7 +99,7 @@
   <div id="lessonInfoPopup">
     <span class="close-button" onclick="closeLessonInfoPopup()">X</span>
     <h2>Lesson Information</h2>
-    <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
+    <p><strong>Date:</strong> <span id="info"></span></p>
     <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
     <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
     <!-- Add an element to store lesson ID -->
@@ -143,7 +143,7 @@
   });
 
   function openAddLessonForm(date) {
-    document.getElementById('lessonDate').value = date;
+    document.getElementById('lessonDate').value = '    ' + date;
     document.getElementById('lessonType').value = '';
     document.getElementById('studentName').value = '';
 
