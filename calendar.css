@@ -95,25 +95,51 @@ nav button:hover {
 .fc-left {
   order: -1; /* Move the clear calendar button to the left */
 }
-
 .fc-center {
   flex: 1;
   text-align: center;
 }
-
 .fc-right {
   order: 2; /* Move the clear calendar button to the right */
 }
-
 /* Add this style to move the clear calendar button to the right */
 .fc-clear {
   order: 3;
+}
+
+.fc-toolbar-title {
+  flex: 1;
+  text-align: center;
+}
+
+.fc-button {
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin: 0 5px; /* Adjust the margin as needed for spacing */
+}
+
+.fc-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Additional styles to position the buttons as requested */
+.fc-header-toolbar .fc-prev-button,
+.fc-header-toolbar .fc-today-button,
+.fc-header-toolbar .fc-next-button {
+  margin-right: 5px; /* Adjust the spacing between buttons */
 }
 
 
 /* Form Styles */
 form {
   margin-top: 20px;
+}
+
+/* Additional styles to center the month and year display */
+.fc-toolbar-title {
+  flex: 1;
+  text-align: center;
 }
 
 .overlay {
@@ -216,8 +242,7 @@ button:hover {
 /* Calendar styles (integrated) */
 
 #calendar {
-  margin-top: 20px auto;
-  width: none;
+  max-width: 85%
 }
 
 @media only screen and (max-width: 786px) {
