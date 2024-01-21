@@ -9,10 +9,6 @@
 }
 
 body {
-  /* background: url("https://d10j3mvrs1suex.cloudfront.net/s:bzglfiles/u/452881/8360455c833c71dcc105413ce118cde846de72fa/original/20191019-k11musea-perfromance11-hck7863.jpg/!!/b%3AW1sicmVzaXplIiwxMDAwXSxbIm1heCJdLFsid2UiXV0%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed; */
   overflow: hidden;
 }
 
@@ -108,19 +104,30 @@ header {
 
 .input-field {
   font-size: 15px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  height: 50px;
-  width: 100%;
-  padding: 0 10px 0 45px;
-  border: none;
-  border-radius: 30px;
-  outline: none;
-  transition: .2s ease;
+  margin-bottom: 15px;
 }
 
-.input-field:hover,
-.input-field:focus {
+.input-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.2);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.input-field input:hover,
+.input-field input:focus {
   background: rgba(255, 255, 255, 0.25);
 }
 
