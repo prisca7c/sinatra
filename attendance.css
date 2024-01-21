@@ -191,6 +191,12 @@ form {
   z-index: 1000;
 }
 
+/* Add the following styles to center the modal */
+.modal-dialog {
+  max-width: 80%;
+  margin: 30px auto;
+}
+
 /* Input Styles */
 input, button {
   margin-top: 10px;
