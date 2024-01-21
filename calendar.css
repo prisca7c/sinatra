@@ -1,7 +1,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0 50px;
   box-sizing: border-box;
   background: #fff;
   overflow: hidden;
@@ -42,6 +42,25 @@ nav a:hover {
   text-decoration: underline; /* Underline on hover */
 }
 
+/* Add this CSS for the calendar header buttons */
+.fc-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fc-button {
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin: 0 5px; /* Adjust the margin as needed for spacing */
+}
+
+.fc-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
 .overlay {
   display: none;
   position: fixed;
@@ -63,24 +82,6 @@ nav a:hover {
   background-color: #fff;
   border: 1px solid #ddd;
   z-index: 1000;
-}
-
-/* Add this CSS for the calendar header buttons */
-.fc-header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.fc-button {
-  background: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: 0.3s ease;
-  margin: 0 5px; /* Adjust the margin as needed for spacing */
-}
-
-.fc-button:hover {
-  background: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -191,6 +192,7 @@ button:hover {
 #calendar {
   margin-top: 20px auto;
   max-width: 900px;
+  width: 80%;
 }
 
 @media only screen and (max-width: 786px) {
