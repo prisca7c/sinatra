@@ -74,6 +74,7 @@
               <button type="button" class="btn btn-success" id="presentBtn">Present</button>
               <button type="button" class="btn btn-danger" id="absentBtn">Absent</button>
             </div>
+            <input type="hidden" id="attendanceStatus" value="">
             <button type="button" class="btn btn-primary" id="addStudentBtn">Add Student</button>
           </form>
         </div>
@@ -192,11 +193,14 @@
       }
 
       function updateAttendanceCheckboxUI() {
-        // Update the UI based on the selected attendance status
         var attendanceStatus = $('#attendanceStatus').val();
-        var colorBoxClass = (attendanceStatus === 'present') ? 'present' : 'absent';
-
-        $('#attendanceCheckbox').html('<div class="color-box ' + colorBoxClass + '"></div>');
+        if (attendanceStatus === 'present') {
+          $('#attendanceCheckbox').html('<div class="color-box present"></div>');
+        } else if (attendanceStatus === 'absent') {
+          $('#attendanceCheckbox').html('<div class="color-box absent"></div>');
+        } else {
+          $('#attendanceCheckbox').html('<div class="color-box"></div>');
+        }
       }
     });
   </script>
