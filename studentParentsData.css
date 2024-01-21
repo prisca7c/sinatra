@@ -1,28 +1,25 @@
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
   background: #fff; /* Set background to white */
   overflow: hidden;
 }
 
 h1 {
-  color: #000;
-  font-size: 24px;
-  text-align: left;
-  padding: 20px;
+  margin-top: 20px;
 }
 
 nav {
   position: fixed;
   top: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
-  height: 80px; /* Reduced height */
-  line-height: 80px; /* Reduced line height */
+  height: 100px; /* Reduced height */
+  line-height: 100px; /* Reduced line height */
   background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
   z-index: 100;
 }
@@ -31,20 +28,25 @@ nav a {
   text-decoration: none;
   color: #000; /* Set navigation text color to black */
   font-weight: 500;
-  font-size: 14px; /* Reduced font size */
-  margin: 0 15px; /* Reduced margin */
+  font-size: 16px; /* Reduced font size */
+  margin: 0 25px 0 40px; /* Reduced margin */
   padding-bottom: 15px;
 }
 
 nav button {
-  width: 100px; /* Reduced width */
-  height: 30px; /* Reduced height */
+  width: 130px; /* Reduced width */
+  height: 40px; /* Reduced height */
   font-weight: 500;
   background: rgba(0, 0, 0, 0.1); /* Set a light background */
   border: none;
   border-radius: 15px; /* Adjusted border-radius */
   cursor: pointer;
   transition: .3s ease;
+}
+
+.link:hover,
+.active {
+  border-bottom: 2px solid #000;
 }
 
 nav button:hover {
