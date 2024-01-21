@@ -23,13 +23,11 @@ header {
   text-align: left; /* Align left */
   padding: 20px; /* Added padding */
   color: #000; /* Text color */
-  width: 100%; /* Full width */
   box-sizing: border-box;
 }
 
 nav {
   padding: 15px 20px; /* Added padding */
-  width: 100%; /* Full width */
   box-sizing: border-box;
 }
 
@@ -179,12 +177,12 @@ nav a:hover {
 
 #calendar {
   margin-top: 20px;
-  width: 100%;
+  max-width: 300px;
 }
 
 #addLessonForm {
   margin-top: 20px;
-  width: 100%;
+  max-width: 300px;
 }
 
 #lessonDate,
@@ -192,7 +190,7 @@ nav a:hover {
 #studentName {
   margin-top: 10px;
   background: rgba(255, 255, 255, 0.2);
-  width: 100%;
+  width: 300px;
 }
 
 #lessonInfoPopup span {
