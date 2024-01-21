@@ -87,14 +87,9 @@
   </table>
   <script>
     $(document).ready(function () {
-      // Function to retrieve all student data from the server
       function getStudents() {
         $.get('/get_students', function (data) {
-          // Handle the response from the server
-          // Clear existing table rows
           $('#studentTableBody').empty();
-
-          // Update the table with data from the server
           data.forEach(function (student) {
             var newRow = '<tr>' +
               '<td>' + student.date + '</td>' +
@@ -105,23 +100,18 @@
               '<td>' + student.parent_email + '</td>' +
               '<td>' + student.parent_phone + '</td>' +
               '</tr>';
-
-            // Append the new row to the table
             $('#studentTableBody').append(newRow);
           });
         });
       }
 
-      // Call the getStudents function on page load
       getStudents();
 
-      // Submit the form using AJAX
       $('#addStudentForm').submit(function (event) {
         event.preventDefault();
+
         $.post('/update_students', $(this).serialize(), function (data) {
-          // Handle the response from the server
           if (data.success) {
-            // Update the existing table with new row
             var newRow = '<tr>' +
               '<td>' + data.date + '</td>' +
               '<td>' + data.student_name + '</td>' +
@@ -131,39 +121,26 @@
               '<td>' + data.parent_email + '</td>' +
               '<td>' + data.parent_phone + '</td>' +
               '</tr>';
-
-            // Append the new row to the table
             $('#studentTableBody').append(newRow);
-
-            // Close the popup
             closeAddStudentPopup();
           } else {
-            // Handle the case where the server-side processing fails
             alert('Failed to add student. Please try again.');
           }
         });
       });
+
+      $('#openAddStudentPopupButton').click(function () {
+        openAddStudentPopup();
+      });
+
+      function openAddStudentPopup() {
+        $('#addStudentPopup').show();
+      }
+
+      function closeAddStudentPopup() {
+        $('#addStudentPopup').hide();
+      }
     });
-
-    function openAddStudentPopup() {
-      var date = moment().format('YYYY-MM-DD');
-      document.getElementById('selectDate').value = date;
-      document.getElementById('studentFirstName').value = '';
-      document.getElementById('studentLastName').value = '';
-      document.getElementById('tuition').value = '';
-      document.getElementById('parentFirstName').value = '';
-      document.getElementById('parentLastName').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('phoneNumber').value = '';
-  
-      // Set the display style to block
-      $('#addStudentPopup').css('display', 'block');
-  }
-
-
-    function closeAddStudentPopup() {
-      $('#addStudentPopup').hide();
-    }
   </script>
 </body>
 
