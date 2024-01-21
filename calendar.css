@@ -1,66 +1,56 @@
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0 20px;
+  padding: 20px; 
   box-sizing: border-box;
-  background: #fff;
+  background: #fff; 
   overflow: hidden;
 }
-/*
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-*/
 
 h1 {
-  margin-top: 20px;
+  margin-top: 20px; 
 }
 
-nav {
-  text-align: center;
-  justify-content: space-between
-  padding: 15px 0;
+.nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
-  box-sizing: border-box;
+  height: 100px;
+  line-height: 100px;
+  background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
+  z-index: 100;
 }
 
 nav a {
   text-decoration: none;
   color: #000;
   font-weight: 500;
-  font-size: 16px;
-  margin: 0 15px;
+  font-size: 16px; 
+  margin: 0 25px 0 40px; 
+  padding-bottom: 15px;
 }
 
-
-nav a:hover {
-  text-decoration: underline; /* Underline on hover */
-}
-
-/* Add this CSS for the calendar header buttons */
-.fc-header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.fc-button {
-  background: rgba(255, 255, 255, 0.7);
+nav button {
+  width: 130px; 
+  height: 40px; 
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.1); 
+  border: none;
+  border-radius: 15px; 
   cursor: pointer;
-  transition: 0.3s ease;
-  margin: 0 5px; /* Adjust the margin as needed for spacing */
+  transition: .3s ease;
 }
 
-.fc-button:hover {
-  background: rgba(255, 255, 255, 0.5);
+.link:hover,
+.active {
+  border-bottom: 2px solid #000;
 }
 
+nav button:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
 
 .overlay {
   display: none;
@@ -83,6 +73,24 @@ nav a:hover {
   background-color: #fff;
   border: 1px solid #ddd;
   z-index: 1000;
+}
+
+/* Add this CSS for the calendar header buttons */
+.fc-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fc-button {
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin: 0 5px; /* Adjust the margin as needed for spacing */
+}
+
+.fc-button:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 
