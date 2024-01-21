@@ -10,15 +10,39 @@ body {
 
 .wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: column;
   align-items: center;
-  min-height: 110vh;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 header {
-  font-size: 20px;
-  text-align: center;
-  padding: 10px 0;
+  font-size: 24px; /* Increased font size */
+  text-align: left; /* Align left */
+  padding: 10px 20px; /* Added padding */
+  background: #20232a; /* Dark background color */
+  color: #61dafb; /* Text color */
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+}
+
+nav {
+  background: #282c34; /* Dark background color */
+  padding: 15px 20px; /* Added padding */
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+}
+
+nav a {
+  text-decoration: none;
+  color: #61dafb; /* Link color */
+  font-weight: 500;
+  font-size: 16px;
+  margin: 0 15px; /* Adjusted margin */
+}
+
+nav a:hover {
+  text-decoration: underline; /* Underline on hover */
 }
 
 .input-field {
@@ -155,10 +179,12 @@ header {
 
 #calendar {
   margin-top: 20px;
+  width: 100%;
 }
 
 #addLessonForm {
   margin-top: 20px;
+  width: 100%;
 }
 
 #lessonDate,
@@ -166,6 +192,7 @@ header {
 #studentName {
   margin-top: 10px;
   background: rgba(255, 255, 255, 0.2);
+  width: 100%;
 }
 
 #lessonInfoPopup span {
