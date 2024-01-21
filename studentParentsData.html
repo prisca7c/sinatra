@@ -170,6 +170,28 @@
       function closeAddStudentPopup() {
         $('#addStudentPopup').hide();
       }
+    
+      // Form Submission
+      $('#addStudentForm').submit(function (event) {
+        event.preventDefault();
+    
+        $.post('/update_students', $(this).serialize(), function (data) {
+          if (data.success) {
+            var newRow = '<tr>' +
+              '<td>' + data.date + '</td>' +
+              '<td>' + data.student_name + '</td>' +
+              '<td>' + data.tuition + '</td>' +
+              '<td>' + data.parent_name + '</td>' +
+              '<td>' + data.parent_email + '</td>' +
+              '<td>' + data.parent_phone + '</td>' +
+              '</tr>';
+            $('#studentTableBody').append(newRow);
+            closeAddStudentPopup();
+          } else {
+            alert('Failed to add student. Please try again.');
+          }
+        });
+      });
     });
   </script>
 </body>
