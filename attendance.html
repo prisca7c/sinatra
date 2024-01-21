@@ -176,13 +176,18 @@
         updateLocalStorage(newStudent);
 
         // Clear input fields and checkboxes
+
         $('#studentName').val('');
         $('#contact').val('');
         $('#attendanceCheckbox').data('attendance', '');
         updateAttendanceCheckboxUI();
-
-        // Close the modal
-        $('#addStudentModal').modal('hide');
+        
+        $('#addStudentModal').on('hidden.bs.modal', function () {
+          $('#studentName').val('');
+          $('#contact').val('');
+          $('#attendanceCheckbox').data('attendance', '');
+          updateAttendanceCheckboxUI();
+        }).modal('hide');
       }
 
 
