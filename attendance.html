@@ -107,6 +107,10 @@
       // Load existing students on page load
       loadStudents();
 
+      $('#addStudentBtn').click(function () {
+        addStudent();
+      });
+
       // Handle "Present" button click
       $('#presentBtn').click(function () {
         $('#attendanceCheckbox').prop('checked', true);
