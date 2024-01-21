@@ -10,24 +10,24 @@ body {
 
 .wrapper {
   display: flex;
-  justify-content: column;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 header {
   font-size: 24px; /* Increased font size */
   text-align: left; /* Align left */
-  padding: 10px 20px; /* Added padding */
-  background: #20232a; /* Dark background color */
-  color: #61dafb; /* Text color */
+  padding: 20px; /* Added padding */
+  color: #000; /* Text color */
   width: 100%; /* Full width */
   box-sizing: border-box;
 }
 
 nav {
-  background: #282c34; /* Dark background color */
   padding: 15px 20px; /* Added padding */
   width: 100%; /* Full width */
   box-sizing: border-box;
@@ -35,7 +35,7 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #61dafb; /* Link color */
+  color: #000; /* Link color */
   font-weight: 500;
   font-size: 16px;
   margin: 0 15px; /* Adjusted margin */
