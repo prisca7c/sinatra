@@ -135,12 +135,12 @@
           });
         });
       }
-    
+
       getStudents();
-    
+
       $('#addStudentForm').submit(function (event) {
         event.preventDefault();
-    
+
         $.post('/update_students', $(this).serialize(), function (data) {
           if (data.success) {
             var newRow = '<tr>' +
@@ -162,16 +162,16 @@
           console.error('Failed to send request to /update_students'); // Log the request failure to the console
         });
       });
-    
+
       // Add Student Button Click Event
       $('#openAddStudentPopupButton').click(function () {
         openAddStudentPopup();
       });
-    
+
       function openAddStudentPopup() {
         $('#addStudentPopup').show();
       }
-    
+
       function closeAddStudentPopup() {
         $('#addStudentPopup').hide();
       }
