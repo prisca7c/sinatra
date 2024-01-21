@@ -75,25 +75,18 @@ nav button:hover {
   z-index: 1000;
 }
 
-/* Add these styles for the calendar header buttons */
+/* Additional styles to shorten the calendar vertically */
+.fc-daygrid {
+  height: auto;
+}
+
+/* Additional styles to position the buttons as requested */
 .fc-header-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.fc-button {
-  background: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: 0.3s ease;
-  margin: 0 5px; /* Adjust the margin as needed for spacing */
-}
-
-.fc-button:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Additional styles to position the buttons as requested */
 .fc-left, .fc-center, .fc-right {
   display: flex;
   align-items: center;
@@ -108,20 +101,13 @@ nav button:hover {
   text-align: center;
 }
 
-/* Add this style to move the clear calendar button to the left */
+.fc-right {
+  order: 2; /* Move the clear calendar button to the right */
+}
+
+/* Add this style to move the clear calendar button to the right */
 .fc-clear {
-  order: -2;
-}
-
-/* Form Styles */
-form {
-  margin-top: 20px;
-}
-
-/* Additional styles to center the month and year display */
-.fc-toolbar-title {
-  flex: 1;
-  text-align: center;
+  order: 3;
 }
 
 
