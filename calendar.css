@@ -100,7 +100,7 @@ nav button:hover {
 }
 
 .fc-left {
-  justify-content: flex-start;
+  order: -1; /* Move the clear calendar button to the left */
 }
 
 .fc-center {
@@ -108,9 +108,9 @@ nav button:hover {
   text-align: center;
 }
 
-/* Adjust the margin as needed for spacing between buttons */
-.fc-button.fc-prev, .fc-button.fc-next {
-  margin-right: 5px;
+/* Add this style to move the clear calendar button to the left */
+.fc-clear {
+  order: -2;
 }
 
 /* Form Styles */
@@ -122,11 +122,6 @@ form {
 .fc-toolbar-title {
   flex: 1;
   text-align: center;
-}
-
-/* Add this style to move the clear calendar button to the left */
-.fc-clear {
-  order: -1;
 }
 
 
