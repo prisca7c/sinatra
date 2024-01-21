@@ -1,125 +1,111 @@
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
   background: #fff;
-  color: #000;
   overflow: hidden;
 }
 
-.wrapper {
+h1 {
+  margin-top: 20px;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-header {
-  font-size: 24px; /* Increased font size */
-  text-align: left; /* Align left */
-  padding: 20px; /* Added padding */
-  color: #000; /* Text color */
-  box-sizing: border-box;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
-nav {
-  padding: 15px 20px; /* Added padding */
-  box-sizing: border-box;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
+  z-index: 100;
 }
 
 nav a {
   text-decoration: none;
-  color: #000; /* Link color */
+  color: #000;
   font-weight: 500;
-  font-size: 16px;
-  margin: 0 15px; /* Adjusted margin */
+  font-size: 16px; 
+  margin: 0 25px 0 40px; 
+  padding-bottom: 15px;
 }
 
 nav a:hover {
   text-decoration: underline; /* Underline on hover */
 }
 
-.input-field {
-  font-size: 15px;
-  margin-bottom: 15px;
-}
-
-.input-field label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #000;
-}
-
-.input-field input {
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  z-index: 1000;
+}
+
+/* Form Styles */
+form {
+  margin-top: 20px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  z-index: 1000;
+}
+
+input, button {
+  margin-top: 10px;
   padding: 10px;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.2);
-  color: #000;
-  border: none;
   border-radius: 5px;
-  outline: none;
-  transition: background 0.2s ease;
-}
-
-.input-field input:hover,
-.input-field input:focus {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.input-box i {
-  position: relative;
-  top: -35px;
-  left: 17px;
-  color: #000;
-}
-
-.submit {
-  font-size: 15px;
-  font-weight: 500;
-  color: #000;
-  height: 45px;
+  border: 1px solid #ddd;
   width: 100%;
-  border: none;
-  border-radius: 30px;
-  outline: none;
+  box-sizing: border-box;
+}
+
+button {
   background: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease;
 }
 
-.submit:hover {
+button:hover {
   background: rgba(255, 255, 255, 0.5);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
 }
 
-.two-col {
-  display: flex;
-  justify-content: space-between;
-  font-size: small;
-  margin-top: 10px;
-}
-
-.two-col .one {
-  display: flex;
-  gap: 5px;
-}
-
-.two label a {
-  text-decoration: none;
-  color: #000;
-}
-
-.two label a:hover {
-  text-decoration: underline;
-}
 
 #addLessonPopup,
 #lessonInfoPopup {
@@ -182,20 +168,7 @@ nav a:hover {
   max-width: 900px;
 }
 
-#addLessonForm {
-  margin-top: 20px;
-  max-width: 300px;
-}
-
-#lessonDate,
-#lessonType,
-#studentName {
-  margin-top: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  width: 300px;
-}
-
-#lessonInfoPopup span {
+/* #lessonInfoPopup span {
   display: block;
   margin-bottom: 10px;
   color: #000;
@@ -210,4 +183,25 @@ nav a:hover {
 
 #lessonInfoPopup button:hover {
   background: rgba(255, 255, 255, 0.5);
+} */
+
+@media only screen and (max-width: 786px) {
+  nav button {
+    display: none;
+  }
+}
+
+@media only screen  and (max-width: 540px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  nav {
+    height: auto;
+    flex-direction: column;
+  }
+
+  nav a, nav button {
+    margin: 5px 0;
+  }
 }
