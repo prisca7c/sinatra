@@ -145,15 +145,15 @@
         } else if (student.attendance === 'absent') {
           attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
         } else {
-          attendanceCell = '<td><input type="checkbox" id="attendance_' + student.id + '" ' + (student.attendance ? 'checked' : '') + '><label for="attendance_' + student.id + '"></label></td>';
+          attendanceCell = '<td><button class="btn btn-light">Not Marked</button></td>';
         }
-
+      
         var newRow = '<tr data-id="' + student.id + '">' +
           '<td>' + student.name + '</td>' +
           '<td>' + student.contact + '</td>' +
           attendanceCell +
           '</tr>';
-
+      
         // Append the new row to the table
         $('#studentTable tbody').append(newRow);
       }
