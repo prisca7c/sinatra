@@ -142,6 +142,8 @@
         event.preventDefault();
 
         $.post('/update_students', $(this).serialize(), function (data) {
+          console.log('Server response:', data); // Add this line for debugging
+        
           if (data.success) {
             var newRow = '<tr>' +
               '<td>' + data.date + '</td>' +
@@ -157,10 +159,11 @@
             alert('Failed to add student. Please try again.');
             console.error('Failed to add student:', data.error); // Log the error to the console
           }
-        }).fail(function () {
+        }).fail(function (xhr, textStatus, errorThrown) {
           alert('Failed to add student. Please try again.');
-          console.error('Failed to send request to /update_students'); // Log the request failure to the console
+          console.error('Failed to send request to /update_students:', textStatus, errorThrown); // Log the request failure to the console
         });
+
       });
 
       // Add Student Button Click Event
