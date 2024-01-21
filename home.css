@@ -139,3 +139,7 @@ ul {
   color: #fff;
   transition: 0.5s;
 }
+
+.users .card button a {
+  color: #000;
+}
