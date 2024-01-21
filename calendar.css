@@ -1,148 +1,186 @@
-/* Updated code with changes */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #fff; 
-  color: #000; 
+  background: #fff;
+  color: #000;
   overflow: hidden;
 }
 
-h1 {
-  margin-top: 20px;
-}
-
-.nav {
-  position: fixed;
-  top: 0;
+.wrapper {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
-  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  min-height: 110vh;
 }
 
-nav a {
+header {
+  font-size: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.input-field {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.input-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.2);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.input-field input:hover,
+.input-field input:focus {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.input-box i {
+  position: relative;
+  top: -35px;
+  left: 17px;
+  color: #000;
+}
+
+.submit {
+  font-size: 15px;
+  font-weight: 500;
+  color: #000;
+  height: 45px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
+.submit:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+
+.two-col {
+  display: flex;
+  justify-content: space-between;
+  font-size: small;
+  margin-top: 10px;
+}
+
+.two-col .one {
+  display: flex;
+  gap: 5px;
+}
+
+.two label a {
   text-decoration: none;
   color: #000;
-  font-weight: 500;
-  font-size: 16px; 
-  margin: 0 25px 0 40px; 
-  padding-bottom: 15px;
 }
 
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+.two label a:hover {
+  text-decoration: underline;
 }
 
-.modal {
+#addLessonPopup,
+#lessonInfoPopup {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 400px;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   z-index: 1000;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  border-radius: 15px;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-/* Form Styles */
-form {
-  margin-top: 20px;
-}
-
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  z-index: 1000;
-}
-
-/* Input Styles */
-input, button {
+#addLessonPopup button,
+#lessonInfoPopup button {
   margin-top: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-button {
   background: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: 0.3s ease;
 }
 
-button:hover {
+#addLessonPopup button:hover,
+#lessonInfoPopup button:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Responsive Styles */
-@media only screen and (max-width: 786px) {
-  nav button {
-    display: none;
-  }
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
 
-@media only screen and (max-width: 540px) {
-  h1 {
-    font-size: 30px;
-  }
+.input-field {
+  position: relative;
+  margin-bottom: 15px;
+}
 
-  nav {
-    height: auto;
-    flex-direction: column;
-  }
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #000;
+}
 
-  nav a, nav button {
-    margin: 5px 0;
-  }
+.input-field i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  color: #000;
+}
+
+/* Calendar styles (integrated) */
+
+#calendar {
+  margin-top: 20px;
+}
+
+#addLessonForm {
+  margin-top: 20px;
+}
+
+#lessonDate,
+#lessonType,
+#studentName {
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#lessonInfoPopup span {
+  display: block;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+#lessonInfoPopup button {
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#lessonInfoPopup button:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
