@@ -64,9 +64,45 @@
 
   <div id="addStudentPopup">
     <form id="addStudentForm" action="/update_students" method="post">
-      <!-- Form fields for student data -->
+      <div class="input-field">
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" readonly>
+      </div>
+
+      <div class="input-field">
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" required>
+      </div>
+
+      <div class="input-field">
+        <label for="tuition">Tuition:</label>
+        <input type="text" id="tuition" name="tuition" required>
+      </div>
+
+      <div class="input-field">
+        <label for="parent_first_name">Parent First Name:</label>
+        <input type="text" id="parent_first_name" name="parent_first_name" required>
+      </div>
+
+      <div class="input-field">
+        <label for="parent_last_name">Parent Last Name:</label>
+        <input type="text" id="parent_last_name" name="parent_last_name" required>
+      </div>
+
+      <div class="input-field">
+        <label for="parent_email">Email:</label>
+        <input type="email" id="parent_email" name="parent_email" required>
+      </div>
+
+      <div class="input-field">
+        <label for="parent_phone">Phone Number:</label>
+        <input type="tel" id="parent_phone" name="parent_phone" required>
+      </div>
+
+      <button type="submit">Add Student</button>
     </form>
   </div>
+
 
   <!-- Table to display student data -->
   <table id="studentTable">
