@@ -182,12 +182,7 @@
         $('#attendanceCheckbox').data('attendance', '');
         updateAttendanceCheckboxUI();
         
-        $('#addStudentModal').on('hidden.bs.modal', function () {
-          $('#studentName').val('');
-          $('#contact').val('');
-          $('#attendanceCheckbox').data('attendance', '');
-          updateAttendanceCheckboxUI();
-        }).modal('hide');
+        $('#addStudentModal').hide();
       }
 
 
