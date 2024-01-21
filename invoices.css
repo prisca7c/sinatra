@@ -27,20 +27,25 @@ nav a {
   text-decoration: none;
   color: #000; /* Set navigation text color to black */
   font-weight: 500;
-  font-size: 14px; /* Reduced font size */
-  margin: 0 15px; /* Reduced margin */
+  font-size: 16px; /* Reduced font size */
+  margin: 0 25px 0 40px; /* Reduced margin */
   padding-bottom: 15px;
 }
 
 nav button {
-  width: 100px; /* Reduced width */
-  height: 30px; /* Reduced height */
+  width: 130px; /* Reduced width */
+  height: 40px; /* Reduced height */
   font-weight: 500;
   background: rgba(0, 0, 0, 0.1); /* Set a light background */
   border: none;
   border-radius: 15px; /* Adjusted border-radius */
   cursor: pointer;
   transition: .3s ease;
+}
+
+.link:hover,
+.active {
+  border-bottom: 2px solid #fff;
 }
 
 nav button:hover {
