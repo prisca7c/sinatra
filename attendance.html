@@ -111,15 +111,13 @@
         addStudent();
       });
 
-      // Handle "Present" button click
       $('#presentBtn').click(function () {
-        $('#attendanceCheckbox').prop('checked', true);
+        $('#attendanceStatus').val('present');
         updateAttendanceCheckboxUI();
       });
-      
-      // Handle "Absent" button click
+
       $('#absentBtn').click(function () {
-        $('#attendanceCheckbox').prop('checked', false);
+        $('#attendanceStatus').val('absent');
         updateAttendanceCheckboxUI();
       });
 
@@ -164,7 +162,7 @@
       function addStudent() {
         var studentName = $('#studentName').val();
         var contact = $('#contact').val();
-        var attendanceStatus = $('#attendanceCheckbox').data('attendance') || '';
+        var attendanceStatus = $('#attendanceStatus').val();
         var studentId = Date.now().toString();
 
         // Create a new student object
@@ -188,25 +186,17 @@
 
 
       function updateLocalStorage(student) {
-        // Retrieve existing students from local storage
         var students = JSON.parse(localStorage.getItem('students')) || [];
-
-        // Add the new student to the students array
         students.push(student);
-
-        // Update the local storage with the modified students array
         localStorage.setItem('students', JSON.stringify(students));
       }
 
       function updateAttendanceCheckboxUI() {
-        var isChecked = $('#attendanceCheckbox').prop('checked');
-        if (isChecked) {
-          $('#attendanceCheckbox').html('<div class="color-box present"></div>');
-        } else {
-          $('#attendanceCheckbox').html('<div class="color-box absent"></div>');
-        } else {
-          $('#attendanceCheckbox').html('<div class="color-box"></div>');
-        }
+        // Update the UI based on the selected attendance status
+        var attendanceStatus = $('#attendanceStatus').val();
+        var colorBoxClass = (attendanceStatus === 'present') ? 'present' : 'absent';
+
+        $('#attendanceCheckbox').html('<div class="color-box ' + colorBoxClass + '"></div>');
       }
     });
   </script>
