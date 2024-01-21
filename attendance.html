@@ -182,7 +182,11 @@
         $('#attendanceCheckbox').data('attendance', '');
         updateAttendanceCheckboxUI();
         
-        $('#addStudentModal').modal('toggle');
+        // Close the Bootstrap modal
+        $('#addStudentModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+
       }
 
 
