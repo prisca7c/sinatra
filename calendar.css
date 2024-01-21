@@ -58,11 +58,19 @@ header {
 ::-webkit-input-placeholder {
   color: #fff;
 }
-
+/*  THIS CODE IS THE ONE I UPDATED TO SEE IF THE ICONS MOVE 
 .input-box i {
   position: relative;
   top: -35px;
   left: 17px;
+  color: #fff;
+} */
+
+.input-field i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px; /* Adjust this value to move the icon more to the left */
   color: #fff;
 }
 
