@@ -145,14 +145,18 @@
           console.log('Server response:', data); // Add this line for debugging
         
           if (data.success) {
+            // Assuming data is an array of students, you need to access the last element
+            var newStudent = data[data.length - 1];
+        
             var newRow = '<tr>' +
-              '<td>' + data.date + '</td>' +
-              '<td>' + data.student_name + '</td>' +
-              '<td>' + data.tuition + '</td>' +
-              '<td>' + data.parent_name + '</td>' +
-              '<td>' + data.parent_email + '</td>' +
-              '<td>' + data.parent_phone + '</td>' +
+              '<td>' + newStudent.date + '</td>' +
+              '<td>' + newStudent.student_name + '</td>' +
+              '<td>' + newStudent.tuition + '</td>' +
+              '<td>' + newStudent.parent_name + '</td>' +
+              '<td>' + newStudent.parent_email + '</td>' +
+              '<td>' + newStudent.parent_phone + '</td>' +
               '</tr>';
+        
             $('#studentTableBody').append(newRow);
             closeAddStudentPopup();
           } else {
@@ -163,6 +167,7 @@
           alert('Failed to add student. Please try again.');
           console.error('Failed to send request to /update_students:', textStatus, errorThrown); // Log the request failure to the console
         });
+
 
       });
 
