@@ -75,7 +75,7 @@ nav button:hover {
   z-index: 1000;
 }
 
-/* Add this CSS for the calendar header buttons */
+/* Add these styles for the calendar header buttons */
 .fc-header-toolbar {
   display: flex;
   justify-content: space-between;
@@ -91,6 +91,42 @@ nav button:hover {
 
 .fc-button:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+/* Additional styles to position the buttons as requested */
+.fc-left, .fc-center, .fc-right {
+  display: flex;
+  align-items: center;
+}
+
+.fc-left {
+  justify-content: flex-start;
+}
+
+.fc-center {
+  flex: 1;
+  text-align: center;
+}
+
+/* Adjust the margin as needed for spacing between buttons */
+.fc-button.fc-prev, .fc-button.fc-next {
+  margin-right: 5px;
+}
+
+/* Form Styles */
+form {
+  margin-top: 20px;
+}
+
+/* Additional styles to center the month and year display */
+.fc-toolbar-title {
+  flex: 1;
+  text-align: center;
+}
+
+/* Add this style to move the clear calendar button to the left */
+.fc-clear {
+  order: -1;
 }
 
 
