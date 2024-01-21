@@ -3,24 +3,24 @@
 <head> 
   <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bonzi Music School | Dashboard</title>
   <link rel="stylesheet" href="home.css" />
+  <title>Bonzi Music School | Dashboard</title>
   <!-- Font Awesome Cdn Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-  <header class="nav">
-    <div class="container">
-      <p>Bonzi Music School</p>
-      <nav>
-        <a href="/sinatra/home">Home</a>
-        <a href="/sinatra/calendar">Calendar</a>
-        <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
-        <a href="/sinatra/invoices">Invoices</a>
-        <a href="/sinatra/attendance">Attendance Record</a>
-      </nav>
-    </div>
-  </header>
+  <h1>Bonzi Music School</h1>
+  <nav>
+    <a href="/sinatra/home">Home</a>
+    <a href="/sinatra/calendar">Calendar</a>
+    <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
+    <a href="/sinatra/invoices">Invoices</a>
+    <a href="/sinatra/attendance">Attendance Record</a>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+  
   <div class="container">
     <section class="main">
       <div class="users">
