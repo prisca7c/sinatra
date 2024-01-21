@@ -24,6 +24,8 @@ header {
   padding: 20px; /* Added padding */
   color: #000; /* Text color */
   box-sizing: border-box;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 nav {
