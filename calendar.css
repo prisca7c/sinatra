@@ -57,7 +57,7 @@ nav button:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
-  margin-top: 100px; /* Increased margin-top for more space */
+  margin-top: 50px; /* Increased margin-top for more space */
 }
 
 #addLessonPopup,
@@ -67,10 +67,18 @@ nav button:hover {
   top: 50%;
   left: 50%;
   transform: translate (-50%, -50%);
+  max-width: 400px;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   z-index: 1000;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Move "X" button to the right */
+  cursor: pointer;
 }
 
 .main {
@@ -204,7 +212,7 @@ button:hover {
 }
 
 .fc-clear-button {
-  margin-left: auto; /* Push "clear calendar" to the right */
+  margin-right: auto; /* Push "clear calendar" to the right */
 }
 
 .fc-center h2 {
