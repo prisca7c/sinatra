@@ -50,7 +50,7 @@
     <button type="button" onclick="closeAddStudentPopup()">Close</button>
   </div>
 
-  <table id="attendanceTable" style="width:100%">
+  <table id="attendanceTable" class="table table-bordered table-striped" style="width:100%">
     <thead>
       <tr>
         <th>Name</th>
@@ -80,6 +80,20 @@
     .absent {
       background-color: #dc3545;
       color: #fff;
+    }
+
+    /* Added CSS for table borders and padding */
+    #attendanceTable {
+      border: 1px solid #ddd;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    #attendanceTable th,
+    #attendanceTable td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
     }
   </style>
 
@@ -169,7 +183,6 @@
       });
       localStorage.setItem('students', JSON.stringify(updatedStudents));
 
-      // Update the table
       loadStudents();
     }
 
