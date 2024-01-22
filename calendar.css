@@ -75,6 +75,8 @@ nav button:hover {
 
 .fc-button {
   margin: 0 5px;
+  font-size: 14px;
+  padding: 5px;
 }
 
 .fc-left,
@@ -98,7 +100,7 @@ nav button:hover {
 
 .fc-prev, .fc-next {
   font-size: 14px; /* Adjust font size as needed */
-  margin-top: 0px; /* Adjust margin-top to bring down the arrow buttons */
+  margin-top: 0 !important; /* Adjust margin-top to bring down the arrow buttons */
 }
 
 .fc-day-grid-event {
