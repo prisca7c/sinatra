@@ -70,7 +70,7 @@ nav button:hover {
 }
 
 .fc-right {
-  margin-top: 2px; /* Adjust the margin-top property to bring down the arrow buttons */
+  margin-top: 0px; /* Adjust the margin-top property to bring down the arrow buttons */
 }
 
 .fc-button {
@@ -98,7 +98,7 @@ nav button:hover {
 
 .fc-prev, .fc-next {
   font-size: 14px; /* Adjust font size as needed */
-  margin-top: 10px; /* Adjust margin-top to bring down the arrow buttons */
+  margin-top: 0px; /* Adjust margin-top to bring down the arrow buttons */
 }
 
 .fc-day-grid-event {
