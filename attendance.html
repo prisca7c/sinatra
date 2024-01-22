@@ -21,13 +21,7 @@
     <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
     <a href="/sinatra/invoices">Invoices</a>
     <a href="/sinatra/attendance">Attendance Record</a>
-    
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
-      Add Student
-    </button>
-    <button type="button" class="btn btn-warning" id="clearAllBtn"> 
-      Clear All
-    </button> -->
+
     <button type="button" id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
   </nav>
 
@@ -56,15 +50,16 @@
     <button type="button" onclick="closeAddStudentPopup()">Close</button>
   </div>
 
-  <table id="studentTable"  style="width:100%">
+  <table id="attendanceTable" style="width:100%">
     <thead>
       <tr>
         <th>Name</th>
         <th>Contact</th>
         <th>Attendance</th>
+        <th>Action</th>
       </tr>
     </thead>
-    <tbody id="studentTableBody">
+    <tbody id="attendanceTableBody">
     </tbody>
   </table>
 
@@ -91,7 +86,6 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     $(document).ready(function () {
-      // Load existing students on page load
       loadStudents();
 
       $('#addStudentBtn').click(function () {
@@ -107,81 +101,87 @@
         $('#attendanceStatus').val('absent');
         updateAttendanceCheckboxUI();
       });
-
-      $('#clearAllBtn').click(function () {
-        clearAllNames();
-      });
-
-      function clearAllNames() {
-        $('#studentTable tbody').empty();
-        localStorage.removeItem('students');
-      }
-      
-
-      // Function to dynamically add a new student to the table
-      function addStudentToTable(student) {
-        var attendanceCell;
-        if (student.attendance === 'present') {
-          attendanceCell = '<td><button class="btn btn-success">Present</button></td>';
-        } else if (student.attendance === 'absent') {
-          attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
-        } else {
-          attendanceCell = '<td><button class="btn btn-light">Not Marked</button></td>';
-        }
-      
-        var newRow = '<tr data-id="' + student.id + '">' +
-          '<td>' + student.name + '</td>' +
-          '<td>' + student.contact + '</td>' +
-          attendanceCell +
-          '</tr>';
-      
-        // Append the new row to the table
-        $('#studentTable tbody').append(newRow);
-      }
-      // Function to load existing students on page load
-      function loadStudents() {
-        var students = JSON.parse(localStorage.getItem('students')) || [];
-        students.forEach(function (student) {
-          addStudentToTable(student);
-        });
-      }
-
-      function addStudent() {
-        var studentName = $('#studentName').val();
-        var contact = $('#contact').val();
-        var attendanceStatus = $('#attendanceStatus').val();
-        var studentId = Date.now().toString();
-
-        // Create a new student object
-        var newStudent = { id: studentId, name: studentName, contact: contact, attendance: attendanceStatus };
-
-        // Add the new student to the table
-        addStudentToTable(newStudent);
-
-        // Save the new student to local storage
-        updateLocalStorage(newStudent);
-
-        // Clear input fields and checkboxes
-
-        $('#studentName').val('');
-        $('#contact').val('');
-        $('#attendanceCheckbox').data('attendance', '');
-        
-        // Close the Bootstrap modal
-        $('#addStudentModal').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-
-      }
-
-
-      function updateLocalStorage(student) {
-        var students = JSON.parse(localStorage.getItem('students')) || [];
-        students.push(student);
-        localStorage.setItem('students', JSON.stringify(students));
-      }
-
     });
+
+    function loadStudents() {
+      var students = JSON.parse(localStorage.getItem('students')) || [];
+      students.forEach(function (student) {
+        addStudentToTable(student);
+      });
+    }
+
+    function addStudent() {
+      var studentName = $('#studentName').val();
+      var contact = $('#contact').val();
+      var attendanceStatus = $('#attendanceStatus').val();
+      var studentId = Date.now().toString();
+
+      var student = {
+        id: studentId,
+        name: studentName,
+        contact: contact,
+        attendance: attendanceStatus
+      };
+
+      addStudentToTable(student);
+      updateLocalStorage(student);
+
+      $('#studentName').val('');
+      $('#contact').val('');
+      $('#attendanceCheckbox').data('attendance', '');
+      updateAttendanceCheckboxUI();
+
+      $('#addStudentModal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    }
+
+    function addStudentToTable(student) {
+      var attendanceCell;
+      if (student.attendance === 'present') {
+        attendanceCell = '<td><button class="btn btn-success">Present</button></td>';
+      } else if (student.attendance === 'absent') {
+        attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
+      } else {
+        attendanceCell = '<td><button class="btn btn-light">Not Marked</button></td>';
+      }
+
+      var newRow = '<tr data-id="' + student.id + '">' +
+        '<td>' + student.name + '</td>' +
+        '<td>' + student.contact + '</td>' +
+        attendanceCell +
+        '<td><button type="button" onclick="deleteStudent(' + student.id + ')">Delete</button></td>' +
+        '</tr>';
+
+      $('#attendanceTableBody').append(newRow);
+    }
+
+    function updateLocalStorage(student) {
+      var students = JSON.parse(localStorage.getItem('students')) || [];
+      students.push(student);
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+
+    function deleteStudent(studentId) {
+      var students = JSON.parse(localStorage.getItem('students')) || [];
+      var updatedStudents = students.filter(function (student) {
+        return student.id !== studentId;
+      });
+      localStorage.setItem('students', JSON.stringify(updatedStudents));
+
+      // Update the table
+      loadStudents();
+    }
+
+    function openAddStudentPopup() {
+      $('#overlay').show();
+      $('#addStudentModal').show();
+    }
+
+    function closeAddStudentPopup() {
+      $('#overlay').hide();
+      $('#addStudentModal').hide();
+    }
   </script>
 
 </body>
