@@ -145,6 +145,12 @@ button:hover {
 }
 
 /* Add this to your CSS */
+.dropbtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .dropdown {
   display: inline-block;
 }
@@ -172,7 +178,6 @@ button:hover {
 .show {
   display: block;
 }
-
 
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
