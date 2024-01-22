@@ -57,7 +57,7 @@ nav button:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
-  margin-top: 150px; /* Increased margin-top for more space */
+  margin-top: 100px; /* Increased margin-top for more space */
 }
 
 .modal {
@@ -187,26 +187,46 @@ button:hover {
   background: rgba(255, 255, 255, 0.5); /* Darkens the background on button hover */
 }
 
+/* Header Styles */
 .fc-toolbar.fc-header-toolbar {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Align items with space between */
+  background: #3498db; /* Header background color */
+  color: #fff; /* Header text color */
+  padding: 10px; /* Add padding for better spacing */
 }
 
 .fc-center h2 {
   flex-grow: 1;
   text-align: center;
+  margin: 0; /* Remove default margin */
+  font-size: 18px; /* Increase font size */
 }
 
 .fc-center .fc-today-button {
-  margin: 0 auto;
+  margin: 0; /* Remove default margin */
+  background: #fff; /* Today button background color */
+  color: #3498db; /* Today button text color */
+  border: 1px solid #fff; /* Add border to today button */
+  border-radius: 5px; /* Add border radius to today button */
+  padding: 5px 10px; /* Add padding to today button */
+  cursor: pointer;
+}
+
+.fc-center .fc-today-button:hover {
+  background: #3498db; /* Today button background color on hover */
+  color: #fff; /* Today button text color on hover */
 }
 
 /* Shorten the height of calendar events */
 .fc-day-grid-event {
-  height: 15px; /*changed from 15px to 100px*/
+  height: 25px;
   font-size: 12px;
   line-height: 1.2;
   overflow: hidden;
+  background: #3498db;
+  color: #fff;
 }
 
 /* Style modifications for better visibility */
