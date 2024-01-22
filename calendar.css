@@ -126,6 +126,10 @@ nav button:hover {
   background: #3498db; 
 }
 
+.fc-daygrid-view .fc-day {
+  height: 20px; 
+}
+
 
 #addLessonPopup,
 #lessonInfoPopup{
