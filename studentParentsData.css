@@ -148,8 +148,15 @@ button:hover {
 .dropbtn {
   display: flex;
   align-items: center;
-  text-align: center;
+  justify-content: center; /* Center horizontally */
   cursor: pointer;
+  position: relative; /* Added position relative for arrow positioning */
+}
+
+.dropbtn::after {
+  content: '▼'; /* Unicode character for down arrow */
+  position: absolute;
+  right: 8px; /* Adjust as needed */
 }
 
 .dropdown {
@@ -179,6 +186,7 @@ button:hover {
 .show {
   display: block;
 }
+
 
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
