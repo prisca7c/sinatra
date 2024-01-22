@@ -56,7 +56,7 @@
     <button type="button" onclick="closeAddStudentPopup()">Close</button>
   </div>
 
-  <table id="studentTable">
+  <table id="studentTable"  style="width:100%">
     <thead>
       <tr>
         <th>Name</th>
@@ -166,7 +166,6 @@
         $('#studentName').val('');
         $('#contact').val('');
         $('#attendanceCheckbox').data('attendance', '');
-        updateAttendanceCheckboxUI();
         
         // Close the Bootstrap modal
         $('#addStudentModal').modal('hide');
@@ -182,16 +181,6 @@
         localStorage.setItem('students', JSON.stringify(students));
       }
 
-      function updateAttendanceCheckboxUI() {
-        var attendanceStatus = $('#attendanceStatus').val();
-        if (attendanceStatus === 'present') {
-          $('#attendanceCheckbox').html('<div class="color-box present"></div>');
-        } else if (attendanceStatus === 'absent') {
-          $('#attendanceCheckbox').html('<div class="color-box absent"></div>');
-        } else {
-          $('#attendanceCheckbox').html('<div class="color-box"></div>');
-        }
-      }
     });
   </script>
 
