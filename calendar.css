@@ -21,7 +21,7 @@ h1 {
   line-height: 100px;
   background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
   z-index: 100;
-  padding: 100px 0; /*changed from 15px to 100px*/
+  padding: 100px 0;
 }
 
 nav a {
@@ -57,7 +57,7 @@ nav button:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
-  margin-top: 50px; /* Increased margin-top for more space */
+  margin-top: 50px;
 }
 
 #addLessonPopup,
@@ -77,7 +77,7 @@ nav button:hover {
 .close-button {
   position: absolute;
   top: 10px;
-  right: 10px; /* Move "X" button to the right */
+  right: 10px;
   cursor: pointer;
 }
 
@@ -85,8 +85,8 @@ nav button:hover {
   position: relative;
   padding: 20px;
   width: 85%;
-  height: calc(100vh - 400px); /* Adjust the height calculation as needed */
-  overflow-y: auto; /* Add a scrollbar if needed */
+  height: calc(100vh - 400px); 
+  overflow-y: auto;
 }
 
 .main-top {
@@ -173,38 +173,38 @@ nav button:hover {
 
 /* Form Styles */
 form {
-  margin-top: 20px; /* Adds top margin to forms */
+  margin-top: 20px;
 }
 
 /* Input Styles */
 input, button {
-  margin-top: 10px; /* Adds top margin to inputs and buttons */
-  padding: 10px; /* Adds padding to inputs and buttons */
-  border-radius: 5px; /* Rounds the corners of inputs and buttons */
-  border: 1px solid #ddd; /* Adds a border to inputs and buttons */
-  /*width: 100%; Occupies the full width of the container */
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  margin-top: 10px; 
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 button {
-  background: rgba(255, 255, 255, 0.7); /* Applies a background color with alpha transparency to buttons */
-  cursor: pointer; /* Changes the cursor to a pointer on hover */
-  transition: 0.3s ease; /* Adds a smooth transition effect */
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer; 
+  transition: 0.3s ease; 
 }
 
 button:hover {
-  background: rgba(255, 255, 255, 0.5); /* Darkens the background on button hover */
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* Header Styles */
+
 .fc-toolbar.fc-header-toolbar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Align items with space between */
-  background: transparent; /* Header background color */
-  color: #fff; /* Header text color */
-  padding: 10px; /* Add padding for better spacing */
+  justify-content: space-between; 
+  background: transparent; 
+  color: #fff; 
+  padding: 10px; 
 }
 
 .fc-center {
@@ -213,30 +213,29 @@ button:hover {
 }
 
 .fc-center h2 {
-  font-size: 18px; /* Increase font size */
+  font-size: 18px; 
   margin: 0;
 }
 
 .fc-clear-button {
-  margin-top: 10px; /* Push "clear calendar" to the right */
+  margin-top: 10px; 
 }
 
 .fc-center .fc-today-button {
-  margin: 0; /* Remove default margin */
-  background: #fff; /* Today button background color */
-  border: 1px solid #fff; /* Add border to today button */
-  border-radius: 5px; /* Add border radius to today button */
-  padding: 5px 10px; /* Add padding to today button */
+  margin: 0; 
+  background: #fff; 
+  border: 1px solid #fff; 
+  border-radius: 5px; 
+  padding: 5px 10px; 
   cursor: pointer;
 }
 
 .fc-center .fc-today-button:hover {
-  color: #fff; /* Today button text color on hover */
+  color: #fff; 
 }
 
-/* Shorten the height of calendar events */
 .fc-day-grid-event {
-  height: 20px; /* Adjusted height to 20px */
+  height: 20px; 
   font-size: 12px;
   line-height: 1.2;
   overflow: hidden;
@@ -244,15 +243,13 @@ button:hover {
   color: #fff;
 }
 
-/* Style modifications for better visibility */
 .fc-day-grid-event.fc-h-event {
-  background: #4AD489; /* Background color for calendar events */
-  border: none; /* Remove border */
-  color: #fff; /* Text color for calendar events */
+  background: #4AD489; 
+  border: none; 
+  color: #fff; 
 }
 
 
-/* Responsive Styles */
 @media only screen and (max-width: 786px) {
   nav button {
     display: none;
