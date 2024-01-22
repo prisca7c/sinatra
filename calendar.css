@@ -21,7 +21,7 @@ h1 {
   line-height: 100px;
   background: linear-gradient(rgba(39, 39, 39, 0.6), transparent);
   z-index: 100;
-  padding: 50px 0; /* Increased padding for more space between navigation and buttons */
+  padding: 100px 0; /*changed from 15px to 100px*/
 }
 
 nav a {
@@ -203,8 +203,8 @@ button:hover {
 
 /* Shorten the height of calendar events */
 .fc-day-grid-event {
-  height: 20px; /* Adjust the height as needed */
-  font-size: 12px; /* Adjust the font size as needed */
+  height: 15px; /*changed from 15px to 100px*/
+  font-size: 12px;
   line-height: 1.2;
   overflow: hidden;
 }
