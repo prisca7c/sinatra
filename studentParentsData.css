@@ -154,7 +154,7 @@ button:hover {
 }
 
 .dropbtn::after {
-  content: '▼'; /* Unicode character for down arrow */
+  /*content: '▼';  Unicode character for down arrow */
   position: absolute;
   right: 8px; /* Adjust as needed */
 }
