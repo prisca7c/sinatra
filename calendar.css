@@ -187,6 +187,21 @@ button:hover {
   background: rgba(255, 255, 255, 0.5); /* Darkens the background on button hover */
 }
 
+#calendar .fc-left,
+#calendar .fc-center,
+#calendar .fc-right {
+  display: flex;
+  align-items: center;
+}
+
+#calendar .fc-left {
+  margin-right: auto;
+}
+
+#calendar .fc-right {
+  margin-left: auto;
+}
+
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
   nav button {
