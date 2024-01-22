@@ -20,6 +20,16 @@
     <a href="/sinatra/attendance">Attendance Record</a>
     <!-- Add Student Button -->
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
+
+    <!-- New Sorting Button/Drop-down -->
+    <div class="dropdown">
+      <button class="dropbtn">Sort by</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="sortStudents('student_name')">Student Name</a>
+        <a href="#" onclick="sortStudents('next_lesson')">Next Lesson</a>
+        <a href="#" onclick="sortStudents('makeup_credits')">Make-up Credits</a>
+      </div>
+    </div>
   </nav>
 
   <div class="overlay" id="overlay"></div>
@@ -56,6 +66,16 @@
         <input type="tel" id="parent_phone" required>
       </div>
 
+      <div class="input-field">
+        <label for="next_lesson">Next Lesson:</label>
+        <input type="text" id="next_lesson" placeholder="YYYY-MM-DD">
+      </div>
+      
+      <div class="input-field">
+        <label for="makeup_credits">Make-up Credits:</label>
+        <input type="number" id="makeup_credits">
+      </div>
+
       <button type="button" onclick="addStudent()">Add Student</button>
     </form>
 
@@ -72,6 +92,8 @@
         <th>Parent Name</th>
         <th>Email</th>
         <th>Phone Number</th>
+        <th>Next Lesson</th>
+        <th>Make-up Credits</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -100,6 +122,8 @@
           '<td>' + data.parent_name + '</td>' +
           '<td>' + data.parent_email + '</td>' +
           '<td>' + data.parent_phone + '</td>' +
+          '<td>' + data.next_lesson + '</td>' +
+          '<td>' + data.makeup_credits + '</td>' +
           '<td><button type="button" onclick="deleteStudent(' + index + ')">Delete</button></td>' +
           '</tr>';
         $('#studentTableBody').append(newRow);
@@ -113,6 +137,8 @@
       var parent_name = $('#parent_name').val();
       var parent_email = $('#parent_email').val();
       var parent_phone = $('#parent_phone').val();
+      var next_lesson = $('#next_lesson').val();
+      var makeup_credits = $('#makeup_credits').val();
 
       // Retrieve existing data from local storage
       var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
@@ -124,7 +150,9 @@
         tuition: tuition,
         parent_name: parent_name,
         parent_email: parent_email,
-        parent_phone: parent_phone
+        parent_phone: parent_phone,
+        next_lesson: next_lesson,
+        makeup_credits: makeup_credits
       });
 
       // Save the updated data back to local storage
@@ -140,6 +168,8 @@
       $('#parent_name').val('');
       $('#parent_email').val('');
       $('#parent_phone').val('');
+      $('#next_lesson').val('');
+      $('#makeup_credits').val('');
 
       // Close the add student pop-up
       closeAddStudentPopup();
@@ -163,6 +193,28 @@
       $('#overlay').hide();
       $('#addStudentModal').hide();
     }
+
+    function sortStudents(sortBy) {
+      var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
+    
+      studentsData.sort(function (a, b) {
+        if (sortBy === 'student_name') {
+          return a.student_name.localeCompare(b.student_name);
+        } else if (sortBy === 'next_lesson') {
+          const dateA = new Date(a.next_lesson);
+          const dateB = new Date(b.next_lesson);
+          return dateA - dateB;
+        } else if (sortBy === 'makeup_credits') {
+          return a.makeup_credits - b.makeup_credits;
+        }
+    
+        return 0;
+      });
+    
+      localStorage.setItem('studentsData', JSON.stringify(studentsData));
+      updateStudentTable();
+    }
+
   </script>
 
 </body>
