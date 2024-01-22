@@ -18,16 +18,15 @@
     <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
     <a href="/sinatra/invoices">Invoices</a>
     <a href="/sinatra/attendance">Attendance Record</a>
-    <!-- Add Student Button -->
-    <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
     <div class="dropdown">
-      <button id="sortDropdownBtn" class="dropbtn">Sort By</button>
-      <div class="dropdown-content">
+      <button onclick="toggleDropdown()" class="dropbtn">&#9662; Sort By</button>
+      <div id="sortDropdown" class="dropdown-content">
         <a href="#" onclick="sortStudents('student_name')">Student Name</a>
         <a href="#" onclick="sortStudents('next_lesson')">Next Lesson</a>
         <a href="#" onclick="sortStudents('makeup_credits')">Makeup Credits</a>
       </div>
     </div>
+    <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
     <!-- New Sorting Button/Drop-down -->
     <div class="dropdown">
       <button class="dropbtn">Sort by</button>
@@ -236,16 +235,19 @@
     };
     
     // Add a function to toggle the dropdown
-    function toggleDropdown() {
-      document.getElementById("sortDropdown").classList.toggle("show");
-    }
-    
-    // Call the sorting function when an option is clicked
     function sortStudents(sortBy) {
-      // Your existing sorting logic here
-    
-      // For demonstration, let's log the sorting option
-      console.log('Sorting by:', sortBy);
+      $.ajax({
+        type: 'GET',
+        url: '/sinatra/studentParentsData/sort/' + sortBy,
+        dataType: 'json',
+        success: function (data) {
+          // Handle the sorted data, update your table or do something else
+          console.log('Sorted data:', data);
+        },
+        error: function (error) {
+          console.error('Error sorting data:', error);
+        }
+      });
     }
 
 
