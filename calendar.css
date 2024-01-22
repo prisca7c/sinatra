@@ -84,8 +84,12 @@ nav button:hover {
 .fc-right {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 33.33%;
+  /*justify-content: space-between;
+  width: 33.33%;*/
+}
+
+.fc-toolbar .fc-right {
+  margin-right: 10px;
 }
 
 .fc-center {
