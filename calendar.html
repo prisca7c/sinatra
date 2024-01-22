@@ -64,7 +64,7 @@
       $('#calendar').fullCalendar({
         defaultView: 'month',
         header: {
-          left: 'prev,next today',
+          left: 'prev,today,next',
           center: 'title',
           right: 'clearButton'
         },
@@ -86,33 +86,8 @@
   
         eventClick: function (calEvent, jsEvent, view) {
           showLessonInformation(calEvent);
-          //return false;
+          return false;
         }
-      });
-  
-      // Open Add Lesson Form when clicking on a date
-      $('#calendar').fullCalendar('option', 'select', function (start, end) {
-        openAddLessonForm(start.format());
-        $('#calendar').fullCalendar('unselect');
-      });
-
-      // Show Lesson Information when clicking on an event
-      $('#calendar').fullCalendar('option', 'eventClick', function (calEvent, jsEvent, view) {
-        showLessonInformation(calEvent);
-      });
-
-      // Show Add Lesson Popup when the 'Add Lesson' button is clicked
-      $('#addLessonButton').click(function () {
-        openAddLessonForm($('#lessonDate').val());
-      });
-
-      // Show modals using Bootstrap modal method
-      $('#addLessonPopup').modal({
-        show: false
-      });
-
-      $('#lessonInfoPopup').modal({
-        show: false
       });
 
       updateCalendarEvents();
@@ -123,15 +98,15 @@
       document.getElementById('lessonType').value = '';
       document.getElementById('studentName').value = '';
   
-      $('#addLessonPopup').modal('show');
+      $('#addLessonPopup').show();
     }
   
     function closeAddLessonPopup() {
-      $('#addLessonPopup').modal('hide');
+      $('#addLessonPopup').hide();
     }
   
     function closeLessonInfoPopup() {
-      $('#lessonInfoPopup').modal('hide');
+      $('#lessonInfoPopup').hide();
     }
   
     function addLesson() {
@@ -191,8 +166,7 @@
       $('#infoStudentName').text(calEvent.student_info);
       $('#infoLessonId').text(calEvent.id);
   
-      //$('#lessonInfoPopup').show();
-      $('#lessonInfoPopup').modal('show');
+      $('#lessonInfoPopup').show();
     }
   
     function updateLocalStorage(event) {
