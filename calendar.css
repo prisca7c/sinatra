@@ -197,12 +197,9 @@ button:hover {
 
 .fc-toolbar.fc-header-toolbar {
   display: flex;
-  flex-direction: row; /* Change here */
   align-items: center;
   justify-content: space-between; 
-  background: transparent; 
-  color: #fff; 
-  padding: 10px; 
+  font-size: 0.8em;
 }
 
 .fc-center {
@@ -211,12 +208,11 @@ button:hover {
 }
 
 .fc-center h2 {
-  font-size: 18px; 
-  margin: 0;
+  color: #000;
 }
 
 .fc-clear-button {
-  margin-top: 10px; 
+  float: right;
 }
 
 .fc-center .fc-today-button {
@@ -242,9 +238,7 @@ button:hover {
 }
 
 .fc-day-grid-event.fc-h-event {
-  background: #4AD489; 
-  border: none; 
-  color: #fff; 
+  background: #3498db; 
 }
 
 
