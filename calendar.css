@@ -173,7 +173,7 @@ input, button {
   padding: 10px; /* Adds padding to inputs and buttons */
   border-radius: 5px; /* Rounds the corners of inputs and buttons */
   border: 1px solid #ddd; /* Adds a border to inputs and buttons */
-  width: 100%; /* Occupies the full width of the container */
+  /*width: 100%; Occupies the full width of the container */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
@@ -187,20 +187,16 @@ button:hover {
   background: rgba(255, 255, 255, 0.5); /* Darkens the background on button hover */
 }
 
-#calendar .fc-left,
-#calendar .fc-center,
-#calendar .fc-right {
+.fc-toolbar.fc-header-toolbar {
   display: flex;
   align-items: center;
 }
 
-#calendar .fc-left {
-  margin-right: auto;
+.fc-center h2 {
+  flex-grow: 1;
+  text-align: center;
 }
 
-#calendar .fc-right {
-  margin-left: auto;
-}
 
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
