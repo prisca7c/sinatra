@@ -219,17 +219,38 @@
     function sortStudents(sortBy) {
       $.ajax({
         type: 'GET',
-        url: '/sinatra/studentParentsData/' + sortBy,
+        url: '/sinatra/studentParentsData/sort/' + sortBy,
         dataType: 'json',
         success: function (data) {
           // Handle the sorted data, update your table or do something else
           console.log('Sorted data:', data);
+    
+          // Assuming 'data' is an array of student objects
+          updateTableWithData(data);
         },
         error: function (error) {
           console.error('Error sorting data:', error);
         }
       });
     }
+    
+    // Add a function to update the table with sorted data
+    function updateTableWithData(data) {
+      $('#studentTableBody').empty(); // Clear existing rows
+      data.forEach(function (student) {
+        var newRow = '<tr>' +
+          '<td>' + student.date + '</td>' +
+          '<td>' + student.student_name + '</td>' +
+          '<td>' + student.tuition + '</td>' +
+          '<td>' + student.parent_name + '</td>' +
+          '<td>' + student.parent_email + '</td>' +
+          '<td>' + student.parent_phone + '</td>' +
+          '<td><button type="button" onclick="deleteStudent(' + index + ')">Delete</button></td>' +
+          '</tr>';
+        $('#studentTableBody').append(newRow);
+      });
+    }
+
   
     // Add a function to close the dropdown when clicking outside of it
     window.onclick = function (event) {
