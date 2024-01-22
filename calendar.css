@@ -68,17 +68,18 @@ nav button:hover {
 }
 
 .fc-center {
-  text-align: center;
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  /*text-align: center;
+  margin-top: 10px;*/
 }
 
 .fc-center h2 {
   color: #000;
+  margin-right: 10px;
 }
 
 .fc-clear-button {
-  /*float: right;
-  margin-right: 20px;*/
   margin-left: auto;
 }
 
