@@ -30,13 +30,15 @@ class Student
 end
 
 class StudentData
-  attr_accessor :student_name, :parent_email, :parent_phone, :tuition
+  attr_accessor :student_name, :parent_email, :parent_phone, :tuition, :next_lesson, :makeup_credits
 
-  def initialize(student_name, parent_email, parent_phone, tuition)
+  def initialize(student_name, parent_email, parent_phone, tuition, next_lesson, makeup_credits)
     @student_name = student_name
     @parent_email = parent_email
     @parent_phone = parent_phone
     @tuition = tuition
+    @next_lesson = next_lesson
+    @makeup_credits = makeup_credits
   end
 end
 
@@ -171,16 +173,14 @@ post '/update_students' do
   # Validate data (add your validation logic here)
 
   # Add the student to the list
-  student_data = StudentData.new(data['student_name'], data['parent_email'], data['parent_phone'], data['tuition'])
+  student_data = StudentData.new(data['student_name'], data['parent_email'], data['parent_phone'], data['tuition'], data['next_lesson'], data['makeup_credits'])
   $data['studentData'] << student_data
 
   { success: true, message: 'Student added successfully' }.to_json
 end
 
-# Inside app.rb
-
 # Route to handle sorting
-get '/sinatra/studentParentsData' do
+get '/sort_students' do
   sort_by = params[:by]
   students_data = JSON.parse(File.read('students_data.json')) rescue []
 
@@ -193,15 +193,10 @@ get '/sinatra/studentParentsData' do
     students_data.sort! { |a, b| b['makeup_credits'].to_i <=> a['makeup_credits'].to_i }
   end
 
-  # Render or redirect as needed
-  if request.xhr?
-    # If it's an AJAX request, return JSON for dynamic updates
-    content_type :json
-    students_data.to_json
-  else
-    # If it's a regular request, render a view or redirect
-    redirect '/sinatra/studentParentsData'
-  end
+  # Render JSON response
+  content_type :json
+  students_data.to_json
 end
+
 
 run Sinatra::Application
