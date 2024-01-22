@@ -222,7 +222,7 @@
     function sortStudents(sortBy) {
       $.ajax({
         type: 'GET',
-        url: '/sinatra/studentParentsData/sort/' + sortBy,
+        url: '/sinatra/studentParentsData', //+sortBy
         dataType: 'json',
         success: function (data) {
           // Handle the sorted data, update your table or do something else
