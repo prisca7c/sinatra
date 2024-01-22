@@ -66,20 +66,14 @@ nav button:hover {
   justify-content: space-between; 
   font-size: 1em;
   padding: 10px;
+  height: 60px;
 }
 
-.fc-left {
-  flex: 1;
-}
-
-.fc-center {
-  flex: 2;
-  text-align: center;
-}
-
-.fc-right {
-  flex: 1;
-  text-align: right;
+.fc-left, .fc-center, .fc-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 33.33%;
 }
 
 .fc-day-grid-event {
