@@ -65,8 +65,9 @@
         height: 730,
         defaultView: 'month',
         header: {
+          left: 'prev'
           center: 'title',
-          right: 'prev,today,next'
+          right: 'next'
         },
         dayClick: function (date, jsEvent, view) {
           openAddLessonForm(date.format());
