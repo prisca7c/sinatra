@@ -9,9 +9,6 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <style>
-    /* Your existing styles */
-
-    /* Additional styles for the drop-down */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -222,7 +219,7 @@
     function sortStudents(sortBy) {
       $.ajax({
         type: 'GET',
-        url: '/sinatra/studentParentsData', //+sortBy
+        url: '/sinatra/studentParentsData/' + sortBy,
         dataType: 'json',
         success: function (data) {
           // Handle the sorted data, update your table or do something else
