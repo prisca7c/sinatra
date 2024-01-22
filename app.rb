@@ -6,8 +6,46 @@ require 'json'
 
 enable :sessions
 
-# Example in-memory data structure to store lessons
-$lessons = []
+# Define classes for your data
+class Lesson
+  attr_accessor :id, :title, :start_date, :student_name
+
+  def initialize(id, title, start_date, student_name)
+    @id = id
+    @title = title
+    @start_date = start_date
+    @student_name = student_name
+  end
+end
+
+class Student
+  attr_accessor :id, :name, :contact, :attendance
+
+  def initialize(id, name, contact, attendance)
+    @id = id
+    @name = name
+    @contact = contact
+    @attendance = attendance
+  end
+end
+
+class StudentData
+  attr_accessor :student_name, :parent_email, :parent_phone, :tuition
+
+  def initialize(student_name, parent_email, parent_phone, tuition)
+    @student_name = student_name
+    @parent_email = parent_email
+    @parent_phone = parent_phone
+    @tuition = tuition
+  end
+end
+
+# Initialize a single, shared data structure
+$data = {
+  'lessons' => [],
+  'students' => [],
+  'studentData' => []
+}
 
 set :port, 4567
 
@@ -28,14 +66,10 @@ end
 post '/calendar' do
   request.body.rewind
   lesson_data = JSON.parse(request.body.read)
-  lesson_id = $lessons.length + 1
+  lesson_id = $data['lessons'].length + 1
 
-  $lessons << {
-    'id' => lesson_id,
-    'title' => lesson_data['title'],
-    'start_date' => lesson_data['start_date'],
-    'student_name' => lesson_data['studentName']
-  }
+  lesson = Lesson.new(lesson_id, lesson_data['title'], lesson_data['start_date'], lesson_data['studentName'])
+  $data['lessons'] << lesson
 
   content_type :json
   { success: true, lesson_id: lesson_id }.to_json
@@ -46,11 +80,11 @@ delete '/calendar/:id' do
   lesson_id = params[:id].to_i
 
   # Find the lesson with the specified ID
-  lesson_index = $lessons.index { |lesson| lesson['id'] == lesson_id }
+  lesson_index = $data['lessons'].index { |lesson| lesson.id == lesson_id }
 
   if lesson_index
     # Remove the lesson from the array
-    deleted_lesson = $lessons.delete_at(lesson_index)
+    deleted_lesson = $data['lessons'].delete_at(lesson_index)
 
     content_type :json
     { success: true, deleted_lesson: deleted_lesson }.to_json
@@ -60,34 +94,30 @@ delete '/calendar/:id' do
   end
 end
 
+# Get all lessons
+get '/get_lessons' do
+  content_type :json
+  $data['lessons'].to_json
+end
+
 #-------------------------INVOICES---------------------------
 
 post '/invoices' do
   student_name = params[:student_name]
-  parent_email = params[:parent_email]
-  parent_phone = params[:parent_phone]
-  tuition = params[:tuition]
-  # Adjusted to use JSON data
-  { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
+  
+  # Find the student in the studentData array
+  student = $data['studentData'].find { |student| student.student_name == student_name }
+  
+  if student
+    parent_email = student.parent_email
+    parent_phone = student.parent_phone
+    tuition = student.tuition
+  else
+    # Handle case where student is not found
+  end
+  
+  # Continue with your existing code...
 end
-
-
-post '/update_students' do
-  student_name = params[:student_name]
-  parent_email = params[:parent_email]
-  parent_phone = params[:parent_phone]
-  tuition = params[:tuition]
-  # Adjusted to use JSON data
-  { success: true, student_name: student_name, parent_email: parent_email, parent_phone: parent_phone, tuition: tuition }.to_json
-end
-
-get '/get_students' do
-  # Adjusted to use JSON data
-  students_data = [{ student_name: 'John Doe', parent_email: 'john@example.com', parent_phone: '123-456-7890', tuition: '100' }]
-  content_type :json
-  students_data.to_json
-end
-
 
 #-------------------------ATTENDANCE RECORD---------------------------
 # Sample data for students
@@ -108,8 +138,8 @@ post '/attendance/add_student' do
   contact = data[:contact]
   attendance_status = data[:attendance]
 
-  new_student = { id: student_id, name: student_name, contact: contact, attendance: attendance_status }
-  students.push(new_student)
+  new_student = Student.new(student_id, student_name, contact, attendance_status)
+  $data['students'].push(new_student)
 
   content_type :json
   { success: true, student: new_student }.to_json
@@ -118,13 +148,10 @@ end
 # Endpoint to get all students
 get '/attendance/get_students' do
   content_type :json
-  students.to_json
+  $data['students'].to_json
 end
 
 #-------------------------STUDENT & PARENTS DATA---------------------------
-
-# Store student data in-memory for simplicity
-studentData = []
 
 # Serve HTML page
 get '/sinatra/studentParentsData' do
@@ -133,7 +160,7 @@ end
 
 # Get all students
 get '/get_students' do
-  studentData.to_json
+  $data['studentData'].to_json
 end
 
 # Add/update a student
@@ -144,10 +171,10 @@ post '/update_students' do
   # Validate data (add your validation logic here)
 
   # Add the student to the list
-  studentData << data
+  student_data = StudentData.new(data['student_name'], data['parent_email'], data['parent_phone'], data['tuition'])
+  $data['studentData'] << student_data
 
   { success: true, message: 'Student added successfully' }.to_json
 end
-
 
 run Sinatra::Application
