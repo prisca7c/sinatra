@@ -42,9 +42,9 @@
     <div class="dropdown">
       <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
       <div class="dropdown-content" id="sortDropdown">
-        <a href="#" onclick="sortByName()">Student Name</a>
-        <a href="#" onclick="sortByNextLesson()">Next Lesson</a>
-        <a href="#" onclick="sortByMakeupCredits()">Make-up Credits</a>
+        <a href="javascript:void(0)" onclick="sortByName()">Student Name</a>
+        <a href="javascript:void(0)" onclick="sortByNextLesson()">Next Lesson</a>
+        <a href="javascript:void(0)" onclick="sortByMakeupCredits()">Make-up Credits</a>
       </div>
     </div>
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
@@ -247,11 +247,12 @@
           '<td>' + student.parent_phone + '</td>' +
           '<td>' + student.next_lesson + '</td>' +
           '<td>' + student.makeup_credits + '</td>' +
-          '<td><button type="button" onclick="deleteStudent(' + index + ')">Delete</button></td>' +
+          '<td><button type="button" onclick="deleteStudent(' + data.indexOf(student) + ')">Delete</button></td>' +
           '</tr>';
         $('#studentTableBody').append(newRow);
       });
     }
+
   
     // Add a function to close the dropdown when clicking outside of it
     window.onclick = function (event) {
