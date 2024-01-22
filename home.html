@@ -8,6 +8,30 @@
   <!-- Font Awesome Cdn Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch event information from the server
+      $.ajax({
+        url: "/sinatra/events/today", // Update the endpoint based on your server setup
+        method: "GET",
+        success: function(data) {
+          updateEventInfo(data);
+        },
+        error: function(error) {
+          console.error("Error fetching event information:", error);
+        }
+      });
+
+      function updateEventInfo(data) {
+        // Update the HTML dynamically with event information
+        if (data.hasEvent) {
+          $("#calendarCard p").text("Event Today");
+        } else {
+          $("#calendarCard p").text("No Event Today");
+        }
+      }
+    });
+  </script>
 </head>
 <body>
   <h1>Bonzi Music School</h1>
@@ -24,29 +48,25 @@
   <div class="container">
     <section class="main">
       <div class="users">
-        <div class="card">
-          <img src="./pic/img1.jpg">
+        <div class="card" id="calendarCard">
           <h4>Calendar</h4>
           <p>Date Today</p>
           <button><a href="/sinatra/calendar">Go to Calendar</a></button>
         </div>
         
-        <div class="card">
-          <img src="./pic/img2.jpg">
+        <div class="card" id="calendarCard">
           <h4>Attendance Record</h4>
           <p>Date Today</p>
           <button><a href="/sinatra/attendance">Go to Attendance</a></button>
         </div>
         
-        <div class="card">
-          <img src="./pic/img3.jpg">
+        <div class="card" id="calendarCard">
           <h4>Student & Parents' Data</h4>
           <p>tester</p>
           <button><a href="/sinatra/studentParentsData">Go to Database</a></button>
         </div>
         
-        <div class="card">
-          <img src="./pic/img4.jpg">
+        <div class="card" id="calendarCard">
           <h4>Invoices</h4>
           <p>Ui designer</p>
           <button><a href="/sinatra/invoices">Go to Invoices</a></button>
