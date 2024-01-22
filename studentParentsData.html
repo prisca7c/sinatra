@@ -20,7 +20,14 @@
     <a href="/sinatra/attendance">Attendance Record</a>
     <!-- Add Student Button -->
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
-
+    <div class="dropdown">
+      <button id="sortDropdownBtn" class="dropbtn">Sort By</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="sortStudents('student_name')">Student Name</a>
+        <a href="#" onclick="sortStudents('next_lesson')">Next Lesson</a>
+        <a href="#" onclick="sortStudents('makeup_credits')">Makeup Credits</a>
+      </div>
+    </div>
     <!-- New Sorting Button/Drop-down -->
     <div class="dropdown">
       <button class="dropbtn">Sort by</button>
@@ -214,6 +221,33 @@
       localStorage.setItem('studentsData', JSON.stringify(studentsData));
       updateStudentTable();
     }
+
+    // Add a function to close the dropdown when clicking outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    };
+    
+    // Add a function to toggle the dropdown
+    function toggleDropdown() {
+      document.getElementById("sortDropdown").classList.toggle("show");
+    }
+    
+    // Call the sorting function when an option is clicked
+    function sortStudents(sortBy) {
+      // Your existing sorting logic here
+    
+      // For demonstration, let's log the sorting option
+      console.log('Sorting by:', sortBy);
+    }
+
 
   </script>
 
