@@ -177,4 +177,33 @@ post '/update_students' do
   { success: true, message: 'Student added successfully' }.to_json
 end
 
+# Inside app.rb
+
+# Route to handle sorting
+get '/sinatra/studentParentsData/sort/:by' do
+  sort_by = params[:by]
+  students_data = JSON.parse(File.read('students_data.json')) rescue []
+
+  # Call the sorting method based on the parameter
+  case sort_by
+  when 'student_name'
+    students_data.sort! { |a, b| a['student_name'] <=> b['student_name'] }
+  when 'next_lesson'
+    students_data.sort! { |a, b| Date.parse(a['next_lesson']) <=> Date.parse(b['next_lesson']) }
+  when 'makeup_credits'
+    students_data.sort! { |a, b| a['makeup_credits'].to_i <=> b['makeup_credits'].to_i }
+  end
+
+  # Render or redirect as needed
+  if request.xhr?
+    # If it's an AJAX request, return JSON for dynamic updates
+    content_type :json
+    students_data.to_json
+  else
+    # If it's a regular request, render a view or redirect
+    redirect '/sinatra/studentParentsData'
+  end
+end
+
+
 run Sinatra::Application
