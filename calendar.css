@@ -83,22 +83,13 @@ nav button:hover {
 }
 
 .fc-day-grid-event {
-  height: 20px; 
+  height: 10px; 
   font-size: 12px;
   line-height: 1.2;
   overflow: hidden;
   background: #3498db;
   color: #fff;
 }
-
-.fc-day-grid-event.fc-h-event {
-  background: #3498db; 
-}
-
-.fc-daygrid-view .fc-day {
-  height: 20px; 
-}
-
 
 #addLessonPopup,
 #lessonInfoPopup{
