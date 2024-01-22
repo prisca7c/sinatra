@@ -60,7 +60,8 @@ nav button:hover {
   margin-top: 100px; /* Increased margin-top for more space */
 }
 
-.modal {
+#addLessonPopup,
+#lessonInfoPopup{
   display: none;
   position: fixed;
   top: 50%;
