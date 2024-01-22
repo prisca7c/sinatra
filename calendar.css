@@ -62,7 +62,7 @@ nav button:hover {
   position: relative;
   padding: 20px;
   width: 85%;
-  height: calc(100vh - 200px); /* Adjust the height calculation as needed */
+  height: calc(100vh - 600px); /* Adjust the height calculation as needed */
   overflow-y: auto; /* Add a scrollbar if needed */
 }
 
