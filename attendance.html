@@ -178,12 +178,20 @@
   
     function deleteStudent(studentId) {
       var students = JSON.parse(localStorage.getItem('students')) || [];
-      var updatedStudents = students.filter(function (student) {
-        return student.id !== studentId;
-      });
-      localStorage.setItem('students', JSON.stringify(updatedStudents));
-  
-      loadStudents();
+      
+      // Find the index of the student with the specified id
+      var index = students.findIndex(student => student.id === studentId);
+    
+      if (index !== -1) {
+        // Remove the entry at the specified index
+        students.splice(index, 1);
+      
+        // Update local storage with the modified data
+        localStorage.setItem('students', JSON.stringify(students));
+      
+        // Update the table with the modified data
+        updateStudentTable();
+      }
     }
   
     function openAddStudentPopup() {
