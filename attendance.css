@@ -96,69 +96,10 @@ th {
   background-color: #f2f2f2;
 }
 
-/* Main Section 
-.main {
-  position: relative;
-  padding: 20px;
-  width: 100%;
-}
-
-.main-top {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.main-top i {
-  position: absolute;
-  right: 0;
-  margin: 10px 30px;
-  color: rgb(110, 109, 109);
-  cursor: pointer;
-}
-
-.users {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.users .card {
-  width: 48%;
-  margin: 10px;
+.users table tr{
   background: #fff;
-  text-align: center;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  flex-basis: 48%;
 }
 
-.users .card h4 {
-  text-transform: uppercase;
-}
-
-.users .card p {
-  font-size: 12px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-}
-
-.users table {
-  margin: auto;
-}
-
-.users .per span {
-  padding: 5px;
-  border-radius: 10px;
-  background: rgb(223, 223, 223);
-}
-
-.users td {
-  font-size: 14px;
-  padding-right: 15px;
-}
-*/
 /* Add styles for attendance buttons */
 .attendance-btn {
   width: 100%;
