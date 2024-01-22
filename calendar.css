@@ -105,7 +105,7 @@ nav button:hover {
 }
 
 .fc-center {
-  justify-content: center;
+  justify-content: space-around;
   flex-grow: 2;
 }
 
