@@ -69,14 +69,22 @@ nav button:hover {
   height: 60px;
 }
 
-/*.fc-left, 
+.fc-right {
+  margin-right: 10px;
+}
+
+.fc-button {
+  margin: 0 5px;
+}
+
+.fc-left, 
 .fc-center, 
 .fc-right {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 33.33%;
-}*/
+}
 
 .fc-center {
   justify-content: center;
