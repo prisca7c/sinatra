@@ -139,8 +139,6 @@
       closeAddLessonPopup();
     }
   
-  
-  
     function deleteLesson() {
       var lessonId = $('#infoLessonId').text();
   
@@ -169,7 +167,7 @@
       $('#infoLessonId').text(calEvent.id);
   
       //$('#lessonInfoPopup').show();
-      $('#lessonInfoPopup')('show');
+      $('#lessonInfoPopup').modal('show');
     }
   
     function updateLocalStorage(event) {
