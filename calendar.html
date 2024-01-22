@@ -61,6 +61,7 @@
   
   <script>
     $(document).ready(function () {
+      // Initialize the calendar
       $('#calendar').fullCalendar({
         defaultView: 'month',
         header: {
@@ -90,6 +91,31 @@
         }
       });
   
+      // Open Add Lesson Form when clicking on a date
+      $('#calendar').fullCalendar('option', 'select', function (start, end) {
+        openAddLessonForm(start.format());
+        $('#calendar').fullCalendar('unselect');
+      });
+
+      // Show Lesson Information when clicking on an event
+      $('#calendar').fullCalendar('option', 'eventClick', function (calEvent, jsEvent, view) {
+        showLessonInformation(calEvent);
+      });
+
+      // Show Add Lesson Popup when the 'Add Lesson' button is clicked
+      $('#addLessonButton').click(function () {
+        openAddLessonForm($('#lessonDate').val());
+      });
+
+      // Show modals using Bootstrap modal method
+      $('#addLessonPopup').modal({
+        show: false
+      });
+
+      $('#lessonInfoPopup').modal({
+        show: false
+      });
+
       updateCalendarEvents();
     });
   
@@ -98,15 +124,15 @@
       document.getElementById('lessonType').value = '';
       document.getElementById('studentName').value = '';
   
-      $('#addLessonPopup')modal.show();
+      $('#addLessonPopup').modal('show');
     }
   
     function closeAddLessonPopup() {
-      $('#addLessonPopup').hide();
+      $('#addLessonPopup').modal('hide');
     }
   
     function closeLessonInfoPopup() {
-      $('#lessonInfoPopup').hide();
+      $('#lessonInfoPopup').modal('hide');
     }
   
     function addLesson() {
