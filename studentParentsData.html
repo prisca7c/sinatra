@@ -7,6 +7,30 @@
   <link rel="stylesheet" href="studentParentsData.css">
   <title>Bonzi Music School | Student & Parents' Data</title>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <style>
+    /* Your existing styles */
+
+    /* Additional styles for the drop-down */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+  
 </head>
 
 <body>
@@ -19,23 +43,14 @@
     <a href="/sinatra/invoices">Invoices</a>
     <a href="/sinatra/attendance">Attendance Record</a>
     <div class="dropdown">
-      <button onclick="toggleDropdown()" class="dropbtn">&#9662; Sort By</button>
-      <div id="sortDropdown" class="dropdown-content">
-        <a href="#" onclick="sortStudents('student_name')">Student Name</a>
-        <a href="#" onclick="sortStudents('next_lesson')">Next Lesson</a>
-        <a href="#" onclick="sortStudents('makeup_credits')">Makeup Credits</a>
+      <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
+      <div class="dropdown-content" id="sortDropdown">
+        <a href="#" onclick="sortByName()">Student Name</a>
+        <a href="#" onclick="sortByNextLesson()">Next Lesson</a>
+        <a href="#" onclick="sortByMakeupCredits()">Make-up Credits</a>
       </div>
     </div>
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
-    <!-- New Sorting Button/Drop-down -->
-    <div class="dropdown">
-      <button class="dropbtn">Sort by</button>
-      <div class="dropdown-content">
-        <a href="#" onclick="sortStudents('student_name')">Student Name</a>
-        <a href="#" onclick="sortStudents('next_lesson')">Next Lesson</a>
-        <a href="#" onclick="sortStudents('makeup_credits')">Make-up Credits</a>
-      </div>
-    </div>
   </nav>
 
   <div class="overlay" id="overlay"></div>
@@ -200,41 +215,10 @@
       $('#addStudentModal').hide();
     }
 
-    function sortStudents(sortBy) {
-      var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
-    
-      studentsData.sort(function (a, b) {
-        if (sortBy === 'student_name') {
-          return a.student_name.localeCompare(b.student_name);
-        } else if (sortBy === 'next_lesson') {
-          const dateA = new Date(a.next_lesson);
-          const dateB = new Date(b.next_lesson);
-          return dateA - dateB;
-        } else if (sortBy === 'makeup_credits') {
-          return a.makeup_credits - b.makeup_credits;
-        }
-    
-        return 0;
-      });
-    
-      localStorage.setItem('studentsData', JSON.stringify(studentsData));
-      updateStudentTable();
+    function openSortDropdown() {
+      document.getElementById("sortDropdown").classList.toggle("show");
     }
-
-    // Add a function to close the dropdown when clicking outside of it
-    window.onclick = function (event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    };
-    
-    // Add a function to toggle the dropdown
+  
     function sortStudents(sortBy) {
       $.ajax({
         type: 'GET',
@@ -249,8 +233,20 @@
         }
       });
     }
-
-
+  
+    // Add a function to close the dropdown when clicking outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    };
   </script>
 
 </body>
