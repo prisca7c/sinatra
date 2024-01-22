@@ -62,20 +62,11 @@
   <script>
     $(document).ready(function () {
       $('#calendar').fullCalendar({
-        height: 720,
+        height: 730,
         defaultView: 'month',
         header: {
-          left: 'prev,today,next',
-          center: 'clearButton',
-          right: 'title'
-        },
-        customButtons: {
-          clearButton: {
-            text: 'Clear Calendar',
-            click: function () {
-              clearCalendar();
-            }
-          }
+          center: 'title',
+          right: 'prev,today,next'
         },
         dayClick: function (date, jsEvent, view) {
           openAddLessonForm(date.format());
@@ -181,10 +172,6 @@
       $('#calendar').fullCalendar('addEventSource', calendarEvents);
     }
   
-    function clearCalendar() {
-      $('#calendar').fullCalendar('removeEvents');
-      localStorage.removeItem('calendarEvents');
-    }
   </script>
 </body>
 </html>
