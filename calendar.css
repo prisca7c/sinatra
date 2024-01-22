@@ -56,7 +56,7 @@ nav button:hover {
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 20px;
+  grid-gap: 15px;
   margin-top: 150px; /* Increased margin-top for more space */
 }
 
