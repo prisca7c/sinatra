@@ -63,10 +63,10 @@ nav button:hover {
   z-index: 999;
 }
 
-.container {
+.users {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Change here */
-  grid-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px; /* Adjust the gap based on your preference */
   margin: 50px;
 }
 
