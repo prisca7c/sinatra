@@ -11,6 +11,7 @@ h1 {
   margin-top: 20px;
 }
 
+
 .nav {
   position: fixed;
   top: 0;
@@ -69,42 +70,28 @@ nav button:hover {
   height: 60px;
 }
 
-.fc-right {
-  margin-top: 10px; /* Adjust the margin-top property to bring down the arrow buttons */
-}
-
-.fc-button {
-  margin: 0 5px;
-  font-size: 12px;
-  padding: 5px;
-}
-
 .fc-left,
 .fc-center,
 .fc-right {
   display: flex;
   align-items: center;
-  /*justify-content: space-between;
-  width: 33.33%;*/
 }
 
-.fc-toolbar .fc-right {
-  margin-right: 10px;
+.fc-toolbar button {
+  font-size: 12px;
+  padding: 5px;
+  margin: 0 5px; /* Adjust the margin as needed */
+}
+
+.fc-prev,
+.fc-next {
+  font-size: 14px; /* Adjust font size as needed */
+  margin-top: 0 !important; /* Adjust margin-top to bring down the arrow buttons */
 }
 
 .fc-center {
   justify-content: center;
   flex-grow: 2;
-}
-
-.fc-toolbar button {
-  font-size: 14px; /* Adjust font size as needed */
-  padding: 5px;
-}
-
-.fc-prev, .fc-next {
-  font-size: 14px; /* Adjust font size as needed */
-  margin-top: 0 !important; /* Adjust margin-top to bring down the arrow buttons */
 }
 
 .fc-day-grid-event {
