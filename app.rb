@@ -180,7 +180,7 @@ end
 # Inside app.rb
 
 # Route to handle sorting
-get '/sinatra/studentParentsData/sort/:by' do
+get '/sinatra/studentParentsData' do
   sort_by = params[:by]
   students_data = JSON.parse(File.read('students_data.json')) rescue []
 
