@@ -22,15 +22,41 @@
     <a href="/sinatra/invoices">Invoices</a>
     <a href="/sinatra/attendance">Attendance Record</a>
     
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
       Add Student
     </button>
-    <button type="button" class="btn btn-warning" id="clearAllBtn">
+    <button type="button" class="btn btn-warning" id="clearAllBtn"> 
       Clear All
-    </button>
+    </button> -->
+    <button type="button" id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
   </nav>
 
-  <table class="table" id="studentTable">
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Add Student Modal -->
+  <div class="modal fade" id="addStudentModal">
+    <!-- Add Student Form -->
+    <form id="addStudentForm">
+      <div class="form-group">
+        <label for="studentName">Student Name:</label>
+        <input type="text" class="form-control" id="studentName" required>
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact:</label>
+        <input type="text" class="form-control" id="contact" required>
+      </div>
+      <div class="form-group form-check">
+        <button type="button" class="btn btn-success" id="presentBtn">Present</button>
+        <button type="button" class="btn btn-danger" id="absentBtn">Absent</button>
+      </div>
+      <input type="hidden" id="attendanceStatus" value="">
+      <button type="button" class="btn btn-primary" id="addStudentBtn">Add Student</button>
+    </form>
+    <!-- Close button for the add student pop-up -->
+    <button type="button" onclick="closeAddStudentPopup()">Close</button>
+  </div>
+
+  <table id="studentTable">
     <thead>
       <tr>
         <th>Name</th>
@@ -38,42 +64,9 @@
         <th>Attendance</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="studentTableBody">
     </tbody>
   </table>
-
-  <!-- Add Student Modal -->
-  <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- Add Student Form -->
-          <form id="addStudentForm">
-            <div class="form-group">
-              <label for="studentName">Student Name:</label>
-              <input type="text" class="form-control" id="studentName" required>
-            </div>
-            <div class="form-group">
-              <label for="contact">Contact:</label>
-              <input type="text" class="form-control" id="contact" required>
-            </div>
-            <div class="form-group form-check">
-              <button type="button" class="btn btn-success" id="presentBtn">Present</button>
-              <button type="button" class="btn btn-danger" id="absentBtn">Absent</button>
-            </div>
-            <input type="hidden" id="attendanceStatus" value="">
-            <button type="button" class="btn btn-primary" id="addStudentBtn">Add Student</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <style>
     .color-box {
