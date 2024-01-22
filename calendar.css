@@ -193,22 +193,29 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Align items with space between */
-  background: #3498db; /* Header background color */
+  background: transparent; /* Header background color */
   color: #fff; /* Header text color */
   padding: 10px; /* Add padding for better spacing */
 }
 
-.fc-center h2 {
+.fc-center {
   flex-grow: 1;
   text-align: center;
-  margin: 0; /* Remove default margin */
+}
+
+.fc-clear-button {
+  margin-left: auto; /* Push "clear calendar" to the right */
+}
+
+.fc-center h2 {
+  text-align: center;
+  margin: 0;
   font-size: 18px; /* Increase font size */
 }
 
 .fc-center .fc-today-button {
   margin: 0; /* Remove default margin */
   background: #fff; /* Today button background color */
-  color: #3498db; /* Today button text color */
   border: 1px solid #fff; /* Add border to today button */
   border-radius: 5px; /* Add border radius to today button */
   padding: 5px 10px; /* Add padding to today button */
@@ -216,13 +223,12 @@ button:hover {
 }
 
 .fc-center .fc-today-button:hover {
-  background: #3498db; /* Today button background color on hover */
   color: #fff; /* Today button text color on hover */
 }
 
 /* Shorten the height of calendar events */
 .fc-day-grid-event {
-  height: 25px;
+  height: 20px; /* Adjusted height to 20px */
   font-size: 12px;
   line-height: 1.2;
   overflow: hidden;
