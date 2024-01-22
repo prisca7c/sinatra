@@ -58,135 +58,159 @@
     <!-- Example button to delete a lesson -->
     <button onclick="deleteLesson()">Delete Lesson</button>
   </div>
-
-<script>
-  $(document).ready(function () {
-    $('#calendar').fullCalendar({
-      defaultView: 'month',
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'clearButton'
-      },
-      customButtons: {
-        clearButton: {
-          text: 'Clear Calendar',
-          click: function () {
-            clearCalendar();
+  <!-- Bootstrap Modal for Lesson Information -->
+  <div class="modal fade" id="lessonInfoModal" tabindex="-1" role="dialog" aria-labelledby="lessonInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="lessonInfoModalLabel">Lesson Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Content of the modal goes here -->
+          <p><strong>Date:</strong> <span id="infoLessonDate"></span></p>
+          <p><strong>Type:</strong> <span id="infoLessonType"></span></p>
+          <p><strong>Student Name:</strong> <span id="infoStudentName"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- Example button to delete a lesson -->
+          <button type="button" class="btn btn-danger" onclick="deleteLesson()">Delete Lesson</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    $(document).ready(function () {
+      $('#calendar').fullCalendar({
+        defaultView: 'month',
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'clearButton'
+        },
+        customButtons: {
+          clearButton: {
+            text: 'Clear Calendar',
+            click: function () {
+              clearCalendar();
+            }
           }
+        },
+        dayClick: function (date, jsEvent, view) {
+          openAddLessonForm(date.format());
+        },
+        eventRender: function (event, element) {
+          var studentInfo = '<span class="student-info">' + event.student_info + ' ' + event.title + '</span>';
+          element.find('.fc-title').html(studentInfo);
+        },
+  
+        eventClick: function (calEvent, jsEvent, view) {
+          showLessonInformation(calEvent);
+          //return false;
         }
-      },
-      dayClick: function (date, jsEvent, view) {
-        openAddLessonForm(date.format());
-      },
-      eventRender: function (event, element) {
-        var studentInfo = '<span class="student-info">' + event.student_info + ' ' + event.title + '</span>';
-        element.find('.fc-title').html(studentInfo);
-      },
-
-      eventClick: function (calEvent, jsEvent, view) {
-        showLessonInformation(calEvent);
-        //return false;
-      }
-    });
-
-    updateCalendarEvents();
-  });
-
-  function openAddLessonForm(date) {
-    document.getElementById('lessonDate').value = '' + date;
-    document.getElementById('lessonType').value = '';
-    document.getElementById('studentName').value = '';
-
-    $('#addLessonPopup').show();
-  }
-
-  function closeAddLessonPopup() {
-    $('#addLessonPopup').hide();
-  }
-
-  function closeLessonInfoPopup() {
-    $('#lessonInfoPopup').hide();
-  }
-
-  function addLesson() {
-    var date = $('#lessonDate').val();
-    var lessonType = $('#lessonType').val();
-    var studentName = $('#studentName').val();
-    var lessonId = Date.now().toString(); // Generating a unique lesson ID
+      });
   
-    var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
-      return (
-        event.start.format('YYYY-MM-DD') === date &&
-        event.title === lessonType && // Only check for lessonType in the title
-        event.student_info === studentName
-      );
+      updateCalendarEvents();
     });
   
-    if (existingEvent.length === 0) {
-      var lessonEvent = {
-        id: lessonId, // Unique lesson ID
-        title: lessonType, // Only use lessonType in the title
-        student_info: studentName,
-        start: date + 'T12:00:00',
-        allDay: true
-      };
+    function openAddLessonForm(date) {
+      document.getElementById('lessonDate').value = '' + date;
+      document.getElementById('lessonType').value = '';
+      document.getElementById('studentName').value = '';
   
-      $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
-      updateLocalStorage(lessonEvent);
+      $('#addLessonPopup').show();
     }
   
-    closeAddLessonPopup();
-  }
-
-
-
-  function deleteLesson() {
-    var lessonId = $('#infoLessonId').text();
-
-    // Remove the lesson from local storage
-    removeLessonFromLocalStorage(lessonId);
-
-    // Remove the lesson from the calendar
-    $('#calendar').fullCalendar('removeEvents', lessonId);
-
-    closeLessonInfoPopup();
-  }
-
-  function removeLessonFromLocalStorage(lessonId) {
-    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    calendarEvents = calendarEvents.filter(function (event) {
-      return event.id !== lessonId;
-    });
-
-    localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-  }
-
-  function showLessonInformation(calEvent) {
-    $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
-    $('#infoLessonType').text(calEvent.title);
-    $('#infoStudentName').text(calEvent.student_info);
-    $('#infoLessonId').text(calEvent.id);
-
-    //$('#lessonInfoPopup').show();
-    $('#lessonInfoModal').modal('show');
-  }
-
-  function updateLocalStorage(event) {
-    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    calendarEvents.push(event);
-    localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
-  }
-
-  function updateCalendarEvents() {
-    var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    $('#calendar').fullCalendar('addEventSource', calendarEvents);
-  }
-
-  function clearCalendar() {
-    $('#calendar').fullCalendar('removeEvents');
-    localStorage.removeItem('calendarEvents');
-  }
-</script>
+    function closeAddLessonPopup() {
+      $('#addLessonPopup').hide();
+    }
+  
+    function closeLessonInfoPopup() {
+      $('#lessonInfoPopup').hide();
+    }
+  
+    function addLesson() {
+      var date = $('#lessonDate').val();
+      var lessonType = $('#lessonType').val();
+      var studentName = $('#studentName').val();
+      var lessonId = Date.now().toString(); // Generating a unique lesson ID
+    
+      var existingEvent = $('#calendar').fullCalendar('clientEvents', function (event) {
+        return (
+          event.start.format('YYYY-MM-DD') === date &&
+          event.title === lessonType && // Only check for lessonType in the title
+          event.student_info === studentName
+        );
+      });
+    
+      if (existingEvent.length === 0) {
+        var lessonEvent = {
+          id: lessonId, // Unique lesson ID
+          title: lessonType, // Only use lessonType in the title
+          student_info: studentName,
+          start: date + 'T12:00:00',
+          allDay: true
+        };
+    
+        $('#calendar').fullCalendar('renderEvent', lessonEvent, true);
+        updateLocalStorage(lessonEvent);
+      }
+    
+      closeAddLessonPopup();
+    }
+  
+  
+  
+    function deleteLesson() {
+      var lessonId = $('#infoLessonId').text();
+  
+      // Remove the lesson from local storage
+      removeLessonFromLocalStorage(lessonId);
+  
+      // Remove the lesson from the calendar
+      $('#calendar').fullCalendar('removeEvents', lessonId);
+  
+      closeLessonInfoPopup();
+    }
+  
+    function removeLessonFromLocalStorage(lessonId) {
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+      calendarEvents = calendarEvents.filter(function (event) {
+        return event.id !== lessonId;
+      });
+  
+      localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+    }
+  
+    function showLessonInformation(calEvent) {
+      $('#infoLessonDate').text(calEvent.start.format('YYYY-MM-DD'));
+      $('#infoLessonType').text(calEvent.title);
+      $('#infoStudentName').text(calEvent.student_info);
+      $('#infoLessonId').text(calEvent.id);
+  
+      //$('#lessonInfoPopup').show();
+      $('#lessonInfoModal').modal('show');
+    }
+  
+    function updateLocalStorage(event) {
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+      calendarEvents.push(event);
+      localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+    }
+  
+    function updateCalendarEvents() {
+      var calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+      $('#calendar').fullCalendar('addEventSource', calendarEvents);
+    }
+  
+    function clearCalendar() {
+      $('#calendar').fullCalendar('removeEvents');
+      localStorage.removeItem('calendarEvents');
+    }
+  </script>
 </body>
 </html>
