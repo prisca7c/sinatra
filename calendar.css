@@ -113,6 +113,7 @@ nav button:hover {
 }
 
 .fc-button {
+  display: flex;
   background: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: 0.3s ease;
