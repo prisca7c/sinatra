@@ -158,7 +158,7 @@ end
 
 # Serve HTML page
 get '/sinatra/studentParentsData' do
-  File.read(File.join('views', 'studentParentsData.html'))
+  File.read('studentParentsData.html')
 end
 
 # Get all students
