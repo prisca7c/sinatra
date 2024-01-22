@@ -131,6 +131,13 @@ nav button:hover {
   margin-right: 5px; /* Adjust the spacing between buttons */
 }
 
+/* Add this style to make individual buttons flex containers */
+.fc-prev-button, .fc-today-button, .fc-next-button {
+  display: flex;
+  align-items: center;
+}
+
+
 
 /* Form Styles */
 form {
