@@ -70,6 +70,12 @@ nav button:hover {
   height: 60px;
 }
 
+.fc-center {
+  /* Center-align the month and year */
+  display: flex;
+  align-items: center;
+}
+
 .fc-header-buttons {
   display: flex;
   align-items: center;
