@@ -5,214 +5,132 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="attendance.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <title>Student Attendance Record</title>
+  <title>Bonzi Music School | Attendance Record</title>
+  <!-- Add Bootstrap CSS link -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
-
-  <h1>Student Attendance Record</h1>
+  <h1>Attendance Record</h1>
   <nav>
     <a href="/sinatra/home">Home</a>
     <a href="/sinatra/calendar">Calendar</a>
     <a href="/sinatra/studentParentsData">Student & Parents' Data</a>
     <a href="/sinatra/invoices">Invoices</a>
     <a href="/sinatra/attendance">Attendance Record</a>
-
-    <button type="button" id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
+    <!-- Add Student Button -->
+    <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
   </nav>
 
   <div class="overlay" id="overlay"></div>
 
-  <!-- Add Student Modal -->
-  <div class="modal fade" id="addStudentModal">
-    <!-- Add Student Form -->
+  <div class="modal" id="addStudentModal">
     <form id="addStudentForm">
-      <div class="form-group">
-        <label for="studentName">Student Name:</label>
-        <input type="text" class="form-control" id="studentName" required>
-      </div>
-      <div class="form-group">
-        <label for="contact">Contact:</label>
-        <input type="text" class="form-control" id="contact" required>
-      </div>
-      <div class="form-group form-check">
-        <button type="button" class="btn btn-success" id="presentBtn">Present</button>
-        <button type="button" class="btn btn-danger" id="absentBtn">Absent</button>
-      </div>
-      <input type="hidden" id="attendanceStatus" value="">
-      <button type="button" class="btn btn-primary" id="addStudentBtn">Add Student</button>
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" required><br>
+
+      <label for="contact">Contact:</label>
+      <input type="tel" id="contact" required><br>
+
+      <label for="attendanceStatus">Attendance Status:</label>
+      <select id="attendanceStatus" required>
+        <option value="present">Present</option>
+        <option value="absent">Absent</option>
+      </select><br>
+
+      <button type="button" onclick="addStudent()">Add Student</button>
     </form>
+
     <!-- Close button for the add student pop-up -->
     <button type="button" onclick="closeAddStudentPopup()">Close</button>
   </div>
 
-  <table id="attendanceTable" class="table table-bordered table-striped" style="width:100%">
+  <table id="attendanceTable">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Student Name</th>
         <th>Contact</th>
-        <th>Attendance</th>
+        <th>Attendance Status</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody id="attendanceTableBody">
+      <!-- Existing table rows will be dynamically added here -->
     </tbody>
   </table>
 
-  <style>
-    .color-box {
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      border: 1px solid #ccc;
-      margin-right: 5px;
-    }
-
-    .present {
-      background-color: #28a745;
-      color: #fff;
-    }
-
-    .absent {
-      background-color: #dc3545;
-      color: #fff;
-    }
-
-    /* Added CSS for table borders and padding */
-    #attendanceTable {
-      border: 1px solid #ddd;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    #attendanceTable th,
-    #attendanceTable td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-  </style>
-
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     $(document).ready(function () {
-      loadStudents();
-  
-      $('#addStudentBtn').click(function () {
-        openAddStudentPopup();
-      });
-  
-      $('#presentBtn').click(function () {
-        $('#attendanceStatus').val('present');
-        updateAttendanceCheckboxUI();
-      });
-  
-      $('#absentBtn').click(function () {
-        $('#attendanceStatus').val('absent');
-        updateAttendanceCheckboxUI();
-      });
-  
-      $('#addStudentForm').submit(function (e) {
-        e.preventDefault();
-        addStudent();
-      });
+      // Retrieve data from local storage and update the table
+      updateAttendanceTable();
     });
-  
-    function loadStudents() {
+
+    function updateAttendanceTable() {
+      // Retrieve data from local storage
       var students = JSON.parse(localStorage.getItem('students')) || [];
-      students.forEach(function (student) {
-        addStudentToTable(student);
+
+      // Update the table with the retrieved data
+      $('#attendanceTableBody').empty(); // Clear existing rows
+      students.forEach(function (student, index) {
+        var newRow = '<tr data-id="' + index + '">' +
+          '<td>' + student.name + '</td>' +
+          '<td>' + student.contact + '</td>' +
+          '<td>' + student.attendance + '</td>' +
+          '<td><button type="button" onclick="deleteStudent(' + index + ')">Delete</button></td>' +
+          '</tr>';
+        $('#attendanceTableBody').append(newRow);
       });
     }
-  
+
     function addStudent() {
       var studentName = $('#studentName').val();
       var contact = $('#contact').val();
       var attendanceStatus = $('#attendanceStatus').val();
-      var studentId = Date.now().toString();
-  
-      var student = {
-        id: studentId,
+
+      // Retrieve existing data from local storage
+      var students = JSON.parse(localStorage.getItem('students')) || [];
+
+      // Add the new student data
+      students.push({
         name: studentName,
         contact: contact,
         attendance: attendanceStatus
-      };
-  
-      addStudentToTable(student);
-      updateLocalStorage(student);
-  
+      });
+
+      // Save the updated data back to local storage
+      localStorage.setItem('students', JSON.stringify(students));
+
+      // Update the table
+      updateAttendanceTable();
+
+      // Clear the form fields
       $('#studentName').val('');
       $('#contact').val('');
-      $('#attendanceCheckbox').data('attendance', '');
-      updateAttendanceCheckboxUI();
-  
-      $('#addStudentModal').modal('hide');
-      $('body').removeClass('modal-open');
-      $('.modal-backdrop').remove();
+      $('#attendanceStatus').val('present');
+
+      // Close the add student pop-up
+      closeAddStudentPopup();
     }
-  
-    function addStudentToTable(student) {
-      var attendanceCell;
-      if (student.attendance === 'present') {
-        attendanceCell = '<td><button class="btn btn-success">Present</button></td>';
-      } else if (student.attendance === 'absent') {
-        attendanceCell = '<td><button class="btn btn-danger">Absent</button></td>';
-      } else {
-        attendanceCell = '<td><button class="btn btn-light">Not Marked</button></td>';
-      }
-  
-      var newRow = '<tr data-id="' + student.id + '">' +
-        '<td>' + student.name + '</td>' +
-        '<td>' + student.contact + '</td>' +
-        attendanceCell +
-        '<td><button type="button" onclick="deleteStudent(' + student.id + ')">Delete</button></td>' +
-        '</tr>';
-  
-      $('#attendanceTableBody').append(newRow);
-    }
-  
-    function updateLocalStorage(student) {
+
+    function deleteStudent(index) {
       var students = JSON.parse(localStorage.getItem('students')) || [];
-      students.push(student);
+
+      students.splice(index, 1);
       localStorage.setItem('students', JSON.stringify(students));
+
+      updateAttendanceTable();
     }
-  
-    function deleteStudent(id) {
-      var students = JSON.parse(localStorage.getItem('students')) || [];
-  
-      // Remove the entry with the specified id
-      students = students.filter(function (student) {
-        return student.id !== id;
-      });
-  
-      // Update local storage with the modified data
-      localStorage.setItem('students', JSON.stringify(students));
-  
-      // Update the table with the modified data
-      updateStudentTable();
-    }
-  
-    function updateStudentTable() {
-      $('#attendanceTableBody').empty();
-      loadStudents();
-    }
-  
+
     function openAddStudentPopup() {
       $('#overlay').show();
       $('#addStudentModal').show();
     }
-  
+
     function closeAddStudentPopup() {
       $('#overlay').hide();
       $('#addStudentModal').hide();
     }
   </script>
-  
-
 
 </body>
 
