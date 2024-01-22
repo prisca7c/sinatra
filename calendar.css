@@ -78,16 +78,14 @@ nav button:hover {
   width: 33.33%;
 }
 
-.fc-left {
-  justify-content: flex-start;
-}
-
 .fc-center {
   justify-content: center;
+  flex-grow: 2;
 }
 
-.fc-right {
-  justify-content: flex-end;
+.fc-toolbar button {
+  font-size: 12px;
+  padding: 5px;
 }
 
 .fc-day-grid-event {
