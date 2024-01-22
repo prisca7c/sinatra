@@ -201,6 +201,22 @@ button:hover {
   margin: 0 auto;
 }
 
+/* Shorten the height of calendar events */
+.fc-day-grid-event {
+  height: 20px; /* Adjust the height as needed */
+  font-size: 12px; /* Adjust the font size as needed */
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+/* Style modifications for better visibility */
+.fc-day-grid-event.fc-h-event {
+  background: #4AD489; /* Background color for calendar events */
+  border: none; /* Remove border */
+  color: #fff; /* Text color for calendar events */
+}
+
+
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
   nav button {
