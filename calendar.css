@@ -69,11 +69,25 @@ nav button:hover {
   height: 60px;
 }
 
-.fc-left, .fc-center, .fc-right {
+.fc-left, 
+.fc-center, 
+.fc-right {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 33.33%;
+}
+
+.fc-left {
+  justify-content: flex-start;
+}
+
+.fc-center {
+  justify-content: center;
+}
+
+.fc-right {
+  justify-content: flex-end;
 }
 
 .fc-day-grid-event {
