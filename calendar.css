@@ -199,6 +199,7 @@ button:hover {
 /* Header Styles */
 .fc-toolbar.fc-header-toolbar {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between; /* Align items with space between */
   background: transparent; /* Header background color */
@@ -207,18 +208,17 @@ button:hover {
 }
 
 .fc-center {
-  flex-grow: 1;
   text-align: center;
-}
-
-.fc-clear-button {
-  margin-right: auto; /* Push "clear calendar" to the right */
+  margin-top: 10px;
 }
 
 .fc-center h2 {
-  text-align: center;
-  margin: 0;
   font-size: 18px; /* Increase font size */
+  margin: 0;
+}
+
+.fc-clear-button {
+  margin-top: 10px; /* Push "clear calendar" to the right */
 }
 
 .fc-center .fc-today-button {
