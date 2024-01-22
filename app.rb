@@ -32,11 +32,12 @@ end
 class StudentData
   attr_accessor :student_name, :parent_email, :parent_phone, :tuition, :next_lesson, :makeup_credits
 
-  def initialize(student_name, parent_email, parent_phone, tuition, next_lesson, makeup_credits)
+  def initialize(student_name, tuition, parent_name, parent_email, parent_phone, next_lesson, makeup_credits)
     @student_name = student_name
+    @tuition = tuition
+    @parent_name = parent_name
     @parent_email = parent_email
     @parent_phone = parent_phone
-    @tuition = tuition
     @next_lesson = next_lesson
     @makeup_credits = makeup_credits
   end
@@ -173,7 +174,7 @@ post '/update_students' do
   # Validate data (add your validation logic here)
 
   # Add the student to the list
-  student_data = StudentData.new(data['student_name'], data['parent_email'], data['parent_phone'], data['tuition'], data['next_lesson'], data['makeup_credits'])
+  student_data = StudentData.new(data['student_name'], data['tuition'], data['parent_name'],data['parent_email'], data['parent_phone'], data['next_lesson'], data['makeup_credits'])
   $data['studentData'] << student_data
 
   { success: true, message: 'Student added successfully' }.to_json
