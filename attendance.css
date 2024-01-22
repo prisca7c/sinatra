@@ -115,12 +115,6 @@ nav button:hover {
   flex-basis: 48%;
 }
 
-.users .card img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
-
 .users .card h4 {
   text-transform: uppercase;
 }
