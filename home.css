@@ -1,7 +1,7 @@
 body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
   background: #fff;
 }
@@ -78,12 +78,6 @@ nav button:hover {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-}
-
-.card img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
 }
 
 .card h4 {
