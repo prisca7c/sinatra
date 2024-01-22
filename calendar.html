@@ -62,11 +62,12 @@
   <script>
     $(document).ready(function () {
       $('#calendar').fullCalendar({
+        height:100,
         defaultView: 'month',
         header: {
           left: 'prev,today,next',
-          center: 'title',
-          right: 'clearButton'
+          center: 'clearButton',
+          right: 'title'
         },
         customButtons: {
           clearButton: {
