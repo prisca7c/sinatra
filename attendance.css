@@ -75,7 +75,28 @@ nav button:hover {
   z-index: 1000;
 }
 
-/* Main Section */
+/* Add modern styling with curves to the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  border-radius: 15px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Main Section 
 .main {
   position: relative;
   padding: 20px;
@@ -137,7 +158,7 @@ nav button:hover {
   font-size: 14px;
   padding-right: 15px;
 }
-
+*/
 /* Add styles for attendance buttons */
 .attendance-btn {
   width: 100%;
@@ -181,12 +202,6 @@ form {
   background-color: #fff;
   border: 1px solid #ddd;
   z-index: 1000;
-}
-
-/* Add the following styles to center the modal */
-.modal-dialog {
-  max-width: 80%;
-  margin: 30px auto;
 }
 
 /* Input Styles */
