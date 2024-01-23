@@ -217,14 +217,13 @@
     }
   
     function sortStudents(sortBy) {
+      console.log('Sorting by:', sortBy);
       $.ajax({
         type: 'GET',
         url: '/sort_students?by=' + sortBy,
         dataType: 'json',
         success: function (data) {
-          // Handle the sorted data, update your table or do something else
           console.log('Sorted data:', data);
-    
           // Assuming 'data' is an array of student objects
           updateTableWithData(data);
         },
@@ -233,6 +232,7 @@
         }
       });
     }
+
 
     
     function updateTableWithData(data) {
