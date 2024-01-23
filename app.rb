@@ -213,7 +213,7 @@ post '/update_students' do
   # Validate data (add your validation logic here)
 
   # Add the student to the list
-  student_data = StudentData.new(data['student_name'], data['tuition'], data['parent_name'],data['parent_email'], data['parent_phone'], data['next_lesson'], data['makeup_credits'])
+  student_data = StudentData.new(data['student_name'], data['parent_name'],data['parent_email'], data['parent_phone'], data['next_lesson'], data['makeup_credits'])
   $data['studentData'] << student_data
 
   { success: true, message: 'Student added successfully' }.to_json
