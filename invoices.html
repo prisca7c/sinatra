@@ -73,11 +73,11 @@
       // Retrieve data from local storage and update the table
       updateInvoiceTable();
     });
-
+    
     function updateInvoiceTable() {
       // Retrieve data from local storage
       var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
-
+    
       // Update the table with the retrieved data
       $('#invoiceTableBody').empty(); // Clear existing rows
       invoicesData.forEach(function (data, index) {
@@ -93,34 +93,35 @@
         $('#invoiceTableBody').append(newRow);
       });
     }
-
+    
     function addInvoice() {
       var student_name = $('#student_name').val();
       var parent_email = $('#parent_email').val();
       var parent_phone = $('#parent_phone').val();
       var lessons = $('#lessons').val();
       var rate = $('#rate').val();
-
+    
       var tuition = lessons * rate;
-
+    
       // Retrieve existing data from local storage
       var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
-
+    
       // Add the new invoice data
       invoicesData.push({
         student_name: student_name,
         parent_email: parent_email,
         parent_phone: parent_phone,
         lessons: lessons,
-        rate: rate
+        rate: rate,
+        tuition: tuition // Include tuition in the data
       });
-
+    
       // Save the updated data back to local storage
       localStorage.setItem('invoicesData', JSON.stringify(invoicesData));
-
+    
       // Update the table
       updateInvoiceTable();
-
+    
       // Clear the form fields
       $('#student_name').val('');
       $('#parent_email').val('');
@@ -128,29 +129,29 @@
       $('#lessons').val('');
       $('#rate').val('');
     
-
       // Close the add student pop-up
       closeAddStudentPopup();
     }
-
+    
     function deleteInvoice(index) {
       var invoicesData = JSON.parse(localStorage.getItem('invoicesData')) || [];
-
+    
       invoicesData.splice(index, 1);
       localStorage.setItem('invoicesData', JSON.stringify(invoicesData));
-
+    
       updateInvoiceTable();
     }
-
+    
     function openAddStudentPopup() {
       $('#overlay').show();
       $('#addStudentModal').show();
     }
-
+    
     function closeAddStudentPopup() {
       $('#overlay').hide();
       $('#addStudentModal').hide();
     }
+
   </script>
 
 </body>
