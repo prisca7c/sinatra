@@ -42,9 +42,9 @@
     <div class="dropdown">
       <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
       <div class="dropdown-content" id="sortDropdown">
-        <a href="javascript:void(0)" onclick="sortStudents(SORT_BY_NAME)">Student Name</a>
-        <a href="javascript:void(0)" onclick="sortStudents(SORT_BY_NEXT_LESSON)">Next Lesson</a>
-        <a href="javascript:void(0)" onclick="sortStudents(SORT_BY_MAKEUP_CREDITS)">Make-up Credits</a>
+        <a href="javascript:void(0)" onclick="sortStudents('student_name')">Student Name</a>
+        <a href="javascript:void(0)" onclick="sortStudents('next_lesson')">Next Lesson</a>
+        <a href="javascript:void(0)" onclick="sortStudents('makeup_credits')">Make-up Credits</a>
       </div>
     </div>
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
@@ -121,23 +121,23 @@
   </table>
 
   <script>
-    const SORT_BY_NAME = 'student_name';
-    const SORT_BY_NEXT_LESSON = 'next_lesson';
-    const SORT_BY_MAKEUP_CREDITS = 'makeup_credits';
     $(document).ready(function () {
       // Retrieve data from local storage and update the table
       updateStudentTable();
     });
 
+    var currentSortType = 'student_name';
+
     function updateStudentTable() {
       // Retrieve data from local storage
       var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
-
-      // Update the table with the retrieved data
+  
+      // Sort the data based on the current sort type
+      sortData(studentsData);
+  
+      // Update the table with the sorted data
       $('#studentTableBody').empty(); // Clear existing rows
-
-      studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name));
-      
+  
       studentsData.forEach(function (data, index) {
         var newRow = '<tr>' +
           '<td>' + data.date + '</td>' +
@@ -152,6 +152,46 @@
           '</tr>';
         $('#studentTableBody').append(newRow);
       });
+    }
+  
+    function sortData(data) {
+      // Sort the data based on the current sort type
+      switch (currentSortType) {
+        case 'student_name':
+          data.sort((a, b) => a.student_name.localeCompare(b.student_name));
+          break;
+  
+        case 'next_lesson':
+          data.sort((a, b) => new Date(a.next_lesson) - new Date(b.next_lesson));
+          break;
+  
+        case 'makeup_credits':
+          data.sort((a, b) => b.makeup_credits - a.makeup_credits);
+          break;
+  
+        // Add more cases for other sort types if needed
+  
+        default:
+          // Default sorting, in case an invalid option is provided
+          break;
+      }
+    }
+
+     function sortStudents(sortBy) {
+      // Set the current sort type
+      currentSortType = sortBy;
+  
+      // Retrieve data from local storage
+      var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
+  
+      // Sort the data based on the selected criteria
+      sortData(studentsData);
+  
+      // Save the sorted data back to local storage
+      localStorage.setItem('studentsData', JSON.stringify(studentsData));
+  
+      // Update the table
+      updateStudentTable();
     }
 
     function addStudent() {
