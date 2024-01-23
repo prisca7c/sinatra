@@ -43,7 +43,6 @@
       <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
       <div class="dropdown-content" id="sortDropdown">
         <a href="javascript:void(0)" onclick="sortByName()">Student Name</a>
-        <a href="javascript:void(0)" onclick="sortByNextLesson()">Next Lesson</a>
         <a href="javascript:void(0)" onclick="sortByMakeupCredits()">Make-up Credits</a>
       </div>
     </div>
@@ -163,11 +162,6 @@
         case 'student_name':
           data.sort((a, b) => a.student_name.localeCompare(b.student_name));
           break;
-  
-        case 'next_lesson':
-          data.sort((a, b) => new Date(a.next_lesson) - new Date(b.next_lesson));
-          break;
-  
         case 'makeup_credits':
           data.sort((a, b) => b.makeup_credits - a.makeup_credits);
           break;
@@ -269,10 +263,6 @@
       setSortBy('student_name');
     }
     
-    function sortByNextLesson() {
-      setSortBy('next_lesson');
-    }
-    
     function sortByMakeupCredits() {
       setSortBy('makeup_credits');
     }
@@ -286,8 +276,6 @@
       switch (sortBy) {
         case 'student_name':
           return (a, b) => a.student_name.localeCompare(b.student_name);
-        case 'next_lesson':
-          return (a, b) => new Date(a.next_lesson) - new Date(b.next_lesson);
         case 'makeup_credits':
           return (a, b) => b.makeup_credits - a.makeup_credits;
         default:
