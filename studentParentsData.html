@@ -42,9 +42,9 @@
     <div class="dropdown">
       <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
       <div class="dropdown-content" id="sortDropdown">
-        <a href="javascript:void(0)" onclick="sortByName()">Student Name</a>
-        <a href="javascript:void(0)" onclick="sortByNextLesson()">Next Lesson</a>
-        <a href="javascript:void(0)" onclick="sortByMakeupCredits()">Make-up Credits</a>
+        <a href="javascript:void(0)" onclick="sortStudents('student_name')">Student Name</a>
+        <a href="javascript:void(0)" onclick="sortStudents('next_lesson')">Next Lesson</a>
+        <a href="javascript:void(0)" onclick="sortStudents('makeup_credits')">Make-up Credits</a>
       </div>
     </div>
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
@@ -219,20 +219,37 @@
       document.getElementById("sortDropdown").classList.toggle("show");
     }
   
-    // Add this function to your script
+    function sortByName() {
+      sortStudents('student_name');
+    }
+  
+    function sortByNextLesson() {
+      sortStudents('next_lesson');
+    }
+  
+    function sortByMakeupCredits() {
+      sortStudents('makeup_credits');
+    }
+  
     function sortStudents(sortBy) {
       // Retrieve data from local storage
       var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
   
       // Sort the data based on the selected criteria
       studentsData.sort(function (a, b) {
-        // For date fields, convert to Date objects for proper comparison
-        if (sortBy === 'next_lesson') {
-          return new Date(a[sortBy]) - new Date(b[sortBy]);
-        }
+        switch (sortBy) {
+          case 'student_name':
+            return a[sortBy].localeCompare(b[sortBy]);
   
-        // For other fields, use localeCompare for strings
-        return a[sortBy].localeCompare(b[sortBy]);
+          case 'next_lesson':
+            return new Date(a[sortBy]) - new Date(b[sortBy]);
+  
+          case 'makeup_credits':
+            return b[sortBy] - a[sortBy];
+  
+          default:
+            return 0;
+        }
       });
   
       // Save the sorted data back to local storage
