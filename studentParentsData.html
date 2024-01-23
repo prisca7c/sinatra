@@ -277,31 +277,32 @@
     function sortStudents(sortBy) {
       // Retrieve data from local storage
       var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
-  
+    
       // Sort the data based on the selected criteria
       switch (sortBy) {
-        case SORT_BY_NAME:
+        case 'student_name':
           studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name));
           break;
-  
-        case SORT_BY_NEXT_LESSON:
+    
+        case 'next_lesson':
           studentsData.sort((a, b) => new Date(a.next_lesson) - new Date(b.next_lesson));
           break;
-  
-        case SORT_BY_MAKEUP_CREDITS:
+    
+        case 'makeup_credits':
           studentsData.sort((a, b) => b.makeup_credits - a.makeup_credits);
           break;
-  
+    
         default:
-          // Default sorting, in case an invalid option is provided
           break;
       }
+    
       // Save the sorted data back to local storage
       localStorage.setItem('studentsData', JSON.stringify(studentsData));
-  
+    
       // Update the table
       updateStudentTable();
     }
+
     
     function updateTableWithData(data) {
       $('#studentTableBody').empty(); // Clear existing rows
