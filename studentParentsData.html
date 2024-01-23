@@ -42,9 +42,9 @@
     <div class="dropdown">
       <button onclick="openSortDropdown()" class="dropbtn">Sort By ▼</button>
       <div class="dropdown-content" id="sortDropdown">
-        <a href="javascript:void(0)" onclick="sortStudents('student_name')">Student Name</a>
-        <a href="javascript:void(0)" onclick="sortStudents('next_lesson')">Next Lesson</a>
-        <a href="javascript:void(0)" onclick="sortStudents('makeup_credits')">Make-up Credits</a>
+        <a href="javascript:void(0)" onclick="sortByName()">Student Name</a>
+        <a href="javascript:void(0)" onclick="sortByNextLesson()">Next Lesson</a>
+        <a href="javascript:void(0)" onclick="sortByMakeupCredits()">Make-up Credits</a>
       </div>
     </div>
     <button id="openAddStudentPopupButton" onclick="openAddStudentPopup()">Add Student</button>
@@ -302,6 +302,7 @@
       // Update the table
       updateStudentTable();
     }
+
 
     
     function updateTableWithData(data) {
