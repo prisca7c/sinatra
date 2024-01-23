@@ -5,6 +5,7 @@ require 'erb'
 require 'json'
 
 enable :sessions
+set :session_secret, 'super secret'
 
 # Define classes for your data
 class Lesson
@@ -64,6 +65,10 @@ get '/calendar' do
   erb :calendar
 end
 
+get '/sinatra/home' do
+  erb :invoice
+end
+
 #-------------------------CALENDAR---------------------------
 
 post '/calendar' do
@@ -105,21 +110,55 @@ end
 
 #-------------------------INVOICES---------------------------
 
-post '/invoices' do
+post '/sinatra/add_invoice' do
   student_name = params[:student_name]
-  
-  # Find the student in the studentData array
-  student = $data['studentData'].find { |student| student.student_name == student_name }
-  
-  if student
-    parent_email = student.parent_email
-    parent_phone = student.parent_phone
-    tuition = student.tuition
-  else
-    # Handle case where student is not found
-  end
-  
-  # Continue with your existing code...
+  parent_email = params[:parent_email]
+  parent_phone = params[:parent_phone]
+  lessons = params[:lessons].to_i
+  rate = params[:rate].to_i
+
+  # Calculate tuition
+  tuition = lessons * rate
+
+  # Retrieve existing data from local storage or initialize as an empty array
+  invoices_data = session[:invoices_data] || '[]'
+
+  # Add the new invoice data
+  invoices_data.push({
+    student_name: student_name,
+    parent_email: parent_email,
+    parent_phone: parent_phone,
+    lessons: lessons,
+    rate: rate,
+    tuition: tuition
+  })
+
+  # Save the updated data back to the session
+  session[:invoices_data] = invoices_data
+
+  redirect '/sinatra/home'
+end
+
+get '/sinatra/invoices' do
+  # Retrieve data from the session
+  invoices_data = session[:invoices_data] || []
+
+  erb :invoices, locals: { invoices_data: invoices_data }
+end
+
+# Route to delete an invoice
+get '/sinatra/delete_invoice/:index' do |index|
+  # Retrieve existing data from the session
+  invoices_data = session[:invoices_data] || []
+
+  # Delete the invoice at the specified index
+  invoices_data.delete_at(index.to_i)
+
+  # Save the updated data back to the session
+  session[:invoices_data] = invoices_data
+
+  # Redirect to the invoices page
+  redirect '/sinatra/invoices'
 end
 
 #-------------------------ATTENDANCE RECORD---------------------------
