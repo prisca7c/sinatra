@@ -38,6 +38,7 @@
     <button type="button" onclick="sellOut()">Sell Out</button>
   </form>
 
+  <button type="button" onclick="calculateProfit()">Calculate Profit</button>
   <div id="profitDisplay"></div>
 
   <script>
@@ -55,22 +56,23 @@
       var quantitySell = document.getElementById('quantitySell').value;
       var priceSell = document.getElementById('priceSell').value;
 
-      // Calculate profit
+      // Display sell out action using the values
+      alert('Selling Out:\nStock Symbol: ' + stockSymbolSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
+    }
+
+    function calculateProfit() {
       var buyInQuantity = document.getElementById('quantity').value;
       var buyInPrice = document.getElementById('price').value;
       var totalBuyIn = buyInQuantity * buyInPrice;
 
-      var sellOutQuantity = quantitySell;
-      var sellOutPrice = priceSell;
+      var sellOutQuantity = document.getElementById('quantitySell').value;
+      var sellOutPrice = document.getElementById('priceSell').value;
       var totalSellOut = sellOutQuantity * sellOutPrice;
 
       var profit = totalSellOut - totalBuyIn;
 
       // Display profit
       document.getElementById('profitDisplay').innerHTML = 'Profit: $' + profit;
-
-      // Perform sell out action using the values
-      alert('Selling Out:\nStock Symbol: ' + stockSymbolSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
     }
   </script>
 
