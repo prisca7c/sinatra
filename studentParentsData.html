@@ -128,18 +128,21 @@
 
     var currentSortType = 'student_name';
 
+    
     function updateStudentTable() {
       // Retrieve data from local storage
       var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
-  
-      // Sort the data based on the current sort type
-      sortData(studentsData);
-  
-      // Update the table with the sorted data
+    
+      // Update the table with the retrieved data
       $('#studentTableBody').empty(); // Clear existing rows
-  
+    
+      // Apply the appropriate sorting
+      var sortBy = $('#sortDropdown').data('sort-by');
+      studentsData.sort(getSortFunction(sortBy));
+    
       studentsData.forEach(function (data, index) {
-        var newRow = '<tr>' +
+        var newRow =
+          '<tr>' +
           '<td>' + data.date + '</td>' +
           '<td>' + data.student_name + '</td>' +
           '<td>' + data.tuition + '</td>' +
@@ -259,48 +262,37 @@
     }
 
     function openSortDropdown() {
-      document.getElementById("sortDropdown").classList.toggle("show");
+      $('#sortDropdown').toggle();
     }
-  
-    function sortByName() {
-      sortStudents('student_name');
-    }
-  
-    function sortByNextLesson() {
-      sortStudents('next_lesson');
-    }
-  
-    function sortByMakeupCredits() {
-      sortStudents('makeup_credits');
-    }
-  
-    function sortStudents(sortBy) {
-      // Retrieve data from local storage
-      var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
     
-      // Sort the data based on the selected criteria
+    function sortByName() {
+      setSortBy('student_name');
+    }
+    
+    function sortByNextLesson() {
+      setSortBy('next_lesson');
+    }
+    
+    function sortByMakeupCredits() {
+      setSortBy('makeup_credits');
+    }
+    
+    function setSortBy(sortBy) {
+      $('#sortDropdown').data('sort-by', sortBy);
+      updateStudentTable();
+    }
+    
+    function getSortFunction(sortBy) {
       switch (sortBy) {
         case 'student_name':
-          studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name));
-          break;
-    
+          return (a, b) => a.student_name.localeCompare(b.student_name);
         case 'next_lesson':
-          studentsData.sort((a, b) => new Date(a.next_lesson) - new Date(b.next_lesson));
-          break;
-    
+          return (a, b) => new Date(a.next_lesson) - new Date(b.next_lesson);
         case 'makeup_credits':
-          studentsData.sort((a, b) => b.makeup_credits - a.makeup_credits);
-          break;
-    
+          return (a, b) => b.makeup_credits - a.makeup_credits;
         default:
-          break;
+          return () => 0;
       }
-    
-      // Save the sorted data back to local storage
-      localStorage.setItem('studentsData', JSON.stringify(studentsData));
-    
-      // Update the table
-      updateStudentTable();
     }
 
 
