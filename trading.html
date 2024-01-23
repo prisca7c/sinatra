@@ -22,30 +22,26 @@
 
   <h2>Buy In</h2>
   <form id="buyInForm">
-    <label for="stockSymbol">Stock Symbol:</label>
-    <input type="text" id="stockSymbol" required><br>
+    <label for="itemBuy">Item Name:</label>
+    <input type="text" id="itemBuy" required><br>
 
     <label for="quantity">Quantity:</label>
     <input type="number" id="quantity" required><br>
 
     <label for="price">Price per Share:</label>
     <input type="number" id="price" step="0.01" required><br>
-
-    <button type="button" onclick="buyIn()">Buy In</button>
   </form>
 
   <h2>Sell Out</h2>
   <form id="sellOutForm">
-    <label for="stockSymbolSell">Stock Symbol:</label>
-    <input type="text" id="stockSymbolSell" required><br>
+    <label for="itemSell">Item Name:</label>
+    <input type="text" id="itemSell" required><br>
 
     <label for="quantitySell">Quantity:</label>
     <input type="number" id="quantitySell" required><br>
 
     <label for="priceSell">Price per Share:</label>
     <input type="number" id="priceSell" step="0.01" required><br>
-
-    <button type="button" onclick="sellOut()">Sell Out</button>
   </form>
 
   <button type="button" onclick="calculateProfit()">Calculate Profit</button>
@@ -53,21 +49,21 @@
 
   <script>
     function buyIn() {
-      var stockSymbol = document.getElementById('stockSymbol').value;
+      var itemBuy = document.getElementById('itemBuy').value;
       var quantity = document.getElementById('quantity').value;
       var price = document.getElementById('price').value;
 
       // Perform buy in action using the values
-      alert('Buying In:\nStock Symbol: ' + stockSymbol + '\nQuantity: ' + quantity + '\nPrice per Share: $' + price);
+      alert('Buying In:\nStock Symbol: ' + itemBuy + '\nQuantity: ' + quantity + '\nPrice per Share: $' + price);
     }
 
     function sellOut() {
-      var stockSymbolSell = document.getElementById('stockSymbolSell').value;
+      var itemSell = document.getElementById('itemSell').value;
       var quantitySell = document.getElementById('quantitySell').value;
       var priceSell = document.getElementById('priceSell').value;
 
       // Display sell out action using the values
-      alert('Selling Out:\nStock Symbol: ' + stockSymbolSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
+      alert('Selling Out:\nStock Symbol: ' + itemSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
     }
 
     function calculateProfit() {
