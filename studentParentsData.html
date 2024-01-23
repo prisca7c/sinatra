@@ -232,34 +232,22 @@
     }
   
     function sortStudents(sortBy) {
-      // Retrieve data from local storage
-      var studentsData = JSON.parse(localStorage.getItem('studentsData')) || [];
-  
-      // Sort the data based on the selected criteria
-      studentsData.sort(function (a, b) {
-        switch (sortBy) {
-          case 'student_name':
-            return a[sortBy].localeCompare(b[sortBy]);
-  
-          case 'next_lesson':
-            return new Date(a[sortBy]) - new Date(b[sortBy]);
-  
-          case 'makeup_credits':
-            return b[sortBy] - a[sortBy];
-  
-          default:
-            return 0;
+      $.ajax({
+        type: 'GET',
+        url: '/sort_students?by=' + sortBy,
+        dataType: 'json',
+        success: function (data) {
+          // Handle the sorted data, update your table or do something else
+          console.log('Sorted data:', data);
+    
+          // Assuming 'data' is an array of student objects
+          updateTableWithData(data);
+        },
+        error: function (error) {
+          console.error('Error sorting data:', error);
         }
       });
-  
-      // Save the sorted data back to local storage
-      localStorage.setItem('studentsData', JSON.stringify(studentsData));
-  
-      // Update the table
-      updateStudentTable();
     }
-
-
     
     function updateTableWithData(data) {
       $('#studentTableBody').empty(); // Clear existing rows
@@ -278,6 +266,7 @@
         $('#studentTableBody').append(newRow);
       });
     }
+
 
   
     // Add a function to close the dropdown when clicking outside of it
