@@ -199,5 +199,4 @@ get '/sort_students' do
   students_data.to_json
 end
 
-
 run Sinatra::Application
