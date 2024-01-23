@@ -38,6 +38,8 @@
     <button type="button" onclick="sellOut()">Sell Out</button>
   </form>
 
+  <div id="profitDisplay"></div>
+
   <script>
     function buyIn() {
       var stockSymbol = document.getElementById('stockSymbol').value;
@@ -52,6 +54,20 @@
       var stockSymbolSell = document.getElementById('stockSymbolSell').value;
       var quantitySell = document.getElementById('quantitySell').value;
       var priceSell = document.getElementById('priceSell').value;
+
+      // Calculate profit
+      var buyInQuantity = document.getElementById('quantity').value;
+      var buyInPrice = document.getElementById('price').value;
+      var totalBuyIn = buyInQuantity * buyInPrice;
+
+      var sellOutQuantity = quantitySell;
+      var sellOutPrice = priceSell;
+      var totalSellOut = sellOutQuantity * sellOutPrice;
+
+      var profit = totalSellOut - totalBuyIn;
+
+      // Display profit
+      document.getElementById('profitDisplay').innerHTML = 'Profit: $' + profit;
 
       // Perform sell out action using the values
       alert('Selling Out:\nStock Symbol: ' + stockSymbolSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
