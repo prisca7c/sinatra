@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy and Sell</title>
+</head>
+
+<body>
+  <h1>Buy and Sell</h1>
+
+  <h2>Buy In</h2>
+  <form id="buyInForm">
+    <label for="stockSymbol">Stock Symbol:</label>
+    <input type="text" id="stockSymbol" required><br>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" required><br>
+
+    <label for="price">Price per Share:</label>
+    <input type="number" id="price" step="0.01" required><br>
+
+    <button type="button" onclick="buyIn()">Buy In</button>
+  </form>
+
+  <h2>Sell Out</h2>
+  <form id="sellOutForm">
+    <label for="stockSymbolSell">Stock Symbol:</label>
+    <input type="text" id="stockSymbolSell" required><br>
+
+    <label for="quantitySell">Quantity:</label>
+    <input type="number" id="quantitySell" required><br>
+
+    <label for="priceSell">Price per Share:</label>
+    <input type="number" id="priceSell" step="0.01" required><br>
+
+    <button type="button" onclick="sellOut()">Sell Out</button>
+  </form>
+
+  <script>
+    function buyIn() {
+      var stockSymbol = document.getElementById('stockSymbol').value;
+      var quantity = document.getElementById('quantity').value;
+      var price = document.getElementById('price').value;
+
+      // Perform buy in action using the values
+      alert('Buying In:\nStock Symbol: ' + stockSymbol + '\nQuantity: ' + quantity + '\nPrice per Share: $' + price);
+    }
+
+    function sellOut() {
+      var stockSymbolSell = document.getElementById('stockSymbolSell').value;
+      var quantitySell = document.getElementById('quantitySell').value;
+      var priceSell = document.getElementById('priceSell').value;
+
+      // Perform sell out action using the values
+      alert('Selling Out:\nStock Symbol: ' + stockSymbolSell + '\nQuantity: ' + quantitySell + '\nPrice per Share: $' + priceSell);
+    }
+  </script>
+
+</body>
+
+</html>
