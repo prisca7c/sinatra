@@ -120,6 +120,43 @@ body {
   margin-bottom: 20px;
 }
 
+/* Add this style at the end of your existing CSS */
+
+/* Image Section Styles */
+.image-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+/* Image Container Styles */
+.image-container {
+  width: 300px;
+  margin: 10px;
+}
+
+/* Image Styles */
+.image-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd; /* Add border around the image */
+  border-radius: 5px; /* Optional: Add border-radius for a rounded look */
+}
+
+/* Image Details Styles */
+.image-details {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 540px) {
+  .image-container {
+    width: 100%; /* Make the image container full-width on small screens */
+  }
+}
+
 /* Responsive Styles */
 @media only screen and (max-width: 786px) {
   nav button {
