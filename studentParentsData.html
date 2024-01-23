@@ -65,11 +65,6 @@
       </div>
 
       <div class="input-field">
-        <label for="tuition">Tuition:</label>
-        <input type="number" id="tuition" required>
-      </div>
-
-      <div class="input-field">
         <label for="parent_name">Parent Name:</label>
         <input type="text" id="parent_name" required>
       </div>
@@ -106,7 +101,6 @@
       <tr>
         <th>Date</th>
         <th>Student Name</th>
-        <th>Tuition</th>
         <th>Parent Name</th>
         <th>Email</th>
         <th>Phone Number</th>
@@ -145,7 +139,6 @@
           '<tr>' +
           '<td>' + data.date + '</td>' +
           '<td>' + data.student_name + '</td>' +
-          '<td>' + data.tuition + '</td>' +
           '<td>' + data.parent_name + '</td>' +
           '<td>' + data.parent_email + '</td>' +
           '<td>' + data.parent_phone + '</td>' +
@@ -195,7 +188,6 @@
     function addStudent() {
       var date = $('#date').val();
       var student_name = $('#student_name').val();
-      var tuition = $('#tuition').val();
       var parent_name = $('#parent_name').val();
       var parent_email = $('#parent_email').val();
       var parent_phone = $('#parent_phone').val();
@@ -209,7 +201,6 @@
       studentsData.push({
         date: date,
         student_name: student_name,
-        tuition: tuition,
         parent_name: parent_name,
         parent_email: parent_email,
         parent_phone: parent_phone,
@@ -226,7 +217,6 @@
       // Clear the form fields
       $('#date').val('');
       $('#student_name').val('');
-      $('#tuition').val('');
       $('#parent_name').val('');
       $('#parent_email').val('');
       $('#parent_phone').val('');
@@ -292,7 +282,6 @@
         var newRow = '<tr>' +
           '<td>' + student.date + '</td>' +
           '<td>' + student.student_name + '</td>' +
-          '<td>' + student.tuition + '</td>' +
           '<td>' + student.parent_name + '</td>' +
           '<td>' + student.parent_email + '</td>' +
           '<td>' + student.parent_phone + '</td>' +
